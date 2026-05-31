@@ -2,6 +2,8 @@
 
 > A working prototype for the World Economic Forum — **Digital Product Specialist, AI & Business Transformation** panel task.
 > Built with Claude Code. *"The best documentation is a working system."*
+>
+> **▶ Live demo:** https://valeriosantoni7-lang.github.io/wef-partner-briefing/
 
 ---
 
