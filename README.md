@@ -63,8 +63,15 @@ Plain HTML/CSS/JS, zero dependencies, fully offline. Built with **Claude Code** 
 
 ## Repo
 
-- `index.html` — the prototype
-- `presenter-guide.html` — a readable walkthrough + collapsible Q&A (open in a browser)
-- `onepager.html` / `Partner-Briefing-Onepager.pdf` — one-page leave-behind
-- `TALK-SCRIPT.md` — the 10-minute panel walkthrough + anticipated Q&A (plain text)
-- Built on a feature branch and merged via PR — mirroring the GitHub/PR workflow the role uses.
+**The prototype**
+- `index.html` — the working app (also live at the link above)
+
+**The presentation packet** (three roles, no overlap)
+- `presenter-guide.html` — **drive the tool**: walkthrough + collapsible Q&A prep
+- `full-script.html` — **what to say**: verbatim read-aloud script, with a Zen reading mode
+- `onepager.html` / `Partner-Briefing-Onepager.pdf` — **leave-behind**: one-page PDF to share
+
+**Plain-text backups**
+- `TALK-SCRIPT.md`, `FULL-SCRIPT.md` — markdown versions of the above
+
+Built on a feature branch and merged via PR — mirroring the GitHub/PR workflow the role uses.
