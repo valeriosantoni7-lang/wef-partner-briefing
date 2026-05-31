@@ -12,34 +12,27 @@
     --green:#15a05a; --green-soft:#e4f6ec; --amber:#c77700; --amber-soft:#fdf2dd; --red:#c8402f;
     --sf:#00A1E0; --slack:#4A154B; --email:#5b6b85; --docs:#7b3fe4; --web:#0e9f6e;
     --radius:14px; --shadow:0 1px 2px rgba(16,32,64,.06),0 8px 24px rgba(16,32,64,.06);
+    --mono:'SF Mono',ui-monospace,'Cascadia Code','Roboto Mono',Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg); color:var(--ink); line-height:1.45;
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg); color:var(--ink); line-height:1.45; -webkit-font-smoothing:antialiased;
   }
   .app{display:flex; min-height:100vh}
 
   /* ---------- Sidebar ---------- */
-  .sidebar{
-    width:248px; background:var(--navy); color:#cdd6e6; flex-shrink:0;
-    display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh;
-  }
+  .sidebar{width:248px; background:var(--navy); color:#cdd6e6; flex-shrink:0;
+    display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh}
   .brand{display:flex; align-items:center; gap:11px; padding:4px 8px 20px}
-  .brand .logo{
-    width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#3b78ff,#7aa8ff);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;color:#fff;font-size:15px;flex-shrink:0
-  }
+  .brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#3b78ff,#7aa8ff);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;flex-shrink:0}
   .brand .t{font-weight:700;color:#fff;font-size:15px;line-height:1.15}
   .brand .t small{display:block;font-weight:500;color:#8da2c4;font-size:11.5px}
   .nav{display:flex;flex-direction:column;gap:3px;margin-top:6px}
-  .nav button{
-    all:unset; cursor:pointer; display:flex;align-items:center;gap:11px; padding:10px 12px;border-radius:10px;
-    color:#aebbd2;font-size:14px;font-weight:500;transition:.15s
-  }
+  .nav button{all:unset; cursor:pointer; display:flex;align-items:center;gap:11px; padding:10px 12px;border-radius:10px;
+    color:#aebbd2;font-size:14px;font-weight:500;transition:.15s}
   .nav button:hover{background:rgba(255,255,255,.06);color:#fff}
   .nav button.active{background:var(--accent);color:#fff}
   .nav .ic{width:18px;text-align:center}
@@ -48,10 +41,8 @@
 
   /* ---------- Main ---------- */
   .main{flex:1; min-width:0; display:flex; flex-direction:column}
-  .topbar{
-    background:var(--surface); border-bottom:1px solid var(--line); padding:16px 30px;
-    display:flex;align-items:center;justify-content:space-between; position:sticky;top:0;z-index:5
-  }
+  .topbar{background:var(--surface); border-bottom:1px solid var(--line); padding:16px 30px;
+    display:flex;align-items:center;justify-content:space-between; position:sticky;top:0;z-index:5}
   .topbar h1{margin:0;font-size:18px;font-weight:700}
   .topbar .sub{font-size:13px;color:var(--ink-2);margin-top:2px}
   .demo-pill{font-size:11px;font-weight:600;color:var(--amber);background:var(--amber-soft);
@@ -60,10 +51,8 @@
 
   /* ---------- Meeting list ---------- */
   .section-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
-  .mcard{
-    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;
-    display:flex;align-items:center;gap:18px;margin-bottom:13px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)
-  }
+  .mcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;
+    display:flex;align-items:center;gap:18px;margin-bottom:13px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)}
   .mcard:hover{border-color:#c5d2ea;transform:translateY(-1px)}
   .avatar{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;
     color:#fff;font-weight:800;font-size:16px;flex-shrink:0}
@@ -81,7 +70,7 @@
 
   /* ---------- Brief ---------- */
   .back{all:unset;cursor:pointer;color:var(--accent);font-weight:600;font-size:13.5px;margin-bottom:16px;display:inline-flex;gap:6px;align-items:center}
-  .brief-head{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px}
+  .brief-head{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:14px}
   .bh-top{display:flex;gap:16px;align-items:flex-start}
   .bh-top .avatar{width:54px;height:54px;font-size:19px;border-radius:13px}
   .bh-info{flex:1;min-width:0}
@@ -100,6 +89,16 @@
   .ms-item .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
   .ms-item .v{font-size:13.5px;font-weight:600;margin-top:3px}
 
+  /* honesty legend */
+  .legend-bar{display:flex;gap:18px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:11px;
+    padding:10px 16px;margin-bottom:18px;font-size:12px;color:var(--ink-2);align-items:center;box-shadow:var(--shadow)}
+  .legend-bar .li{display:flex;align-items:center;gap:7px}
+  .legend-bar .sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .legend-bar b{color:var(--ink);font-weight:700}
+  .prov{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;vertical-align:middle;margin-left:7px;letter-spacing:.02em}
+  .prov.real{background:var(--accent-soft);color:var(--accent)}
+  .prov.sample{background:var(--amber-soft);color:var(--amber)}
+
   /* TLDR */
   .tldr{background:linear-gradient(180deg,#fbfcff,#f4f8ff);border:1px solid #d7e4ff;border-left:4px solid var(--accent);
     border-radius:12px;padding:16px 18px;margin-bottom:18px}
@@ -111,7 +110,7 @@
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:18px}
   .card.full{grid-column:1 / -1}
   .card h3{margin:0 0 2px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:9px}
-  .card .h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .card .h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;flex-wrap:wrap}
   .src-row{display:flex;gap:6px;flex-wrap:wrap}
   .src{font-size:10.5px;font-weight:700;padding:3px 9px 3px 8px;border-radius:20px;color:#fff;display:inline-flex;align-items:center;gap:5px;opacity:.92}
   .src::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
@@ -162,6 +161,8 @@
   .ext:last-child{border-bottom:none}
   .ext .tx{font-size:13.5px;font-weight:500}
   .ext .mt{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center}
+  .ext a{color:var(--web);text-decoration:none;font-weight:600}
+  .ext a:hover{text-decoration:underline}
 
   /* talking points */
   .tp-card{background:linear-gradient(180deg,#fffdf6,#fff9ea);border:1px solid #f0e2bd;border-radius:var(--radius);padding:18px 20px;margin-bottom:18px}
@@ -175,24 +176,25 @@
   .flag .ic{font-size:14px}
   .flag .tx{font-size:13px;color:#8a3322}
 
-  .feedback{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+  .feedback{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12.5px;color:var(--ink-2);flex-wrap:wrap}
   .fb-btn{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--surface-2);border-radius:7px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
   .fb-btn:hover{border-color:#c5d2ea}
 
   /* ---------- Generate overlay ---------- */
   .overlay{position:fixed;inset:0;background:rgba(15,25,45,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:50}
   .overlay.show{display:flex}
-  .gen{background:#fff;border-radius:18px;width:480px;max-width:92vw;padding:28px 30px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+  .gen{background:#fff;border-radius:18px;width:520px;max-width:92vw;padding:28px 30px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
   .gen h3{margin:0 0 4px;font-size:18px}
   .gen .gsub{color:var(--ink-2);font-size:13.5px;margin-bottom:20px}
-  .step{display:flex;align-items:center;gap:13px;padding:9px 0}
+  .step{display:flex;align-items:flex-start;gap:13px;padding:8px 0}
   .step .si{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;
-    border:2px solid var(--line);color:var(--muted);background:#fff;transition:.2s}
+    border:2px solid var(--line);color:var(--muted);background:#fff;transition:.2s;margin-top:1px}
   .step.run .si{border-color:var(--accent);color:var(--accent)}
   .step.done .si{border-color:var(--green);background:var(--green);color:#fff}
   .step .sl{font-size:13.5px;font-weight:600;color:var(--muted)}
   .step.run .sl,.step.done .sl{color:var(--ink)}
-  .step .ss{font-size:12px;color:var(--muted);font-weight:400;display:block;margin-top:1px}
+  .step .sq{font-size:11px;color:var(--muted);font-family:var(--mono);display:block;margin-top:2px;word-break:break-word}
+  .step.run .sq{color:var(--accent)}
   .spinner{width:13px;height:13px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
   .gbar{height:5px;background:var(--surface-2);border-radius:10px;overflow:hidden;margin-top:18px}
@@ -215,6 +217,41 @@
   .sl-btn.green{background:#007a5a;color:#fff}
   .sl-btn.gray{background:#fff;border:1px solid var(--line);color:var(--ink)}
   .ctx{font-size:12px;color:var(--muted);margin-top:12px}
+
+  /* ---------- Spec view ---------- */
+  .spec-intro{font-size:14.5px;color:var(--ink-2);max-width:780px;margin:0 0 22px;line-height:1.6}
+  .spec-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+  .spec-tab{all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:9px 15px;border-radius:9px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line)}
+  .spec-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .obj{border:1px solid var(--line);border-radius:11px;margin-bottom:13px;overflow:hidden}
+  .obj-head{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .obj-head .on{font-weight:700;font-size:14px;font-family:var(--mono)}
+  .obj-head .ot{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
+  .obj-head .ot.custom{background:#f2ecff;color:#7a4ddb}
+  .obj-head .owhy{font-size:12px;color:var(--ink-2);margin-left:auto}
+  .fields{padding:6px 16px 12px}
+  .fld{display:flex;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;align-items:baseline}
+  .fld:last-child{border-bottom:none}
+  .fld .fn{font-family:var(--mono);font-size:12.5px;color:var(--navy-2);min-width:200px;font-weight:600}
+  .fld .fd{color:var(--ink-2)}
+  .codeblock{background:#0f1b30;border-radius:12px;padding:18px 20px;overflow-x:auto;margin-bottom:16px}
+  .codeblock pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:#cdd9ef;white-space:pre-wrap}
+  .codeblock .k{color:#7fb0ff;font-weight:600}
+  .codeblock .s{color:#9be2b0}
+  .codeblock .c{color:#6b7c9c;font-style:italic}
+  .codeblock .h{color:#ffd479}
+  .pipe{display:flex;flex-direction:column;gap:0}
+  .pstep{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .pstep:last-child{border-bottom:none}
+  .pstep .pn{width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .pstep .pt{font-weight:600;font-size:13.5px}
+  .pstep .pd{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+  .pstep .ptag{font-size:10.5px;font-weight:700;color:#fff;padding:2px 8px;border-radius:20px;align-self:center;margin-left:auto;white-space:nowrap}
+  .rule{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .rule:last-child{border-bottom:none}
+  .rule .ri{font-size:16px}
+  .rule .rt b{font-weight:700;font-size:13.5px}
+  .rule .rt div{font-size:12.5px;color:var(--ink-2);margin-top:2px}
 
   /* ---------- How it works ---------- */
   .hiw-intro{font-size:15px;color:var(--ink-2);max-width:760px;margin:0 0 26px;line-height:1.6}
@@ -239,11 +276,8 @@
   .metric{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;flex:1;min-width:150px;box-shadow:var(--shadow)}
   .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
   .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
-  .legend span{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
-  .legend .nd{width:9px;height:9px;border-radius:50%}
 
-  @media (max-width:880px){.grid,.col-split,.vs{grid-template-columns:1fr}.sidebar{display:none}}
+  @media (max-width:880px){.grid,.col-split,.vs{grid-template-columns:1fr}.sidebar{display:none}.fld .fn{min-width:130px}}
   @media print{.sidebar,.topbar,.bh-actions,.back,.feedback,.demo-pill{display:none}.content{max-width:100%}}
 </style>
 </head>
@@ -257,10 +291,11 @@
     </div>
     <nav class="nav" id="nav">
       <button data-view="meetings" class="active"><span class="ic">📅</span> Upcoming meetings</button>
+      <button data-view="spec"><span class="ic">🧩</span> Build spec</button>
       <button data-view="how"><span class="ic">⚙️</span> How it works</button>
     </nav>
     <div class="side-foot">
-      <b>Prototype</b> · sample data<br>Built with Claude Code for the WEF panel.
+      <b>Prototype</b> · built with Claude Code<br>for the WEF panel task.
     </div>
   </aside>
 
@@ -271,7 +306,7 @@
         <h1 id="tb-title">Upcoming external meetings</h1>
         <div class="sub" id="tb-sub">Briefs auto-assemble 24h before each meeting · 3 this week</div>
       </div>
-      <div class="demo-pill">PROTOTYPE · SAMPLE DATA</div>
+      <div class="demo-pill">PROTOTYPE</div>
     </div>
     <div class="content" id="content"></div>
   </main>
@@ -281,14 +316,19 @@
 <div class="overlay" id="overlay">
   <div class="gen">
     <h3 id="gen-org">Assembling brief…</h3>
-    <div class="gsub">Pulling context from every source and synthesizing — normally runs automatically the day before.</div>
+    <div class="gsub">Querying every source and synthesizing — normally runs automatically the day before.</div>
     <div id="gen-steps"></div>
     <div class="gbar"><div class="gbar-fill" id="gbar"></div></div>
   </div>
 </div>
 
 <script>
-/* ============================ DATA (sample) ============================ */
+/* ============================ DATA ============================
+   PROVENANCE MODEL (shown to the panel via the legend bar):
+   • REAL  = organisation profile, WEF initiatives & external context — public, sourced.
+   • SAMPLE = CRM records, Slack/email, internal contacts — illustrative
+             (I obviously don't have access to the Forum's live systems).
+=============================================================== */
 const SRC = {
   sf:{c:'src-sf',label:'Salesforce'}, email:{c:'src-email',label:'Email'},
   slack:{c:'src-slack',label:'Slack'}, docs:{c:'src-docs',label:'Documents'}, web:{c:'src-web',label:'Web'}
@@ -297,77 +337,77 @@ const SRC = {
 const MEETINGS = [
   {
     id:'nestle', status:'ready',
-    org:{name:'Nestlé S.A.', initials:'N', color:'#0a4c8b', sector:'Food & Beverage', hq:'Vevey, Switzerland', tier:'Strategic Partner', since:'2011'},
+    org:{name:'Nestlé S.A.', initials:'N', color:'#0a4c8b', sector:'Food & Beverage', hq:'Vevey, Switzerland', tier:'Strategic Partner', since:'long-standing'},
     meeting:{
       title:'Annual Partnership Review — Food Systems & AI',
       date:'Tue 3 Jun 2026', time:'14:00–15:00 CET', loc:'Forum HQ, Geneva (+ Zoom)',
       ours:'Maria Lindqvist (Relationship Lead)', theirs:'4 attendees incl. Chief Sustainability Officer'
     },
-    tldr:'Nestlé is a 15-year Strategic Partner up for annual renewal. The relationship is strong but the renewal conversation is happening against a tense backdrop: they want a bigger role in the AI for Food Systems initiative, and an unresolved data-sharing question from March is still open. Lead with the renewal win, then steer to their AI ask.',
+    tldr:'Nestlé is a long-standing WEF Strategic Partner and a pillar of the Food Systems work. The renewal is on track, but two live threads shape this meeting: they’re leaning into the AI-for-food-systems agenda, and Nestlé is mid strategy-reset under CEO Laurent Freixe (since Sept 2024), so their priorities are shifting. Lead with the renewal and regenerative-agriculture wins, then probe where the new leadership wants to take the partnership.',
     freshness:'Updated 2 hours ago',
     history:[
-      {dt:'2011', tx:'Joined as Strategic Partner; founding member of the Food Systems Initiative.'},
-      {dt:'2019', tx:'Co-chaired the Davos panel on regenerative agriculture.'},
-      {dt:'Jan 2025', tx:'Signed 3-year commitment to the AI for Food Systems initiative.'},
-      {dt:'Jan 2026', tx:'Strong Davos presence — CEO on main-stage climate session.'}
+      {dt:'Ongoing', tx:'WEF <b>Strategic Partner</b> — engages across the Annual Meeting and global initiatives.', real:true},
+      {dt:'Food Systems', tx:'Active in the Forum’s <b>Food Systems Initiative</b>; regenerative agriculture is a flagship Nestlé commitment.', real:true},
+      {dt:'Sep 2024', tx:'<b>Laurent Freixe</b> appointed CEO — driving a strategy reset and cost/efficiency focus.', real:true},
+      {dt:'Jan 2026', tx:'Strong Davos presence on food security &amp; climate. [illustrative]', real:false}
     ],
     initiatives:[
-      {nm:'AI for Food Systems', ro:'Funding partner · wants to co-lead the data working group', st:'active'},
-      {nm:'Food Action Alliance', ro:'Steering board member', st:'active'},
-      {nm:'First Movers Coalition', ro:'Exploring participation (raised in April)', st:'explore'},
-      {nm:'Plastics & Packaging', ro:'Participation paused since 2024', st:'paused'}
+      {nm:'Food Systems Initiative', ro:'Core funding partner · regenerative agriculture focus', st:'active', real:true},
+      {nm:'Food Action Alliance', ro:'Participant in the Forum’s food-systems coalition', st:'active', real:true},
+      {nm:'First Movers Coalition (Food/Ag)', ro:'Exploring participation [illustrative]', st:'explore', real:false},
+      {nm:'AI for Food Systems', ro:'Wants a bigger role in the data working group [illustrative]', st:'explore', real:false}
     ],
     contactsTheirs:[
-      {nm:'Dr. Anna Brandt', ti:'Chief Sustainability Officer', note:'Main sponsor. Pushing for a co-lead role on AI data group.', color:'#0a4c8b'},
-      {nm:'Marco Rossi', ti:'VP Digital & Data', note:'New since Jan — the AI ask is coming from his team.', color:'#7a4ddb'},
+      {nm:'Dr. Anna Brandt', ti:'Chief Sustainability Officer', note:'Main sponsor; pushing the regenerative-ag agenda.', color:'#0a4c8b'},
+      {nm:'Marco Rossi', ti:'VP Digital & Data', note:'New post-reorg — the AI ask comes from his team.', color:'#7a4ddb'},
       {nm:'Claire Dubois', ti:'Head of Global Partnerships', note:'Day-to-day contact, very responsive.', color:'#0e9f6e'}
     ],
     contactsOurs:[
       {nm:'Maria Lindqvist', ti:'Relationship Lead (owner)', note:'Owns the account since 2022.', color:'#2f6df0'},
-      {nm:'James Okoro', ti:'Lead, AI for Food Systems', note:'Should join — the AI ask lands with him.', color:'#c77700'}
+      {nm:'James Okoro', ti:'Lead, Food Systems Initiative', note:'Should join — the AI ask lands with him.', color:'#c77700'}
     ],
     interactions:[
-      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Claire confirmed the 4 attendees and asked to add "expanded AI collaboration" to the agenda.', dt:'Email · 2 days ago'},
-      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'In #partnerships, James flagged the March data-sharing question is still unresolved.', dt:'Slack #partnerships · 4 days ago'},
-      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Logged call: Anna "very keen to deepen the AI partnership before Davos 2027."', dt:'Salesforce activity · 11 days ago'},
-      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Q1 partnership health note: engagement "green", renewal expected to proceed.', dt:'Internal doc · 3 weeks ago'}
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Claire confirmed 4 attendees; asked to add “expanded AI collaboration” to the agenda.', dt:'Email · 2 days ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'In #food-systems, James flagged the March data-sharing question is still unresolved.', dt:'Slack #food-systems · 4 days ago'},
+      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Logged call: Anna “very keen to deepen the partnership ahead of Davos 2027.”', dt:'Salesforce activity · 11 days ago'},
+      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Q1 partnership-health note: engagement “green”, renewal expected to proceed.', dt:'Internal doc · 3 weeks ago'}
     ],
     external:[
-      {tx:'Nestlé announced a CHF 1.2bn investment in regenerative agriculture across European supply chains.', mt:'Reuters · 8 days ago', src:'web'},
-      {tx:'Appointed a new Chief AI Officer — signals a deeper internal AI push (context for their ask).', mt:'Company press release · 3 weeks ago', src:'web'},
-      {tx:'Q1 results beat expectations; sustainability cited as a growth driver on the earnings call.', mt:'FT · 5 weeks ago', src:'web'}
+      {tx:'Nestlé describes itself as a WEF Strategic Partner, citing food systems & sustainability collaboration.', mt:'nestle.com — Partnerships', url:'https://www.nestle.com/about/partnerships/world-economic-forum'},
+      {tx:'The Forum’s Food Systems Initiative is the home of the food-transformation work Nestlé funds.', mt:'weforum.org — Food Systems', url:'https://www.weforum.org/focus/food-systems/'},
+      {tx:'Under new CEO Laurent Freixe (since Sept 2024) Nestlé is resetting strategy — expect shifting priorities. [public]', mt:'Company leadership', url:'https://www.nestle.com/aboutus/management/executiveboard'}
     ],
     talking:[
-      'Open by confirming the renewal — it’s on track and worth celebrating 15 years.',
-      'Acknowledge the AI ask directly: explore what "co-leading the data working group" means in practice.',
-      'Close the loop on the March data-sharing question before they raise it — James has context.',
-      'Plant a seed on the First Movers Coalition while AI momentum is high.'
+      'Open by confirming the renewal — celebrate the long partnership and the regenerative-agriculture progress.',
+      'Read the new leadership: under Freixe’s reset, ask where Nestlé wants the partnership to go next.',
+      'Acknowledge the AI ask directly — explore what a bigger role in the food-systems data work means in practice.',
+      'Close the loop on the March data-sharing question before they raise it — James has context.'
     ],
     flags:[
-      {tx:'The March data-sharing question is unresolved and the other side knows it. Don’t get caught flat-footed — align with James beforehand.'},
-      {tx:'Marco Rossi (VP Digital) is new and not in Salesforce yet. Added from the email thread — verify his exact title.'}
+      {tx:'New CEO (Sept 2024) = shifting priorities. Don’t assume last year’s plan still holds — listen for the reset.'},
+      {tx:'Marco Rossi (VP Digital) is illustrative / not in Salesforce. If real, verify his exact title before the meeting.'}
     ]
   },
   {
     id:'siemens', status:'ready',
-    org:{name:'Siemens AG', initials:'S', color:'#009999', sector:'Industrial Tech & Manufacturing', hq:'Munich, Germany', tier:'Strategic Partner', since:'2014'},
+    org:{name:'Siemens AG', initials:'S', color:'#009999', sector:'Industrial Tech & Manufacturing', hq:'Munich, Germany', tier:'Strategic Partner', since:'long-standing'},
     meeting:{
       title:'Roundtable: AI in Advanced Manufacturing',
       date:'Thu 5 Jun 2026', time:'10:30–11:30 CET', loc:'Zoom',
       ours:'Thomas Müller (Relationship Lead)', theirs:'3 attendees incl. Head of Digital Industries'
     },
-    tldr:'Siemens is a reliable Strategic Partner and a likely anchor speaker for the new Advanced Manufacturing initiative. This roundtable is about securing their commitment to host a session at the Annual Meeting. Warm relationship, no open issues — the goal is to convert enthusiasm into a concrete commitment.',
+    tldr:'Siemens is one of the Forum’s deepest tech partners — its factories anchor the Global Lighthouse Network and it co-built the Global Collaboration Village. This roundtable is about converting that goodwill into a concrete commitment: an anchor speaking role on AI in advanced manufacturing at the Annual Meeting. Warm relationship, no open issues — the goal is to land the “yes”.',
     freshness:'Updated 5 hours ago',
     history:[
-      {dt:'2014', tx:'Joined as Strategic Partner via the Advanced Manufacturing platform.'},
-      {dt:'2021', tx:'Hosted the "Factories of the Future" showcase at the Annual Meeting.'},
-      {dt:'2024', tx:'Co-authored a Forum white paper on industrial AI.'},
-      {dt:'Jan 2026', tx:'CTO joined the Davos tech leaders’ dinner.'}
+      {dt:'Ongoing', tx:'WEF <b>Strategic Partner</b>; CEO <b>Roland Busch</b> is an active Forum contributor.', real:true},
+      {dt:'Lighthouses', tx:'Siemens plants are recognised in the Forum’s <b>Global Lighthouse Network</b> for 4IR manufacturing.', real:true},
+      {dt:'Metaverse', tx:'Founding tech partner of the Forum’s <b>Global Collaboration Village</b> (industrial metaverse).', real:true},
+      {dt:'2024', tx:'Co-authored a Forum perspective on industrial AI. [illustrative]', real:false}
     ],
     initiatives:[
-      {nm:'Advanced Manufacturing & Supply Chains', ro:'Anchor partner', st:'active'},
-      {nm:'AI Governance Alliance', ro:'Active contributor', st:'active'},
-      {nm:'Centre for Advanced Manufacturing', ro:'Founding supporter', st:'active'}
+      {nm:'Global Lighthouse Network', ro:'Anchor manufacturer — multiple lighthouse sites', st:'active', real:true},
+      {nm:'Global Collaboration Village', ro:'Founding technology partner', st:'active', real:true},
+      {nm:'Advanced Manufacturing & AI', ro:'Target: anchor speaker at Annual Meeting [illustrative]', st:'explore', real:false}
     ],
     contactsTheirs:[
       {nm:'Dr. Klaus Weber', ti:'Head of Digital Industries', note:'Decision-maker for speaking commitments.', color:'#009999'},
@@ -378,47 +418,49 @@ const MEETINGS = [
       {nm:'Aisha Khan', ti:'Lead, Advanced Manufacturing', note:'Owns the initiative agenda.', color:'#7a4ddb'}
     ],
     interactions:[
-      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Sofia: "Klaus is interested in a speaking role — let’s discuss formats."', dt:'Email · 3 days ago'},
-      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Opportunity updated: "AM initiative — anchor sponsor", stage Proposal.', dt:'Salesforce · 1 week ago'},
-      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Aisha in #annual-meeting: Siemens is "first choice" to host the AM session.', dt:'Slack · 9 days ago'}
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Sofia: “Klaus is interested in a speaking role — let’s discuss formats.”', dt:'Email · 3 days ago'},
+      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Opportunity updated: “AM initiative — anchor sponsor”, stage Proposal.', dt:'Salesforce · 1 week ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Aisha in #annual-meeting: Siemens is “first choice” to host the AM session.', dt:'Slack · 9 days ago'}
     ],
     external:[
-      {tx:'Siemens unveiled a new industrial AI copilot at Hannover Messe — strong proof point to reference.', mt:'Handelsblatt · 12 days ago', src:'web'},
-      {tx:'Raised full-year guidance on the back of digital-industries growth.', mt:'Bloomberg · 4 weeks ago', src:'web'}
+      {tx:'Siemens is a founding partner of the Forum’s Global Collaboration Village — a strong, specific proof point.', mt:'weforum.org — Collaboration Village', url:'https://www.weforum.org/projects/global-collaboration-village/'},
+      {tx:'Siemens sites feature in the Global Lighthouse Network for advanced manufacturing.', mt:'weforum.org — Lighthouse Network', url:'https://www.weforum.org/projects/global_lighthouse_network/'},
+      {tx:'CEO Roland Busch is a recurring Forum voice on industrial transformation.', mt:'weforum.org — Roland Busch', url:'https://www.weforum.org/people/roland-busch/'}
     ],
     talking:[
-      'Reference the Hannover Messe AI copilot launch — shows you’re paying attention to their priorities.',
+      'Open on the Global Collaboration Village — it shows you value the partnership beyond sponsorship.',
       'Make the speaking-slot ask concrete: propose a format and a date for the Annual Meeting.',
-      'Connect Klaus with Aisha to shape the session content.',
-      'Confirm next steps in writing the same day to keep the proposal moving.'
+      'Tie the session to their Lighthouse credibility — they’re the natural voice on factory-floor AI.',
+      'Connect Klaus with Aisha to shape content; confirm next steps in writing the same day.'
     ],
     flags:[
-      {tx:'Opportunity in Salesforce hasn’t moved stage in 3 weeks. Use this meeting to advance it from Proposal.'}
+      {tx:'Opportunity hasn’t changed stage in ~3 weeks. Use this meeting to advance it from Proposal.'}
     ]
   },
   {
     id:'maersk', status:'pending',
-    org:{name:'A.P. Moller – Maersk', initials:'M', color:'#42b0d5', sector:'Logistics & Shipping', hq:'Copenhagen, Denmark', tier:'Partner (deepening)', since:'2018'},
+    org:{name:'A.P. Moller – Maersk', initials:'M', color:'#42b0d5', sector:'Logistics & Shipping', hq:'Copenhagen, Denmark', tier:'Partner (deepening)', since:'long-standing'},
     meeting:{
       title:'Exploratory: Trade & Supply-Chain Resilience',
       date:'Mon 9 Jun 2026', time:'15:00–16:00 CET', loc:'Zoom',
       ours:'Elena Costa (Relationship Lead)', theirs:'2 attendees incl. Head of Sustainability'
     },
-    tldr:'Maersk is a mid-tier Partner the team wants to deepen into the Trade & Supply-Chain Resilience initiative. This is an exploratory call — the goal is to gauge appetite and identify the right entry point. Less history on file, so external context matters more here.',
+    tldr:'Maersk is a credible Partner the team wants to deepen into the Trade & Supply-Chain Resilience work. Its decarbonisation leadership is real and current — founding member of the First Movers Coalition and operator of Laura Maersk, the first methanol-enabled container ship. This is an exploratory call to gauge appetite. Internal history is lighter here, so external context carries more of the weight.',
     freshness:'Generated just now',
     history:[
-      {dt:'2018', tx:'Joined as a Partner via the Supply Chain & Transport platform.'},
-      {dt:'2022', tx:'Participated in the ocean-decarbonisation working group.'},
-      {dt:'2025', tx:'Lighter engagement year — limited Annual Meeting presence.'}
+      {dt:'2021', tx:'Founding member of the Forum’s <b>First Movers Coalition</b> (launched at COP26).', real:true},
+      {dt:'2023', tx:'Named <b>Laura Maersk</b> — the world’s first methanol-enabled container vessel.', real:true},
+      {dt:'Ongoing', tx:'CEO <b>Vincent Clerc</b> is vocal on green fuels &amp; shipping decarbonisation.', real:true},
+      {dt:'2025', tx:'Lighter Forum engagement year — limited Annual Meeting presence. [illustrative]', real:false}
     ],
     initiatives:[
-      {nm:'Trade & Supply-Chain Resilience', ro:'Target initiative — not yet committed', st:'explore'},
-      {nm:'First Movers Coalition (Shipping)', ro:'Active member', st:'active'},
-      {nm:'Ocean Decarbonisation', ro:'Past contributor', st:'paused'}
+      {nm:'First Movers Coalition (Shipping)', ro:'Founding member — green-fuel demand signal', st:'active', real:true},
+      {nm:'Trade & Supply-Chain Resilience', ro:'Target initiative — not yet committed [illustrative]', st:'explore', real:false},
+      {nm:'Ocean decarbonisation', ro:'Active leader via methanol fleet', st:'active', real:true}
     ],
     contactsTheirs:[
-      {nm:'Lars Petersen', ti:'Head of Sustainability', note:'Driving their net-zero shipping agenda.', color:'#42b0d5'},
-      {nm:'Nina Holm', ti:'Director, Public Affairs', note:'Our entry point; relationship is still light.', color:'#7a4ddb'}
+      {nm:'Lars Petersen', ti:'Head of Sustainability', note:'Driving the net-zero shipping agenda.', color:'#42b0d5'},
+      {nm:'Nina Holm', ti:'Director, Public Affairs', note:'Our entry point; relationship still light.', color:'#7a4ddb'}
     ],
     contactsOurs:[
       {nm:'Elena Costa', ti:'Relationship Lead (owner)', note:'Took over the account 6 months ago.', color:'#2f6df0'},
@@ -426,23 +468,23 @@ const MEETINGS = [
     ],
     interactions:[
       {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Nina agreed to an exploratory call; asked what deeper involvement would entail.', dt:'Email · 5 days ago'},
-      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'David in #partnerships: Maersk is "a gap we should close" for the resilience initiative.', dt:'Slack · 1 week ago'},
-      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Account note flags engagement has been light for ~18 months — needs re-warming.', dt:'Internal doc · 1 month ago'}
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'David in #partnerships: Maersk is “a gap we should close” for the resilience initiative.', dt:'Slack · 1 week ago'},
+      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Account note flags engagement light for ~18 months — needs re-warming.', dt:'Internal doc · 1 month ago'}
     ],
     external:[
-      {tx:'Maersk announced a major order of methanol-powered vessels — strong alignment with the resilience agenda.', mt:'Reuters · 6 days ago', src:'web'},
-      {tx:'New CEO outlined "resilience and decarbonisation" as twin strategic priorities.', mt:'Financial Times · 3 weeks ago', src:'web'},
-      {tx:'Red Sea disruptions cited as pushing up freight rates — supply-chain resilience is top-of-mind for them right now.', mt:'WSJ · 2 weeks ago', src:'web'}
+      {tx:'Maersk is a founding member of the Forum’s First Movers Coalition — perfect bridge into the resilience agenda.', mt:'weforum.org — First Movers Coalition', url:'https://www.weforum.org/communities/first-movers-coalition/'},
+      {tx:'Laura Maersk, the first methanol-enabled container ship, anchors their decarbonisation story.', mt:'maersk.com — News', url:'https://www.maersk.com/news/'},
+      {tx:'CEO Vincent Clerc frames resilience + decarbonisation as twin priorities. [public positioning]', mt:'Company leadership', url:'https://www.maersk.com/about/leadership'}
     ],
     talking:[
-      'Lead with their methanol-vessel order — it’s the perfect bridge into the resilience initiative.',
+      'Lead with their First Movers Coalition + methanol leadership — it’s the natural bridge into resilience.',
       'Acknowledge the lighter recent engagement honestly and frame this as a fresh chapter.',
-      'Tie the ask to their new CEO’s stated priorities (resilience + decarbonisation).',
-      'Keep it exploratory — propose a concrete next step, not a commitment, given the relationship is re-warming.'
+      'Tie the ask to decarbonisation + resilience as twin priorities, where they’re already credible.',
+      'Keep it exploratory — propose a concrete next step, not a commitment, since the relationship is re-warming.'
     ],
     flags:[
-      {tx:'Thin internal history — most signal here is external. Treat relationship facts as lower-confidence and verify with Elena.'},
-      {tx:'Engagement has been light for ~18 months. Manage expectations: this is re-warming, not a renewal.'}
+      {tx:'Thin internal history — most signal here is external/public. Treat CRM facts as lower-confidence and verify with Elena.'},
+      {tx:'Engagement light for ~18 months. Manage expectations: this is re-warming, not a renewal.'}
     ]
   }
 ];
@@ -452,13 +494,9 @@ const content = document.getElementById('content');
 const tbTitle = document.getElementById('tb-title');
 const tbSub = document.getElementById('tb-sub');
 
-function srcRow(keys){
-  return '<div class="src-row">'+keys.map(k=>`<span class="src ${SRC[k].c}">${SRC[k].label}</span>`).join('')+'</div>';
-}
-
-function setNav(view){
-  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
-}
+function srcRow(keys){return '<div class="src-row">'+keys.map(k=>`<span class="src ${SRC[k].c}">${SRC[k].label}</span>`).join('')+'</div>';}
+function prov(real){return real?'<span class="prov real">REAL</span>':'<span class="prov sample">SAMPLE</span>';}
+function setNav(view){document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));}
 
 /* ---- Meeting list ---- */
 function renderMeetings(){
@@ -488,57 +526,48 @@ function renderMeetings(){
       ${st}
     </div>`;
   });
-  content.innerHTML=h;
-  window.scrollTo(0,0);
+  content.innerHTML=h; window.scrollTo(0,0);
 }
 
-/* ---- Open a meeting (generate if needed) ---- */
-function openMeeting(id){
-  const m = MEETINGS.find(x=>x.id===id);
-  if(m.status==='ready') return renderBrief(id);
-  runGenerate(m);
-}
+function openMeeting(id){const m=MEETINGS.find(x=>x.id===id); if(m.status==='ready') return renderBrief(id); runGenerate(m);}
 
-/* ---- Generate animation ---- */
+/* ---- Generate animation (with real-looking queries) ---- */
 function runGenerate(m){
   const overlay=document.getElementById('overlay');
   document.getElementById('gen-org').textContent='Assembling brief: '+m.org.name;
+  const q=m.org.name.split(' ')[0].replace(/[^A-Za-z]/g,'');
   const steps=[
-    {l:'Salesforce',s:'Account, Contacts, Opportunities, Activities'},
-    {l:'Email',s:'Relevant threads, last 90 days'},
-    {l:'Slack',s:'#partnerships, #annual-meeting mentions'},
-    {l:'Internal documents',s:'Account notes & meeting minutes'},
-    {l:'Web',s:'News, filings, leadership changes'},
-    {l:'Synthesizing brief with AI',s:'Structuring + flagging gaps for review'}
+    {l:'Salesforce',s:`SELECT Account, Contacts, Opportunities, Activities WHERE Account = "${m.org.name}"`},
+    {l:'Email',s:`search "${m.org.name}" · last 90 days`},
+    {l:'Slack',s:`#partnerships #annual-meeting · mentions of ${q}`},
+    {l:'Internal documents',s:'account notes & meeting minutes'},
+    {l:'Web',s:`"${q} World Economic Forum" · recent news & filings`},
+    {l:'Synthesizing brief with AI',s:'structure · cite sources · flag low-confidence for review'}
   ];
   const cont=document.getElementById('gen-steps');
   cont.innerHTML=steps.map((s,i)=>`<div class="step" id="step${i}">
       <div class="si">${i+1}</div>
-      <div><span class="sl">${s.l}</span><span class="ss">${s.s}</span></div>
-    </div>`).join('');
+      <div><span class="sl">${s.l}</span><span class="sq">${s.s}</span></div></div>`).join('');
   document.getElementById('gbar').style.width='0%';
   overlay.classList.add('show');
-
   let i=0;
   const run=()=>{
     if(i>0){const p=document.getElementById('step'+(i-1));p.classList.remove('run');p.classList.add('done');p.querySelector('.si').textContent='✓';}
     if(i>=steps.length){
       document.getElementById('gbar').style.width='100%';
-      setTimeout(()=>{overlay.classList.remove('show'); m.status='ready'; renderBrief(m.id);},450);
-      return;
+      setTimeout(()=>{overlay.classList.remove('show'); m.status='ready'; renderBrief(m.id);},450); return;
     }
     const el=document.getElementById('step'+i);
     el.classList.add('run'); el.querySelector('.si').innerHTML='<div class="spinner"></div>';
     document.getElementById('gbar').style.width=((i+1)/steps.length*100)+'%';
-    i++;
-    setTimeout(run, i===steps.length ? 900 : 620);
+    i++; setTimeout(run, i===steps.length ? 950 : 640);
   };
   setTimeout(run,400);
 }
 
 /* ---- Full brief ---- */
 function renderBrief(id){
-  const m = MEETINGS.find(x=>x.id===id);
+  const m=MEETINGS.find(x=>x.id===id);
   setNav('meetings');
   tbTitle.textContent='Partner brief';
   tbSub.textContent=m.org.name+' · '+m.meeting.date;
@@ -557,7 +586,6 @@ function renderBrief(id){
           <span class="tag tier">★ ${m.org.tier}</span>
           <span class="tag">${m.org.sector}</span>
           <span class="tag">${m.org.hq}</span>
-          <span class="tag">Partner since ${m.org.since}</span>
         </div>
       </div>
       <div class="bh-actions">
@@ -573,13 +601,18 @@ function renderBrief(id){
     </div>
   </div>
 
+  <div class="legend-bar">
+    <span class="li"><span class="sw" style="background:var(--accent)"></span><b>Real &amp; sourced:</b>&nbsp;org profile · WEF initiatives · external context</span>
+    <span class="li"><span class="sw" style="background:var(--amber)"></span><b>Illustrative sample:</b>&nbsp;CRM · Slack/email · named contacts</span>
+  </div>
+
   <div class="tldr">
     <div class="lab">⚡ 60-second brief</div>
     <p>${m.tldr}</p>
     <div class="ai-note">✨ AI-synthesized from the sources below · ${m.freshness} · verify flagged items before the meeting</div>
   </div>`;
 
-  /* talking points (value-add, up top) */
+  /* talking points */
   h+=`<div class="tp-card">
     <div class="h-row"><h3>🎯 Suggested talking points</h3></div>
     ${m.talking.map((t,i)=>`<div class="tp"><div class="n">${i+1}</div><div class="tx">${t}</div></div>`).join('')}
@@ -591,50 +624,39 @@ function renderBrief(id){
   </div>`;
 
   /* flags */
-  if(m.flags && m.flags.length){
+  if(m.flags&&m.flags.length){
     h+=`<div class="card full"><div class="h-row"><h3>⚠️ Flagged for your attention</h3>
       <span class="freshness stale">needs human check</span></div>
-      ${m.flags.map(f=>`<div class="flag"><span class="ic">⚠️</span><div class="tx">${f.tx}</div></div>`).join('')}
-    </div>`;
+      ${m.flags.map(f=>`<div class="flag"><span class="ic">⚠️</span><div class="tx">${f.tx}</div></div>`).join('')}</div>`;
   }
 
-  /* two-column grid */
+  /* grid: history + initiatives */
   h+='<div class="grid">';
-
-  /* history */
-  h+=`<div class="card"><div class="h-row"><h3>📈 History with us</h3>${srcRow(['sf','docs'])}</div>
-    <div class="timeline">${m.history.map(x=>`<div class="tl-item"><div class="dt">${x.dt}</div><div class="tx">${x.tx}</div></div>`).join('')}</div>
-  </div>`;
-
-  /* initiatives */
+  h+=`<div class="card"><div class="h-row"><h3>📈 History with us</h3>${srcRow(['sf','docs','web'])}</div>
+    <div class="timeline">${m.history.map(x=>`<div class="tl-item"><div class="dt">${x.dt} ${prov(x.real)}</div><div class="tx">${x.tx}</div></div>`).join('')}</div></div>`;
   h+=`<div class="card"><div class="h-row"><h3>🚀 Current initiatives</h3>${srcRow(['sf','docs'])}</div>
     ${m.initiatives.map(x=>`<div class="init"><div class="dot" style="background:${initDot[x.st]}"></div>
-      <div style="flex:1"><div class="nm">${x.nm}</div><div class="ro">${x.ro}</div></div>${initChip[x.st]}</div>`).join('')}
-  </div>`;
+      <div style="flex:1"><div class="nm">${x.nm} ${prov(x.real)}</div><div class="ro">${x.ro}</div></div>${initChip[x.st]}</div>`).join('')}</div>`;
+  h+='</div>';
 
-  h+='</div>'; // end grid
-
-  /* contacts full */
-  h+=`<div class="card full"><div class="h-row"><h3>👥 Key contacts</h3>${srcRow(['sf','email'])}</div>
+  /* contacts */
+  h+=`<div class="card full"><div class="h-row"><h3>👥 Key contacts ${prov(false)}</h3>${srcRow(['sf','email'])}</div>
     <div class="col-split">
       <div><h4>Their side</h4>${m.contactsTheirs.map(c=>contactRow(c)).join('')}</div>
       <div><h4>Our side</h4>${m.contactsOurs.map(c=>contactRow(c)).join('')}</div>
-    </div>
-  </div>`;
+    </div></div>`;
 
   /* interactions + external */
   h+='<div class="grid">';
-  h+=`<div class="card"><div class="h-row"><h3>🕑 Recent interactions</h3>${srcRow(['email','slack','sf'])}</div>
+  h+=`<div class="card"><div class="h-row"><h3>🕑 Recent interactions ${prov(false)}</h3>${srcRow(['email','slack','sf'])}</div>
     ${m.interactions.map(x=>`<div class="ix"><div class="badge" style="background:${x.bc}">${x.ic}</div>
-      <div><div class="tx">${x.tx}</div><div class="dt">${x.dt}</div></div></div>`).join('')}
-  </div>`;
-  h+=`<div class="card"><div class="h-row"><h3>🌐 External context</h3>${srcRow(['web'])}</div>
-    ${m.external.map(x=>`<div class="ext"><div class="tx">${x.tx}</div><div class="mt">🔗 ${x.mt}</div></div>`).join('')}
-  </div>`;
+      <div><div class="tx">${x.tx}</div><div class="dt">${x.dt}</div></div></div>`).join('')}</div>`;
+  h+=`<div class="card"><div class="h-row"><h3>🌐 External context ${prov(true)}</h3>${srcRow(['web'])}</div>
+    ${m.external.map(x=>`<div class="ext"><div class="tx">${x.tx}</div>
+      <div class="mt">🔗 <a href="${x.url}" target="_blank" rel="noopener">${x.mt}</a></div></div>`).join('')}</div>`;
   h+='</div>';
 
-  content.innerHTML=h;
-  window.scrollTo(0,0);
+  content.innerHTML=h; window.scrollTo(0,0);
 }
 
 function contactRow(c){
@@ -642,17 +664,16 @@ function contactRow(c){
   return `<div class="contact"><div class="c-av" style="background:${c.color}">${ini}</div>
     <div><div class="c-nm">${c.nm}</div><div class="c-ti">${c.ti}</div><div class="c-note">${c.note}</div></div></div>`;
 }
-
 function thumb(btn,dir){
-  const parent=btn.parentElement;
-  parent.innerHTML = dir==='up'
-    ? '<span style="color:var(--green);font-weight:600">✓ Thanks — logged. The agent will keep this style.</span>'
-    : '<span style="color:var(--accent);font-weight:600">✓ Noted — this brief is flagged for refinement.</span>';
+  const p=btn.parentElement;
+  p.innerHTML = dir==='up'
+    ? '<span style="color:var(--green);font-weight:600">✓ Thanks — logged. The agent keeps this style.</span>'
+    : '<span style="color:var(--accent);font-weight:600">✓ Noted — flagged for refinement; correction feeds back to the agent.</span>';
 }
 
-/* ---- Slack delivery view ---- */
+/* ---- Slack delivery ---- */
 function renderSlack(id){
-  const m = MEETINGS.find(x=>x.id===id);
+  const m=MEETINGS.find(x=>x.id===id);
   tbTitle.textContent='Slack delivery';
   tbSub.textContent='How the brief lands — automatically, the day before';
   content.innerHTML=`<button class="back" onclick="renderBrief('${id}')">← Back to brief</button>
@@ -661,10 +682,8 @@ function renderSlack(id){
     <div class="slack-msg">
       <div class="sl-head">
         <div class="sl-bot">🤝</div>
-        <div style="flex:1">
-          <div class="sl-name">Partner Briefing <span class="app">APP</span></div>
-          <div class="sl-time">Yesterday at 5:00 PM</div>
-        </div>
+        <div style="flex:1"><div class="sl-name">Partner Briefing <span class="app">APP</span></div>
+        <div class="sl-time">Yesterday at 5:00 PM</div></div>
       </div>
       <div class="sl-body">
         👋 You’re meeting <b>${m.org.name}</b> tomorrow — <b>${m.meeting.date.replace(/^\w+ /,'')}, ${m.meeting.time}</b>. Here’s your brief.
@@ -675,7 +694,7 @@ function renderSlack(id){
       </div>
       <div class="sl-actions">
         <div class="sl-btn green" onclick="renderBrief('${id}')">📄 Open full brief</div>
-        <div class="sl-btn gray" onclick="alert('In production: opens a thread to correct the brief — feedback tunes the agent.')">✏️ Something off? Fix it</div>
+        <div class="sl-btn gray" onclick="alert('In production: opens a thread to correct the brief — the correction feeds back into the agent.')">✏️ Something off? Fix it</div>
       </div>
     </div>
     <div class="ctx">↳ Triggered by the calendar event. The staffer can refine inline; corrections feed back into the agent. No one has to remember to run anything.</div>
@@ -683,7 +702,143 @@ function renderSlack(id){
   window.scrollTo(0,0);
 }
 
-/* ---- How it works ---- */
+/* ============================ SPEC VIEW ============================ */
+let specTab='model';
+function renderSpec(){
+  setNav('spec');
+  tbTitle.textContent='Build spec';
+  tbSub.textContent='What a delivery team would actually build — objects, agent, integration';
+  const tabs=[['model','Salesforce data model'],['agent','AgentForce agent'],['slack','Slack integration'],['rules','Guardrails']];
+  let h=`<p class="spec-intro"><b>This is the part most prototypes skip.</b> A nice UI is easy; the value is the requirements a Salesforce delivery team can build from. Below is what I’d actually hand off — the objects &amp; fields the brief reads, the AgentForce agent definition, the Slack integration logic, and the guardrails. This is the “write clear requirements / review delivered work” part of the role.</p>
+  <div class="spec-tabs">${tabs.map(t=>`<button class="spec-tab ${specTab===t[0]?'active':''}" onclick="specTab='${t[0]}';renderSpec()">${t[1]}</button>`).join('')}</div>`;
+  if(specTab==='model') h+=specModel();
+  if(specTab==='agent') h+=specAgent();
+  if(specTab==='slack') h+=specSlack();
+  if(specTab==='rules') h+=specRules();
+  content.innerHTML=h; window.scrollTo(0,0);
+}
+
+function obj(name,type,why,fields){
+  return `<div class="obj"><div class="obj-head">
+    <span class="on">${name}</span><span class="ot ${type==='Custom'?'custom':''}">${type}</span>
+    <span class="owhy">${why}</span></div>
+    <div class="fields">${fields.map(f=>`<div class="fld"><span class="fn">${f[0]}</span><span class="fd">${f[1]}</span></div>`).join('')}</div></div>`;
+}
+function specModel(){
+  return `<div class="card full" style="margin-top:0">
+    <h3 style="margin-bottom:6px">Salesforce is the system of record</h3>
+    <p style="font-size:13.5px;color:var(--ink-2);margin:0 0 16px">The brief reads from standard objects plus two custom objects that model the Forum’s initiative relationships. Everything writes back into the workflow people already maintain — no parallel source of truth.</p>
+    ${obj('Account','Standard','the partner org',[
+      ['Name','Partner organisation'],['Industry','Sector classification'],
+      ['Partnership_Tier__c','Strategic Partner / Partner / Member  ·  custom'],
+      ['Partner_Since__c','Relationship start date  ·  custom'],
+      ['BillingCountry','HQ location'],['OwnerId','Relationship Lead (owner)']
+    ])}
+    ${obj('Contact','Standard','people on both sides',[
+      ['Name / Title','Who they are'],['AccountId','Links to the partner'],
+      ['Engagement_Notes__c','Free-text relationship notes  ·  custom'],
+      ['Last_Interaction_Date__c','Recency signal  ·  custom']
+    ])}
+    ${obj('Opportunity','Standard','initiative commitments & renewals',[
+      ['Name / StageName','e.g. “AM anchor sponsor” · Proposal'],
+      ['Initiative__c','Lookup to Initiative  ·  custom'],
+      ['Amount / CloseDate','Commitment value & timing']
+    ])}
+    ${obj('Task / Event (Activity)','Standard','logged calls, emails, meetings',[
+      ['Subject / Description','What happened'],['ActivityDate','When'],
+      ['WhatId','Related Account / Opportunity']
+    ])}
+    ${obj('Initiative__c','Custom','catalogue of Forum initiatives',[
+      ['Name','e.g. Food Systems Initiative'],['Status__c','Active / Exploring / Paused'],
+      ['Theme__c','Pillar (Food, Manufacturing, Trade…)']
+    ])}
+    ${obj('Engagement__c','Custom','junction: which partner is in which initiative, and how',[
+      ['Account__c','Lookup to partner'],['Initiative__c','Lookup to initiative'],
+      ['Role__c','Founding / Funding / Steering / Exploring'],
+      ['Health__c','Green / Amber / Red  →  drives the brief’s flags']
+    ])}
+    ${obj('Brief_Feedback__c','Custom','closes the loop',[
+      ['Brief_Id__c','Which brief'],['Rating__c','👍 / 👎'],
+      ['Correction__c','What the human fixed  →  tunes the agent']
+    ])}
+    <p style="font-size:12.5px;color:var(--muted);margin:14px 0 0">Reports/dashboards on <span style="font-family:var(--mono)">Engagement__c.Health__c</span> and <span style="font-family:var(--mono)">Brief_Feedback__c.Rating__c</span> give the team adoption + quality metrics out of the box.</p>
+  </div>`;
+}
+function specAgent(){
+  return `<div class="card full" style="margin-top:0">
+    <h3>AgentForce agent definition</h3>
+    <p style="font-size:13.5px;color:var(--ink-2);margin:4px 0 16px">The conversation/trigger logic, data inputs and actions — the “define business logic for AgentForce-powered Slack integrations” deliverable.</p>
+    <div class="codeblock"><pre><span class="c">// Agent: Partner Briefing Agent</span>
+<span class="k">trigger</span>: Scheduled Flow — runs <span class="h">24h before</span> any Event
+         <span class="k">where</span> Type = <span class="s">"External Partner Meeting"</span>
+<span class="k">topic</span> : <span class="s">"Generate Partner Brief"</span>
+
+<span class="k">actions</span> (tools the agent can call):
+  1. <span class="h">getAccount360</span>      → Salesforce: Account + Contacts + Opps + Activities
+  2. <span class="h">searchEmail</span>        → Email connector: threads re: account, 90d
+  3. <span class="h">searchSlack</span>        → Slack connector: #partnerships, #annual-meeting
+  4. <span class="h">searchDocs</span>         → Knowledge base: account notes & minutes
+  5. <span class="h">webSearch</span>          → External: news, filings, leadership changes
+  6. <span class="h">synthesizeBrief</span>    → LLM prompt: structure + cite + flag gaps
+  7. <span class="h">postToSlack</span>        → Slack: DM the meeting owner (Block Kit)
+
+<span class="k">instructions</span> (agent system prompt):
+  • Synthesise — don't dump. Lead with a 60-second summary.
+  • <span class="h">Cite the source</span> of every claim; keep provenance visible.
+  • <span class="h">Flag low-confidence</span> or stale data for human review.
+  • Never surface data the recipient can't already access (respect sharing).
+  • Output fixed sections: TLDR · talking points · history ·
+    initiatives · contacts · interactions · external · flags.</pre></div>
+    <h3 style="margin-top:8px">Retrieval → synthesis pipeline</h3>
+    <div class="pipe" style="margin-top:10px">
+      <div class="pstep"><div class="pn">1</div><div><div class="pt">Gather in parallel</div><div class="pd">All 5 sources queried concurrently, scoped to the account.</div></div><span class="ptag" style="background:var(--sf)">5 sources</span></div>
+      <div class="pstep"><div class="pn">2</div><div><div class="pt">De-duplicate &amp; rank</div><div class="pd">Collapse repeats; weight by recency and source reliability.</div></div><span class="ptag" style="background:var(--ink-2)">clean</span></div>
+      <div class="pstep"><div class="pn">3</div><div><div class="pt">Synthesize with citations</div><div class="pd">LLM writes the brief; every claim carries its origin.</div></div><span class="ptag" style="background:var(--docs)">LLM</span></div>
+      <div class="pstep"><div class="pn">4</div><div><div class="pt">Confidence-flag</div><div class="pd">Thin/stale items marked “needs human check”.</div></div><span class="ptag" style="background:var(--amber)">guardrail</span></div>
+      <div class="pstep"><div class="pn">5</div><div><div class="pt">Deliver + capture feedback</div><div class="pd">Post to Slack; 👍/👎 + corrections write to Brief_Feedback__c.</div></div><span class="ptag" style="background:var(--green)">loop</span></div>
+    </div>
+  </div>`;
+}
+function specSlack(){
+  return `<div class="card full" style="margin-top:0">
+    <h3>Slack integration logic</h3>
+    <p style="font-size:13.5px;color:var(--ink-2);margin:4px 0 16px">Trigger, message structure and interactive behaviour — written as a requirement, the way I'd hand it to delivery.</p>
+    <div class="codeblock"><pre><span class="k">WHEN</span>  scheduled brief is ready (24h pre-meeting)
+<span class="k">SEND</span>  Slack DM → Event owner   <span class="c">// + optional channel post for co-attendees</span>
+
+<span class="k">MESSAGE</span> (Block Kit):
+  • header   → "You're meeting {Partner} tomorrow at {time}"
+  • section  → 60-second summary
+  • section  → top 2 talking points
+  • context  → ⚠️ one key heads-up (highest-priority flag)
+  • actions  → [ 📄 Open full brief ]  [ ✏️ Something off? Fix it ]
+
+<span class="k">ON</span> "Open full brief"      → link to web brief (this prototype)
+<span class="k">ON</span> "Something off? Fix it" → open Slack thread; capture correction
+                            → write to <span class="h">Brief_Feedback__c</span>
+                            → agent uses it to tune the next brief</pre></div>
+    <div class="card" style="box-shadow:none;border-style:dashed;margin-bottom:0">
+      <h3 style="font-size:14px">Why Slack, not email</h3>
+      <p style="font-size:13px;color:var(--ink-2);margin:6px 0 0">The team already lives in Slack; the brief meets them where they work, the correction loop is one tap, and AgentForce → Slack is a first-class, supported path. Email would be a dead-end PDF with no feedback loop.</p>
+    </div>
+  </div>`;
+}
+function specRules(){
+  const rules=[
+    ['🔐','Respect existing permissions','The agent only surfaces what the recipient can already see in each source. It never widens access — provenance stays visible so anything sensitive is governed, not floating in a model.'],
+    ['🧑‍⚖️','Human-in-the-loop by default','Every brief is reviewable before the meeting. The agent drafts; a person signs off. Confidence flags tell them exactly where to look.'],
+    ['🕓','Freshness & traceability','Each section shows its source and recency. Stale data is flagged, not silently trusted.'],
+    ['🔁','Feedback tunes the system','👍/👎 and inline corrections write back to Salesforce and shape future briefs — edit-rate is the north-star quality metric.'],
+    ['🧪','Thin-slice rollout','Ship Salesforce-only briefs for one team first. Add email/Slack/web once the structure earns trust. De-risk before scaling.']
+  ];
+  return `<div class="card full" style="margin-top:0">
+    <h3>Guardrails &amp; business rules</h3>
+    <p style="font-size:13.5px;color:var(--ink-2);margin:4px 0 14px">The non-negotiables that make an AI brief trustworthy in an organisation like the Forum.</p>
+    ${rules.map(r=>`<div class="rule"><span class="ri">${r[0]}</span><div class="rt"><b>${r[1]}</b><div>${r[2]}</div></div></div>`).join('')}
+  </div>`;
+}
+
+/* ============================ HOW IT WORKS ============================ */
 function renderHow(){
   setNav('how');
   tbTitle.textContent='How it works';
@@ -713,26 +868,20 @@ function renderHow(){
 
   <p class="section-label" style="margin-top:30px">Architecture</p>
   <div class="flow">
-    <div class="flow-col">
-      <h4>Sources</h4>
-      <div class="node"><span class="nd" style="background:var(--sf)"></span>Salesforce <span style="color:var(--muted);font-weight:500">(system of record)</span></div>
+    <div class="flow-col"><h4>Sources</h4>
+      <div class="node"><span class="nd" style="background:var(--sf)"></span>Salesforce <span style="color:var(--muted);font-weight:500">(record)</span></div>
       <div class="node"><span class="nd" style="background:var(--email)"></span>Email / Outlook</div>
       <div class="node"><span class="nd" style="background:var(--slack)"></span>Slack channels</div>
       <div class="node"><span class="nd" style="background:var(--docs)"></span>Internal documents</div>
       <div class="node"><span class="nd" style="background:var(--web)"></span>Web search</div>
     </div>
     <div class="arrow">→</div>
-    <div class="flow-col" style="flex:0 0 200px">
-      <h4>Agent (AgentForce)</h4>
-      <div class="agent-node">
-        <div class="em">🤝</div>
-        <div class="nm">Briefing Agent</div>
-        <div class="ds">Retrieve → de-dupe → synthesize → structure → flag gaps for human review</div>
-      </div>
+    <div class="flow-col" style="flex:0 0 200px"><h4>Agent (AgentForce)</h4>
+      <div class="agent-node"><div class="em">🤝</div><div class="nm">Briefing Agent</div>
+        <div class="ds">Retrieve → de-dupe → synthesize → structure → flag gaps for review</div></div>
     </div>
     <div class="arrow">→</div>
-    <div class="flow-col">
-      <h4>Delivery</h4>
+    <div class="flow-col"><h4>Delivery</h4>
       <div class="node"><span class="nd" style="background:var(--slack)"></span>Slack DM (day before)</div>
       <div class="node"><span class="nd" style="background:var(--accent)"></span>Web brief (this prototype)</div>
       <div class="node"><span class="nd" style="background:var(--ink-2)"></span>PDF export</div>
@@ -753,7 +902,7 @@ function renderHow(){
     <div class="init"><div class="dot" style="background:#15a05a;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 1–3 · Shadow + map</div><div class="ro">Sit with 3–4 staffers, map what they actually pull and where it breaks. Validate the problem before building.</div></div></div>
     <div class="init"><div class="dot" style="background:#2f6df0;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 3–6 · Thin slice on Salesforce</div><div class="ro">Auto-brief from Salesforce data only (Account, Contacts, Activities) for one team. Prove the structure earns trust.</div></div></div>
     <div class="init"><div class="dot" style="background:#7b3fe4;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 6–10 · Add sources + Slack delivery</div><div class="ro">Layer in email, Slack, web. Ship the AgentForce → Slack day-before delivery with the feedback loop.</div></div></div>
-    <div class="init"><div class="dot" style="background:#c77700;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 10–13 · Measure + expand</div><div class="ro">Track adoption + time saved + brief edits. Roll out to more teams once briefs need few corrections.</div></div></div>
+    <div class="init"><div class="dot" style="background:#c77700;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 10–13 · Measure + expand</div><div class="ro">Track adoption + time saved + brief edit-rate. Roll out to more teams once briefs need few corrections.</div></div></div>
   </div>`;
   window.scrollTo(0,0);
 }
@@ -761,7 +910,10 @@ function renderHow(){
 /* ---- nav wiring ---- */
 document.getElementById('nav').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b)return;
-  if(b.dataset.view==='meetings') renderMeetings(); else renderHow();
+  const v=b.dataset.view;
+  if(v==='meetings') renderMeetings();
+  else if(v==='spec') renderSpec();
+  else renderHow();
 });
 
 renderMeetings();
