@@ -21,7 +21,7 @@ So the goal isn't a better template. It's to make the brief **assemble itself** 
 
 | View | What it demonstrates |
 |------|----------------------|
-| **Upcoming meetings** | Briefs triggered by calendar events; generate one live (watch it query all 5 sources). |
+| **Upcoming meetings** | Briefs triggered by calendar events; generate one live (watch it query all 5 sources). Plus an **"any organisation"** box — type any company and the agent assembles a brief on demand. |
 | **Partner brief** | A one-screen synthesis: 60-sec summary · talking points · history · initiatives · contacts (both sides) · interactions · external context — every claim traceable to its source, low-confidence items flagged. |
 | **Slack delivery** | How it lands: an AgentForce → Slack DM the day before, with an inline "fix it" feedback loop. |
 | **Build spec** | The part most prototypes skip: the Salesforce objects & fields, the AgentForce agent definition, the Slack integration logic, and the guardrails — what a delivery team actually builds from. |
@@ -42,6 +42,17 @@ It's a single self-contained file — no build, no install.
 open index.html          # macOS
 # or just double-click index.html
 ```
+
+## Optional: real Slack posting
+
+The "📨 Send to my Slack" button works for real if you add a webhook:
+
+```bash
+cp slack-config.example.js slack-config.js   # gitignored
+# paste a Slack Incoming Webhook URL inside, then reload
+```
+
+Without it, the button shows a clean simulation toast — the demo still works fully offline.
 
 ## Tech
 

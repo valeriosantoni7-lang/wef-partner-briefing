@@ -277,6 +277,18 @@
   .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
   .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
 
+  /* any-company + slack + toast */
+  .anyco-card{background:linear-gradient(120deg,#13243f,#274a7d);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:22px;
+    display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:var(--shadow)}
+  .anyco-t{font-weight:800;font-size:16px}
+  .anyco-s{font-size:12.5px;color:#b9c7e0;margin-top:4px;max-width:430px}
+  .anyco-r{display:flex;gap:9px;align-items:center}
+  .anyco-input{border:none;border-radius:9px;padding:11px 14px;font-size:13.5px;width:260px;max-width:48vw;outline:none}
+  .crm-note{background:#f2ecff;border:1px solid #e0d2ff;color:#5b3fa0;font-size:12.5px;border-radius:9px;padding:9px 12px;margin-bottom:12px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#13243f;color:#fff;
+    padding:12px 20px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.3);opacity:0;transition:.3s;z-index:100}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
   @media (max-width:880px){.grid,.col-split,.vs{grid-template-columns:1fr}.sidebar{display:none}.fld .fn{min-width:130px}}
   @media print{.sidebar,.topbar,.bh-actions,.back,.feedback,.demo-pill{display:none}.content{max-width:100%}}
 </style>
@@ -322,6 +334,7 @@
   </div>
 </div>
 
+<script src="slack-config.js"></script>
 <script>
 /* ============================ DATA ============================
    PROVENANCE MODEL (shown to the panel via the legend bar):
@@ -489,6 +502,146 @@ const MEETINGS = [
   }
 ];
 
+/* ===================== ANY-COMPANY (on-demand) =====================
+   Offline, no API key — a curated library of real WEF-partner orgs (public
+   facts, cited) + a graceful scaffold for anything else. Demonstrates
+   "generate a brief for any org the panel names" without live-demo risk. */
+const ANY_LIBRARY = [
+  { key:'microsoft', aliases:['microsoft','msft'],
+    org:{name:'Microsoft',initials:'M',color:'#0067b8',sector:'Technology',hq:'Redmond, USA',tier:'Strategic Partner'},
+    tldr:'Microsoft is one of the Forum’s deepest technology partners — a founding partner of the Global Collaboration Village and a leading member of the AI Governance Alliance. A conversation here is likely about responsible-AI standards, AI governance, or extending the Village work. Strong, strategic relationship.',
+    history:[
+      {dt:'Ongoing',tx:'WEF <b>Strategic Partner</b>; recurring main-stage presence at Davos.',real:true},
+      {dt:'Metaverse',tx:'Founding partner of the Forum’s <b>Global Collaboration Village</b>.',real:true},
+      {dt:'AI',tx:'Leading member of the Forum’s <b>AI Governance Alliance</b>.',real:true}],
+    initiatives:[
+      {nm:'AI Governance Alliance',ro:'Leading member — responsible AI',st:'active',real:true},
+      {nm:'Global Collaboration Village',ro:'Founding technology partner',st:'active',real:true}],
+    external:[
+      {tx:'Microsoft’s WEF organisation profile & partnership.',mt:'weforum.org — Microsoft',url:'https://www.weforum.org/organizations/microsoft-corp/'},
+      {tx:'The Forum’s AI Governance Alliance, where Microsoft is active.',mt:'weforum.org — AI Governance Alliance',url:'https://www.weforum.org/communities/ai-governance-alliance/'}],
+    talking:['Anchor on the AI Governance Alliance — the most active part of the relationship.','Explore extending the Global Collaboration Village work.','Frame any ask around responsible-AI standards, their stated priority.'] },
+  { key:'salesforce', aliases:['salesforce'],
+    org:{name:'Salesforce',initials:'S',color:'#00A1E0',sector:'Technology / CRM',hq:'San Francisco, USA',tier:'Partner'},
+    tldr:'Salesforce engages the Forum on stakeholder capitalism, AI and sustainability — and is the company behind Agentforce, the exact platform a production version of this briefing agent would run on. A conversation here naturally bridges their platform and the responsible-AI agenda.',
+    history:[
+      {dt:'Ongoing',tx:'Engages the Forum on stakeholder capitalism & the <b>1% Pledge</b> model.',real:true},
+      {dt:'AI',tx:'Vendor of <b>Agentforce</b> — the agent platform relevant to the Forum’s own workflows.',real:true},
+      {dt:'Climate',tx:'Public net-zero commitments & ecosystem-restoration advocacy.',real:true}],
+    initiatives:[
+      {nm:'AI / Agentforce',ro:'Platform partner for agentic workflows',st:'active',real:true},
+      {nm:'Stakeholder capitalism',ro:'Long-time advocate',st:'active',real:true}],
+    external:[
+      {tx:'Salesforce WEF organisation profile.',mt:'weforum.org — Salesforce',url:'https://www.weforum.org/organizations/salesforce-com-inc/'},
+      {tx:'Agentforce — the platform underpinning this brief’s production design.',mt:'salesforce.com — Agentforce',url:'https://www.salesforce.com/agentforce/'}],
+    talking:['Meta-point: their Agentforce platform is what a production briefing agent runs on.','Connect on responsible-AI + stakeholder capitalism.','Explore co-innovation on agentic workflows.'] },
+  { key:'unilever', aliases:['unilever'],
+    org:{name:'Unilever',initials:'U',color:'#1f36c7',sector:'Consumer Goods',hq:'London, UK',tier:'Strategic Partner'},
+    tldr:'Unilever is a long-standing Forum partner on sustainability, food systems and responsible supply chains. Conversations typically center on regenerative sourcing, plastics and climate commitments.',
+    history:[
+      {dt:'Ongoing',tx:'WEF partner active on <b>sustainability</b> & consumer-goods transformation.',real:true},
+      {dt:'Food/Ag',tx:'Engaged in food-systems & regenerative-sourcing work.',real:true},
+      {dt:'Climate',tx:'Public net-zero & plastics-reduction commitments.',real:true}],
+    initiatives:[
+      {nm:'Food Systems / regenerative sourcing',ro:'Active participant',st:'active',real:true},
+      {nm:'Plastics & packaging',ro:'Sustainability commitments',st:'active',real:true}],
+    external:[
+      {tx:'Unilever WEF organisation profile.',mt:'weforum.org — Unilever',url:'https://www.weforum.org/organizations/unilever/'},
+      {tx:'The Forum’s Food Systems Initiative.',mt:'weforum.org — Food Systems',url:'https://www.weforum.org/focus/food-systems/'}],
+    talking:['Lead on regenerative sourcing — their flagship sustainability theme.','Connect to the Food Systems Initiative.','Explore plastics/packaging collaboration.'] },
+  { key:'google', aliases:['google','alphabet'],
+    org:{name:'Alphabet (Google)',initials:'G',color:'#ea4335',sector:'Technology',hq:'Mountain View, USA',tier:'Strategic Partner'},
+    tldr:'Google/Alphabet engages the Forum primarily on AI, digital inclusion and the responsible-AI agenda. Likely topics: AI governance, AI for science/climate, and skills.',
+    history:[
+      {dt:'Ongoing',tx:'WEF <b>Strategic Partner</b>; active on AI & the digital economy.',real:true},
+      {dt:'AI',tx:'Member of the Forum’s <b>AI Governance Alliance</b>.',real:true},
+      {dt:'Skills',tx:'Engaged on digital skills & inclusion.',real:true}],
+    initiatives:[
+      {nm:'AI Governance Alliance',ro:'Member — responsible AI',st:'active',real:true},
+      {nm:'Digital inclusion / skills',ro:'Active',st:'active',real:true}],
+    external:[
+      {tx:'Alphabet/Google WEF organisation profile.',mt:'weforum.org — Google',url:'https://www.weforum.org/organizations/google/'},
+      {tx:'The Forum’s AI Governance Alliance.',mt:'weforum.org — AI Governance Alliance',url:'https://www.weforum.org/communities/ai-governance-alliance/'}],
+    talking:['Anchor on AI governance — their most active Forum theme.','Explore AI-for-science / climate angles.','Connect on digital skills & inclusion.'] },
+  { key:'amazon', aliases:['amazon','aws'],
+    org:{name:'Amazon',initials:'A',color:'#ff9900',sector:'Technology / Retail',hq:'Seattle, USA',tier:'Strategic Partner'},
+    tldr:'Amazon engages the Forum on climate (The Climate Pledge), cloud/AI via AWS, and supply chains. Conversations often bridge decarbonisation commitments and AI infrastructure.',
+    history:[
+      {dt:'Climate',tx:'Co-founder of <b>The Climate Pledge</b> (net-zero by 2040).',real:true},
+      {dt:'Ongoing',tx:'WEF partner active on AI/cloud & sustainability.',real:true},
+      {dt:'AI',tx:'AWS engaged in AI-infrastructure discussions.',real:true}],
+    initiatives:[
+      {nm:'The Climate Pledge',ro:'Co-founder',st:'active',real:true},
+      {nm:'AI / cloud (AWS)',ro:'Active',st:'active',real:true}],
+    external:[
+      {tx:'Amazon WEF organisation profile.',mt:'weforum.org — Amazon',url:'https://www.weforum.org/organizations/amazon-com-inc/'},
+      {tx:'The Climate Pledge.',mt:'theclimatepledge.com',url:'https://www.theclimatepledge.com/'}],
+    talking:['Lead with The Climate Pledge — their flagship Forum-adjacent commitment.','Bridge to AWS on AI infrastructure.','Explore supply-chain resilience angles.'] }
+];
+
+function expandLib(spec,key){
+  return {
+    id:key, status:'pending', anyMode:true,
+    org:{...spec.org, since:'on-demand'},
+    meeting:{title:'On-demand brief',date:'on demand',time:'—',loc:'—',ours:'—',theirs:'—'},
+    tldr:spec.tldr, freshness:'Generated just now',
+    history:spec.history, initiatives:spec.initiatives,
+    contactsTheirs:[], contactsOurs:[],
+    crmNote:'No CRM record loaded for an on-demand org — only the public/web context above is real. In production this section pulls live from Salesforce, email & Slack.',
+    interactions:[], external:spec.external, talking:spec.talking,
+    flags:[{tx:'On-demand brief: public context is real & sourced; CRM/relationship data would come from live Salesforce + email + Slack.'}]
+  };
+}
+function expandScaffold(name,key){
+  const ini=(name.replace(/[^A-Za-z0-9]/g,'').slice(0,1)||'?').toUpperCase();
+  return {
+    id:key, status:'pending', anyMode:true,
+    org:{name:name,initials:ini,color:'#516079',sector:'—',hq:'—',tier:'On-demand'},
+    meeting:{title:'On-demand brief',date:'on demand',time:'—',loc:'—',ours:'—',theirs:'—'},
+    tldr:`No internal record for “${name}”. This is the structure the agent fills: in production it runs live web search for public context and checks Salesforce/email/Slack for any relationship history, then synthesizes. Below is the skeleton with that explanation in each section.`,
+    freshness:'Generated just now',
+    history:[{dt:'—',tx:`No internal history found for “${name}”. The agent would surface any first-touch records from CRM/email here.`,real:false}],
+    initiatives:[{nm:'To be discovered',ro:'Live web search would identify Forum-relevant initiatives',st:'explore',real:false}],
+    contactsTheirs:[], contactsOurs:[],
+    crmNote:`No CRM record for “${name}”. In production this pulls live from Salesforce, email & Slack.`,
+    interactions:[],
+    external:[{tx:`Live web search would populate recent news, leadership and filings for “${name}” here.`,mt:'live web search (production)',url:'https://www.google.com/search?q='+encodeURIComponent(name+' World Economic Forum')}],
+    talking:['Establish the relationship goal before the meeting.','Use live external context to find a relevant hook.','Confirm internal owner / any prior touchpoints.'],
+    flags:[{tx:`On-demand scaffold for an org with no CRM record. Public context would come from live web search; relationship data from Salesforce.`}]
+  };
+}
+function generateAnyCompany(){
+  const inp=document.getElementById('anyco');
+  const q=(inp?inp.value:'').trim();
+  if(!q){ if(inp) inp.focus(); return; }
+  const key='any-'+q.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  const i=MEETINGS.findIndex(m=>m.id===key); if(i>=0) MEETINGS.splice(i,1);
+  const spec=ANY_LIBRARY.find(s=>s.aliases.some(a=>q.toLowerCase().includes(a)));
+  const obj=spec?expandLib(spec,key):expandScaffold(q,key);
+  MEETINGS.push(obj);
+  runGenerate(obj);
+}
+
+/* ===================== TOAST + SLACK SEND ===================== */
+function toast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(window.__tt); window.__tt=setTimeout(()=>t.classList.remove('show'),3400);
+}
+function sendToSlack(id){
+  const m=MEETINGS.find(x=>x.id===id);
+  const payload={text:`*Partner brief — ${m.org.name}*\n${m.tldr}\n\n*Lead with:* ${m.talking[0]}`};
+  const url=window.SLACK_WEBHOOK_URL;
+  if(url){
+    fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})
+      .then(()=>toast('📨 Posted to your Slack'))
+      .catch(()=>toast('📨 Could not reach Slack — check connection'));
+  } else {
+    toast('📨 Sent to Slack — simulation (add slack-config.js to post for real)');
+  }
+}
+
 /* ============================ RENDER ============================ */
 const content = document.getElementById('content');
 const tbTitle = document.getElementById('tb-title');
@@ -503,7 +656,17 @@ function renderMeetings(){
   setNav('meetings');
   tbTitle.textContent='Upcoming external meetings';
   tbSub.textContent='Briefs auto-assemble 24h before each meeting · 3 this week';
-  let h='<p class="section-label">This week</p>';
+  let h=`<div class="anyco-card">
+    <div class="anyco-l">
+      <div class="anyco-t">✨ Generate a brief for any organisation</div>
+      <div class="anyco-s">Type any company — the agent assembles a brief on demand. Try “Salesforce”, “Microsoft”, “Unilever”, or anything else.</div>
+    </div>
+    <div class="anyco-r">
+      <input id="anyco" class="anyco-input" placeholder="e.g. Salesforce, Microsoft…" onkeydown="if(event.key==='Enter')generateAnyCompany()" />
+      <button class="btn primary" onclick="generateAnyCompany()">Generate →</button>
+    </div>
+  </div>
+  <p class="section-label">This week</p>`;
   MEETINGS.forEach(m=>{
     const st = m.status==='ready'
       ? '<span class="status st-ready">● Brief ready</span>'
@@ -641,14 +804,16 @@ function renderBrief(id){
 
   /* contacts */
   h+=`<div class="card full"><div class="h-row"><h3>👥 Key contacts ${prov(false)}</h3>${srcRow(['sf','email'])}</div>
-    <div class="col-split">
+    ${m.crmNote?`<div class="crm-note">🔌 ${m.crmNote}</div>`:''}
+    ${(m.contactsTheirs.length||m.contactsOurs.length)?`<div class="col-split">
       <div><h4>Their side</h4>${m.contactsTheirs.map(c=>contactRow(c)).join('')}</div>
       <div><h4>Our side</h4>${m.contactsOurs.map(c=>contactRow(c)).join('')}</div>
-    </div></div>`;
+    </div>`:''}</div>`;
 
   /* interactions + external */
   h+='<div class="grid">';
   h+=`<div class="card"><div class="h-row"><h3>🕑 Recent interactions ${prov(false)}</h3>${srcRow(['email','slack','sf'])}</div>
+    ${m.crmNote?`<div class="crm-note">🔌 Pulls live from CRM / email / Slack in production.</div>`:''}
     ${m.interactions.map(x=>`<div class="ix"><div class="badge" style="background:${x.bc}">${x.ic}</div>
       <div><div class="tx">${x.tx}</div><div class="dt">${x.dt}</div></div></div>`).join('')}</div>`;
   h+=`<div class="card"><div class="h-row"><h3>🌐 External context ${prov(true)}</h3>${srcRow(['web'])}</div>
@@ -693,8 +858,9 @@ function renderSlack(id){
         <div class="sl-li" style="margin-top:8px"><span class="e">⚠️</span><span><b>Heads-up:</b> ${m.flags[0].tx}</span></div>
       </div>
       <div class="sl-actions">
-        <div class="sl-btn green" onclick="renderBrief('${id}')">📄 Open full brief</div>
-        <div class="sl-btn gray" onclick="alert('In production: opens a thread to correct the brief — the correction feeds back into the agent.')">✏️ Something off? Fix it</div>
+        <div class="sl-btn green" onclick="sendToSlack('${id}')">📨 Send to my Slack</div>
+        <div class="sl-btn gray" onclick="renderBrief('${id}')">📄 Open full brief</div>
+        <div class="sl-btn gray" onclick="alert('In production: opens a thread to correct the brief — the correction feeds back into the agent.')">✏️ Fix it</div>
       </div>
     </div>
     <div class="ctx">↳ Triggered by the calendar event. The staffer can refine inline; corrections feed back into the agent. No one has to remember to run anything.</div>

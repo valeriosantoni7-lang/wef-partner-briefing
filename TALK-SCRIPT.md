@@ -43,7 +43,7 @@ Same screen → green **With Partner Briefing** column:
 
 Go to **"Upcoming meetings."**
 
-**a) The trigger.** "Upcoming external meetings, from the calendar. Two briefs are ready; one isn't generated yet."
+**a) The trigger.** "Upcoming external meetings, from the calendar. Two briefs are ready; one isn't generated yet." *(Note the "Generate a brief for any organisation" box at the top — you'll come back to it in step 3g.)*
 
 **b) Generate it — click the Maersk meeting (amber 'Not generated').**
 > "Normally this runs automatically the night before. Watch: it queries Salesforce, email, Slack, internal docs, and the web — you can see the actual queries — then synthesizes."
@@ -64,6 +64,15 @@ Let it play. Call out the last step: **"structure, cite sources, and flag low-co
 
 **f) Delivery — click "View Slack delivery."**
 > "Where it actually lands: an AgentForce-style Slack DM the day before — 60-second version, what to lead with, the heads-up, and a 'Something off? Fix it' button. That's the human-in-the-loop and the AgentForce + Slack integration in one screen."
+
+*(Optional, only if you set up the webhook: click "📨 Send to my Slack" and switch to your Slack window to show it actually arrived. If no webhook, leave this button alone — it just shows a simulation toast.)*
+
+**g) The "wow" — generate one live for any org.** Go back to meetings, point at the box at the top:
+> "And it's not limited to a fixed list. If you're about to meet anyone — say, give me a name — it assembles a brief on demand."
+Type a company (try **Salesforce** — there's a nice meta-beat: *"note this is the company behind Agentforce, the exact platform a production version would run on"*) and hit Generate. Let the animation play, land on the brief.
+> "For orgs we have public data on, the context is real and sourced. For anything else, it builds the structure and is explicit that the CRM layer would come from live Salesforce. Either way — no one had to prepare anything."
+
+⚠️ *If asked to type a company you don't know: it still works — it returns a labelled scaffold explaining what each section would pull live. That's a feature, not a failure. Say so.*
 
 ---
 
