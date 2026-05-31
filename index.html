@@ -26,8 +26,9 @@
   .sidebar{width:248px; background:var(--navy); color:#cdd6e6; flex-shrink:0;
     display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh}
   .brand{display:flex; align-items:center; gap:11px; padding:4px 8px 20px}
-  .brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#3b78ff,#7aa8ff);
-    display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;flex-shrink:0}
+  .brand .logo{width:34px;height:34px;border-radius:9px;background:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--navy);font-size:12px;flex-shrink:0;overflow:hidden}
+  .brand .logo img{width:100%;height:100%;object-fit:contain;padding:4px}
   .brand .t{font-weight:700;color:#fff;font-size:15px;line-height:1.15}
   .brand .t small{display:block;font-weight:500;color:#8da2c4;font-size:11.5px}
   .nav{display:flex;flex-direction:column;gap:3px;margin-top:6px}
@@ -55,7 +56,9 @@
     display:flex;align-items:center;gap:18px;margin-bottom:13px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)}
   .mcard:hover{border-color:#c5d2ea;transform:translateY(-1px)}
   .avatar{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-    color:#fff;font-weight:800;font-size:16px;flex-shrink:0}
+    color:#fff;font-weight:800;font-size:16px;flex-shrink:0;position:relative;overflow:hidden}
+  .avatar .ini{position:relative;z-index:1}
+  .avatar .logo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;z-index:2;padding:7px}
   .mc-body{flex:1;min-width:0}
   .mc-body .org{font-weight:700;font-size:15.5px}
   .mc-body .meet{color:var(--ink-2);font-size:13.5px;margin-top:1px}
@@ -277,6 +280,30 @@
   .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
   .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
 
+  /* branded cover */
+  .cover{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;text-align:center;
+    background:radial-gradient(120% 120% at 50% 0%,#1d3358 0%,#13243f 55%,#0c1830 100%);color:#fff;
+    transition:opacity .5s ease,visibility .5s}
+  .cover.hide{opacity:0;visibility:hidden}
+  .cover-inner{max-width:620px;padding:40px 28px;animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+  .cover-kick{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8fb0e6}
+  .cover-logo{width:72px;height:72px;border-radius:18px;margin:22px auto 18px;background:linear-gradient(135deg,#3b78ff,#7aa8ff);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(59,120,255,.45)}
+  .cover-logo span{font-weight:800;font-size:26px;color:#fff}
+  .cover-logo img{width:64px;height:64px;object-fit:contain;background:#fff;border-radius:14px;padding:9px}
+  .cover-title{font-size:46px;font-weight:800;letter-spacing:-.02em;margin:0}
+  .cover-tag{font-size:17px;line-height:1.55;color:#c9d6ee;max-width:520px;margin:14px auto 0}
+  .cover-tag b{color:#fff}
+  .cover-reframe{display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#dbe6fb;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:30px;padding:9px 18px}
+  .cover-reframe u{text-decoration-color:#6fa0ff;text-underline-offset:3px}
+  .cover-btn{all:unset;cursor:pointer;margin-top:30px;display:inline-block;background:#2f6df0;color:#fff;font-weight:700;
+    font-size:15px;padding:14px 28px;border-radius:12px;box-shadow:0 10px 30px rgba(47,109,240,.5);transition:.15s}
+  .cover-btn:hover{background:#2a62d8;transform:translateY(-1px)}
+  .cover-meta{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-size:12px;color:#7e93b8}
+  .restart-cover{all:unset;cursor:pointer;font-size:11px;color:#7286a6;margin-top:6px}
+  .restart-cover:hover{color:#aebbd2}
+
   /* ask this brief — chat */
   .ask-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:18px}
   .ask-chips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
@@ -354,12 +381,29 @@
 </style>
 </head>
 <body>
+<!-- Branded cover -->
+<div class="cover" id="cover">
+  <div class="cover-inner">
+    <div class="cover-kick">World Economic Forum · AI &amp; Business Transformation</div>
+    <div class="cover-logo"><img src="https://www.google.com/s2/favicons?domain=weforum.org&sz=128" alt="WEF" onerror="this.parentNode.innerHTML='<span>WEF</span>'"/></div>
+    <h1 class="cover-title">Partner Briefing</h1>
+    <p class="cover-tag">Every partner meeting starts with a brief that <b>assembles itself</b> — and arrives before anyone has to ask.</p>
+    <div class="cover-reframe">Not a <u>document</u> problem. A <u>fragmentation</u> problem.</div>
+    <button class="cover-btn" onclick="enterApp()">Enter the prototype →</button>
+    <div class="cover-meta">
+      <span>🛠 Built with Claude Code</span><span>·</span>
+      <span>📦 Working prototype + Salesforce/AgentForce spec</span><span>·</span>
+      <span>Valerio Santoni</span>
+    </div>
+  </div>
+</div>
+
 <div class="app">
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">PB</div>
-      <div class="t">Partner Briefing<small>AI &amp; Business Transformation</small></div>
+      <div class="logo"><img src="https://www.google.com/s2/favicons?domain=weforum.org&sz=128" alt="WEF" onerror="this.parentNode.textContent='WEF'"/></div>
+      <div class="t">Partner Briefing<small>World Economic Forum</small></div>
     </div>
     <nav class="nav" id="nav">
       <button data-view="meetings" class="active"><span class="ic">📅</span> Upcoming meetings</button>
@@ -369,6 +413,7 @@
     </nav>
     <div class="side-foot">
       <b>Prototype</b> · built with Claude Code<br>for the WEF panel task.
+      <br><button class="restart-cover" onclick="showCover()">↺ cover screen</button>
     </div>
   </aside>
 
@@ -377,7 +422,7 @@
     <div class="topbar">
       <div>
         <h1 id="tb-title">Upcoming external meetings</h1>
-        <div class="sub" id="tb-sub">Briefs auto-assemble 24h before each meeting · 3 this week</div>
+        <div class="sub" id="tb-sub">Briefs auto-assemble 24h before each meeting · 5 this week</div>
       </div>
       <div class="demo-pill">PROTOTYPE</div>
     </div>
@@ -411,7 +456,7 @@ const SRC = {
 const MEETINGS = [
   {
     id:'nestle', status:'ready',
-    org:{name:'Nestlé S.A.', initials:'N', color:'#0a4c8b', sector:'Food & Beverage', hq:'Vevey, Switzerland', tier:'Strategic Partner', since:'long-standing'},
+    org:{name:'Nestlé S.A.', initials:'N', domain:'nestle.com', color:'#0a4c8b', sector:'Food & Beverage', hq:'Vevey, Switzerland', tier:'Strategic Partner', since:'long-standing'},
     meeting:{
       title:'Annual Partnership Review — Food Systems & AI',
       date:'Tue 3 Jun 2026', time:'14:00–15:00 CET', loc:'Forum HQ, Geneva (+ Zoom)',
@@ -447,9 +492,9 @@ const MEETINGS = [
       {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Q1 partnership-health note: engagement “green”, renewal expected to proceed.', dt:'Internal doc · 3 weeks ago'}
     ],
     external:[
-      {tx:'Nestlé describes itself as a WEF Strategic Partner, citing food systems & sustainability collaboration.', mt:'nestle.com — Partnerships', url:'https://www.nestle.com/about/partnerships/world-economic-forum'},
+      {tx:'Nestlé’s World Economic Forum organisation profile.', mt:'weforum.org — Nestlé', url:'https://www.weforum.org/organizations/nestle-sa/'},
       {tx:'The Forum’s Food Systems Initiative is the home of the food-transformation work Nestlé funds.', mt:'weforum.org — Food Systems', url:'https://www.weforum.org/focus/food-systems/'},
-      {tx:'Under new CEO Laurent Freixe (since Sept 2024) Nestlé is resetting strategy — expect shifting priorities. [public]', mt:'Company leadership', url:'https://www.nestle.com/aboutus/management/executiveboard'}
+      {tx:'Under new CEO Laurent Freixe (since Sept 2024) Nestlé is resetting strategy — expect shifting priorities. [public]', mt:'nestle.com', url:'https://www.nestle.com/'}
     ],
     talking:[
       'Open by confirming the renewal — celebrate the long partnership and the regenerative-agriculture progress.',
@@ -464,7 +509,7 @@ const MEETINGS = [
   },
   {
     id:'siemens', status:'ready',
-    org:{name:'Siemens AG', initials:'S', color:'#009999', sector:'Industrial Tech & Manufacturing', hq:'Munich, Germany', tier:'Strategic Partner', since:'long-standing'},
+    org:{name:'Siemens AG', initials:'S', domain:'siemens.com', color:'#009999', sector:'Industrial Tech & Manufacturing', hq:'Munich, Germany', tier:'Strategic Partner', since:'long-standing'},
     meeting:{
       title:'Roundtable: AI in Advanced Manufacturing',
       date:'Thu 5 Jun 2026', time:'10:30–11:30 CET', loc:'Zoom',
@@ -497,9 +542,9 @@ const MEETINGS = [
       {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Aisha in #annual-meeting: Siemens is “first choice” to host the AM session.', dt:'Slack · 9 days ago'}
     ],
     external:[
+      {tx:'Siemens’ World Economic Forum organisation profile.', mt:'weforum.org — Siemens', url:'https://www.weforum.org/organizations/siemens-ag/'},
       {tx:'Siemens is a founding partner of the Forum’s Global Collaboration Village — a strong, specific proof point.', mt:'weforum.org — Collaboration Village', url:'https://www.weforum.org/projects/global-collaboration-village/'},
-      {tx:'Siemens sites feature in the Global Lighthouse Network for advanced manufacturing.', mt:'weforum.org — Lighthouse Network', url:'https://www.weforum.org/projects/global_lighthouse_network/'},
-      {tx:'CEO Roland Busch is a recurring Forum voice on industrial transformation.', mt:'weforum.org — Roland Busch', url:'https://www.weforum.org/people/roland-busch/'}
+      {tx:'CEO Roland Busch is a recurring Forum voice on industrial transformation & advanced manufacturing.', mt:'weforum.org — Roland Busch', url:'https://www.weforum.org/people/roland-busch/'}
     ],
     talking:[
       'Open on the Global Collaboration Village — it shows you value the partnership beyond sponsorship.',
@@ -513,7 +558,7 @@ const MEETINGS = [
   },
   {
     id:'maersk', status:'pending',
-    org:{name:'A.P. Moller – Maersk', initials:'M', color:'#42b0d5', sector:'Logistics & Shipping', hq:'Copenhagen, Denmark', tier:'Partner (deepening)', since:'long-standing'},
+    org:{name:'A.P. Moller – Maersk', initials:'M', domain:'maersk.com', color:'#42b0d5', sector:'Logistics & Shipping', hq:'Copenhagen, Denmark', tier:'Partner (deepening)', since:'long-standing'},
     meeting:{
       title:'Exploratory: Trade & Supply-Chain Resilience',
       date:'Mon 9 Jun 2026', time:'15:00–16:00 CET', loc:'Zoom',
@@ -547,8 +592,8 @@ const MEETINGS = [
     ],
     external:[
       {tx:'Maersk is a founding member of the Forum’s First Movers Coalition — perfect bridge into the resilience agenda.', mt:'weforum.org — First Movers Coalition', url:'https://www.weforum.org/communities/first-movers-coalition/'},
-      {tx:'Laura Maersk, the first methanol-enabled container ship, anchors their decarbonisation story.', mt:'maersk.com — News', url:'https://www.maersk.com/news/'},
-      {tx:'CEO Vincent Clerc frames resilience + decarbonisation as twin priorities. [public positioning]', mt:'Company leadership', url:'https://www.maersk.com/about/leadership'}
+      {tx:'Maersk is accelerating fleet decarbonisation with methanol-enabled vessels (incl. Laura Maersk).', mt:'maersk.com — News', url:'https://www.maersk.com/news/articles/2021/08/24/maersk-accelerates-fleet-decarbonisation'},
+      {tx:'New Maersk vessel class entering service — ongoing green-fleet expansion. [public]', mt:'maersk.com — News', url:'https://www.maersk.com/news/articles/2025/06/18/new-maersk-vessel-class-to-enter-service'}
     ],
     talking:[
       'Lead with their First Movers Coalition + methanol leadership — it’s the natural bridge into resilience.',
@@ -560,6 +605,104 @@ const MEETINGS = [
       {tx:'Thin internal history — most signal here is external/public. Treat CRM facts as lower-confidence and verify with Elena.'},
       {tx:'Engagement light for ~18 months. Manage expectations: this is re-warming, not a renewal.'}
     ]
+  },
+  {
+    id:'microsoft', status:'ready',
+    org:{name:'Microsoft', initials:'M', domain:'microsoft.com', color:'#0067b8', sector:'Technology', hq:'Redmond, USA', tier:'Strategic Partner', since:'long-standing'},
+    meeting:{
+      title:'Strategic Sync — AI Governance & the Collaboration Village',
+      date:'Wed 4 Jun 2026', time:'16:00–17:00 CET', loc:'Zoom',
+      ours:'Sofia Reyes (Relationship Lead)', theirs:'3 attendees incl. VP, AI & Society'
+    },
+    tldr:'Microsoft is one of the Forum’s deepest technology partners — a founding partner of the Global Collaboration Village (built on Microsoft Mesh) and a leading voice in the AI Governance Alliance. This sync is about their role in shaping the next phase of the responsible-AI agenda. Warm, strategic relationship; the opportunity is to anchor them as a flagship voice at the Annual Meeting’s AI track.',
+    freshness:'Updated 1 hour ago',
+    history:[
+      {dt:'Ongoing', tx:'WEF <b>Strategic Partner</b>; consistent main-stage presence at Davos.', real:true},
+      {dt:'Metaverse', tx:'<b>Founding partner</b> of the Global Collaboration Village, built on Microsoft Mesh.', real:true},
+      {dt:'AI', tx:'Leading member of the Forum’s <b>AI Governance Alliance</b>.', real:true},
+      {dt:'Jan 2026', tx:'Strong Davos delegation on AI & society. [illustrative]', real:false}
+    ],
+    initiatives:[
+      {nm:'AI Governance Alliance', ro:'Leading member — responsible AI standards', st:'active', real:true},
+      {nm:'Global Collaboration Village', ro:'Founding technology partner', st:'active', real:true},
+      {nm:'Annual Meeting AI track', ro:'Target: flagship speaker [illustrative]', st:'explore', real:false}
+    ],
+    contactsTheirs:[
+      {nm:'Dr. Elena Fischer', ti:'VP, AI & Society', note:'Drives their responsible-AI positioning.', color:'#0067b8'},
+      {nm:'Raj Malhotra', ti:'Senior Director, Global Affairs', note:'Our main contact; very engaged with the Forum.', color:'#7a4ddb'}
+    ],
+    contactsOurs:[
+      {nm:'Sofia Reyes', ti:'Relationship Lead (owner)', note:'Owns the account; strong rapport with Raj.', color:'#2f6df0'},
+      {nm:'Daniel Cohen', ti:'Lead, AI Governance Alliance', note:'Should join — the AI-track ask lands with him.', color:'#c77700'}
+    ],
+    interactions:[
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Raj: “Elena would like to discuss a larger role in the AI track this year.”', dt:'Email · 2 days ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Daniel in #ai-governance: Microsoft is “our strongest candidate” to anchor the responsible-AI session.', dt:'Slack · 6 days ago'},
+      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Activity logged: renewed Collaboration Village commitment confirmed for next cycle.', dt:'Salesforce · 2 weeks ago'}
+    ],
+    external:[
+      {tx:'Microsoft’s World Economic Forum organisation profile.', mt:'weforum.org — Microsoft', url:'https://www.weforum.org/organizations/microsoft-corp/'},
+      {tx:'The Forum’s AI Governance Alliance, where Microsoft is a leading member.', mt:'weforum.org — AI Governance Alliance', url:'https://www.weforum.org/communities/ai-governance-alliance/'},
+      {tx:'The Global Collaboration Village — Microsoft is a founding technology partner.', mt:'weforum.org — Collaboration Village', url:'https://www.weforum.org/projects/global-collaboration-village/'}
+    ],
+    talking:[
+      'Open on the Collaboration Village — anchor the relationship in what you’ve already built together.',
+      'Make the AI-track ask concrete: propose Elena for the responsible-AI anchor session, with a date.',
+      'Tie it to the AI Governance Alliance — they’re the natural voice on responsible-AI standards.',
+      'Connect Elena with Daniel to shape the session content; confirm next steps the same day.'
+    ],
+    flags:[
+      {tx:'Relationship is warm with no open issues — the risk is under-asking. Come in with a specific, named commitment.'}
+    ]
+  },
+  {
+    id:'unilever', status:'pending',
+    org:{name:'Unilever', initials:'U', domain:'unilever.com', color:'#1f36c7', sector:'Consumer Goods', hq:'London, UK', tier:'Strategic Partner', since:'long-standing'},
+    meeting:{
+      title:'Sustainability Review — Plastics & Food Systems',
+      date:'Fri 6 Jun 2026', time:'11:00–12:00 CET', loc:'Forum HQ, Geneva (+ Zoom)',
+      ours:'Tom Becker (Relationship Lead)', theirs:'3 attendees incl. Chief Sustainability Officer'
+    },
+    tldr:'Unilever is a long-standing Forum partner on sustainability — active across the Food Systems work and the plastics/packaging agenda. This review covers their commitments heading into the next cycle. Solid relationship; the goal is to deepen them into the Consumers Beyond Waste community and confirm their food-systems involvement.',
+    freshness:'Generated just now',
+    history:[
+      {dt:'Ongoing', tx:'WEF <b>partner</b> active on sustainability & consumer-goods transformation.', real:true},
+      {dt:'Plastics', tx:'Long-running <b>plastic-waste reduction</b> commitments, featured by the Forum.', real:true},
+      {dt:'Food/Ag', tx:'Engaged in the Forum’s <b>Food Systems</b> work and regenerative sourcing.', real:true},
+      {dt:'2025', tx:'Lighter Annual Meeting presence than prior years. [illustrative]', real:false}
+    ],
+    initiatives:[
+      {nm:'Food Systems Initiative', ro:'Active participant — regenerative sourcing', st:'active', real:true},
+      {nm:'Consumers Beyond Waste', ro:'Target community — not yet committed [illustrative]', st:'explore', real:false},
+      {nm:'Plastics & packaging', ro:'Public reduction commitments', st:'active', real:true}
+    ],
+    contactsTheirs:[
+      {nm:'Marta Oliveira', ti:'Chief Sustainability Officer', note:'Owns their net-zero & plastics agenda.', color:'#1f36c7'},
+      {nm:'Henry Wallace', ti:'Director, Global Partnerships', note:'Day-to-day contact; relationship is solid.', color:'#0e9f6e'}
+    ],
+    contactsOurs:[
+      {nm:'Tom Becker', ti:'Relationship Lead (owner)', note:'Took the account 1 year ago.', color:'#2f6df0'},
+      {nm:'Priya Nair', ti:'Lead, Consumers Beyond Waste', note:'Wants Unilever as an anchor for the community.', color:'#c77700'}
+    ],
+    interactions:[
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Henry confirmed attendees; asked what the Consumers Beyond Waste community involves.', dt:'Email · 4 days ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Priya in #sustainability: Unilever would be “a marquee name” for the waste community.', dt:'Slack · 1 week ago'},
+      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Account note: strong on plastics; food-systems engagement could be deepened.', dt:'Internal doc · 3 weeks ago'}
+    ],
+    external:[
+      {tx:'Unilever’s World Economic Forum organisation profile.', mt:'weforum.org — Unilever', url:'https://www.weforum.org/organizations/unilever/'},
+      {tx:'The Forum has featured how Unilever is reducing plastic waste.', mt:'weforum.org — Unilever plastics', url:'https://www.weforum.org/stories/2019/01/how-unilever-is-reducing-plastic/'},
+      {tx:'Consumers Beyond Waste — the Forum community to deepen them into.', mt:'weforum.org — Consumers Beyond Waste', url:'https://www.weforum.org/communities/consumers-beyond-waste/'}
+    ],
+    talking:[
+      'Open on their plastics leadership — it’s their strongest, most public sustainability story.',
+      'Make the deepening ask: invite them to anchor the Consumers Beyond Waste community.',
+      'Confirm and expand their Food Systems involvement — there’s room to grow there.',
+      'Connect Marta with Priya to scope what anchoring the waste community would involve.'
+    ],
+    flags:[
+      {tx:'Food-systems engagement is lighter than plastics — don’t overstate it; frame as an area to grow.'}
+    ]
   }
 ];
 
@@ -569,7 +712,7 @@ const MEETINGS = [
    "generate a brief for any org the panel names" without live-demo risk. */
 const ANY_LIBRARY = [
   { key:'microsoft', aliases:['microsoft','msft'],
-    org:{name:'Microsoft',initials:'M',color:'#0067b8',sector:'Technology',hq:'Redmond, USA',tier:'Strategic Partner'},
+    org:{name:'Microsoft',initials:'M',domain:'microsoft.com',color:'#0067b8',sector:'Technology',hq:'Redmond, USA',tier:'Strategic Partner'},
     tldr:'Microsoft is one of the Forum’s deepest technology partners — a founding partner of the Global Collaboration Village and a leading member of the AI Governance Alliance. A conversation here is likely about responsible-AI standards, AI governance, or extending the Village work. Strong, strategic relationship.',
     history:[
       {dt:'Ongoing',tx:'WEF <b>Strategic Partner</b>; recurring main-stage presence at Davos.',real:true},
@@ -583,7 +726,7 @@ const ANY_LIBRARY = [
       {tx:'The Forum’s AI Governance Alliance, where Microsoft is active.',mt:'weforum.org — AI Governance Alliance',url:'https://www.weforum.org/communities/ai-governance-alliance/'}],
     talking:['Anchor on the AI Governance Alliance — the most active part of the relationship.','Explore extending the Global Collaboration Village work.','Frame any ask around responsible-AI standards, their stated priority.'] },
   { key:'salesforce', aliases:['salesforce'],
-    org:{name:'Salesforce',initials:'S',color:'#00A1E0',sector:'Technology / CRM',hq:'San Francisco, USA',tier:'Partner'},
+    org:{name:'Salesforce',initials:'S',domain:'salesforce.com',color:'#00A1E0',sector:'Technology / CRM',hq:'San Francisco, USA',tier:'Partner'},
     tldr:'Salesforce engages the Forum on stakeholder capitalism, AI and sustainability — and is the company behind Agentforce, the exact platform a production version of this briefing agent would run on. A conversation here naturally bridges their platform and the responsible-AI agenda.',
     history:[
       {dt:'Ongoing',tx:'Engages the Forum on stakeholder capitalism & the <b>1% Pledge</b> model.',real:true},
@@ -597,7 +740,7 @@ const ANY_LIBRARY = [
       {tx:'Agentforce — the platform underpinning this brief’s production design.',mt:'salesforce.com — Agentforce',url:'https://www.salesforce.com/agentforce/'}],
     talking:['Meta-point: their Agentforce platform is what a production briefing agent runs on.','Connect on responsible-AI + stakeholder capitalism.','Explore co-innovation on agentic workflows.'] },
   { key:'unilever', aliases:['unilever'],
-    org:{name:'Unilever',initials:'U',color:'#1f36c7',sector:'Consumer Goods',hq:'London, UK',tier:'Strategic Partner'},
+    org:{name:'Unilever',initials:'U',domain:'unilever.com',color:'#1f36c7',sector:'Consumer Goods',hq:'London, UK',tier:'Strategic Partner'},
     tldr:'Unilever is a long-standing Forum partner on sustainability, food systems and responsible supply chains. Conversations typically center on regenerative sourcing, plastics and climate commitments.',
     history:[
       {dt:'Ongoing',tx:'WEF partner active on <b>sustainability</b> & consumer-goods transformation.',real:true},
@@ -611,7 +754,7 @@ const ANY_LIBRARY = [
       {tx:'The Forum’s Food Systems Initiative.',mt:'weforum.org — Food Systems',url:'https://www.weforum.org/focus/food-systems/'}],
     talking:['Lead on regenerative sourcing — their flagship sustainability theme.','Connect to the Food Systems Initiative.','Explore plastics/packaging collaboration.'] },
   { key:'google', aliases:['google','alphabet'],
-    org:{name:'Alphabet (Google)',initials:'G',color:'#ea4335',sector:'Technology',hq:'Mountain View, USA',tier:'Strategic Partner'},
+    org:{name:'Alphabet (Google)',initials:'G',domain:'google.com',color:'#ea4335',sector:'Technology',hq:'Mountain View, USA',tier:'Strategic Partner'},
     tldr:'Google/Alphabet engages the Forum primarily on AI, digital inclusion and the responsible-AI agenda. Likely topics: AI governance, AI for science/climate, and skills.',
     history:[
       {dt:'Ongoing',tx:'WEF <b>Strategic Partner</b>; active on AI & the digital economy.',real:true},
@@ -625,7 +768,7 @@ const ANY_LIBRARY = [
       {tx:'The Forum’s AI Governance Alliance.',mt:'weforum.org — AI Governance Alliance',url:'https://www.weforum.org/communities/ai-governance-alliance/'}],
     talking:['Anchor on AI governance — their most active Forum theme.','Explore AI-for-science / climate angles.','Connect on digital skills & inclusion.'] },
   { key:'amazon', aliases:['amazon','aws'],
-    org:{name:'Amazon',initials:'A',color:'#ff9900',sector:'Technology / Retail',hq:'Seattle, USA',tier:'Strategic Partner'},
+    org:{name:'Amazon',initials:'A',domain:'amazon.com',color:'#ff9900',sector:'Technology / Retail',hq:'Seattle, USA',tier:'Strategic Partner'},
     tldr:'Amazon engages the Forum on climate (The Climate Pledge), cloud/AI via AWS, and supply chains. Conversations often bridge decarbonisation commitments and AI infrastructure.',
     history:[
       {dt:'Climate',tx:'Co-founder of <b>The Climate Pledge</b> (net-zero by 2040).',real:true},
@@ -710,13 +853,17 @@ const tbSub = document.getElementById('tb-sub');
 
 function srcRow(keys){return '<div class="src-row">'+keys.map(k=>`<span class="src ${SRC[k].c}">${SRC[k].label}</span>`).join('')+'</div>';}
 function prov(real){return real?'<span class="prov real">REAL</span>':'<span class="prov sample">SAMPLE</span>';}
+function avatarHTML(m){
+  const img=m.org.domain?`<img class="logo-img" src="https://www.google.com/s2/favicons?domain=${m.org.domain}&sz=128" alt="" onerror="this.remove()"/>`:'';
+  return `<div class="avatar" style="background:${m.org.color}">${img}<span class="ini">${m.org.initials}</span></div>`;
+}
 function setNav(view){document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));}
 
 /* ---- Meeting list ---- */
 function renderMeetings(){
   setNav('meetings');
   tbTitle.textContent='Upcoming external meetings';
-  tbSub.textContent='Briefs auto-assemble 24h before each meeting · 3 this week';
+  tbSub.textContent='Briefs auto-assemble 24h before each meeting · 5 this week';
   let h=`<div class="anyco-card">
     <div class="anyco-l">
       <div class="anyco-t">✨ Generate a brief for any organisation</div>
@@ -733,7 +880,7 @@ function renderMeetings(){
       ? '<span class="status st-ready">● Brief ready</span>'
       : '<span class="status st-pending">○ Not generated</span>';
     h+=`<div class="mcard" onclick="openMeeting('${m.id}')">
-      <div class="avatar" style="background:${m.org.color}">${m.org.initials}</div>
+      ${avatarHTML(m)}
       <div class="mc-body">
         <div class="org">${m.org.name}</div>
         <div class="meet">${m.meeting.title}</div>
@@ -803,7 +950,7 @@ function renderBrief(id){
 
   <div class="brief-head">
     <div class="bh-top">
-      <div class="avatar" style="background:${m.org.color}">${m.org.initials}</div>
+      ${avatarHTML(m)}
       <div class="bh-info">
         <h2>${m.org.name}</h2>
         <div class="tags">
@@ -1291,6 +1438,10 @@ document.getElementById('nav').addEventListener('click',e=>{
   else if(v==='impact') renderImpact();
   else renderHow();
 });
+
+/* ---- cover control ---- */
+function enterApp(){document.getElementById('cover').classList.add('hide');}
+function showCover(){document.getElementById('cover').classList.remove('hide');}
 
 renderMeetings();
 </script>
