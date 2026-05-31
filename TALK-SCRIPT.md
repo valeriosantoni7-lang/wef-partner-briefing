@@ -91,9 +91,11 @@ Go to **"Build spec."** *This is what no generalist candidate will have.*
 
 ---
 
-## 5 · How I built it + roadmap (~1 min)
+## 5 · Impact + how I built it + roadmap (~1 min)
 
-> "Two quick things on *how*, since the role is about AI-assisted building. First: I built this with **Claude Code** — one of the tools you named — and shipped it the way your team works: on a feature branch, merged via a **pull request**." *(Flip to the GitHub PR tab for 5 seconds — show the diff/description.)* "So the 'push PRs with AI-assisted tools' part isn't a claim, it's in the repo."
+> "Quick word on how I'd know it's working." **Open the "Impact" view.** "Success isn't *briefs generated* — it's adoption, time saved, and the one I care about most: **edit-rate falling over time**. Every correction a human makes is logged, so this chart builds itself — and a falling edit-rate means the agent is earning trust. That's a data-informed product decision, not a vanity metric."
+
+> "And on *how* I built it, since the role is about AI-assisted building: **Claude Code** — one of the tools you named — shipped the way your team works, on a feature branch merged via a **pull request**." *(Flip to the GitHub PR tab for 5 seconds — show the diff/description.)* "So the 'push PRs with AI-assisted tools' part isn't a claim, it's in the repo."
 
 Back to **How it works**, scroll to the 90-day plan:
 > "And I wouldn't build all of this first. **Weeks 1–3: shadow staffers, validate the problem.** Then a **thin slice — Salesforce-only briefs for one team** — to prove the structure earns trust before adding sources. Email, Slack, web and the Slack delivery come next. Then measure and expand."

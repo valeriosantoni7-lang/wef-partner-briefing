@@ -25,6 +25,7 @@ So the goal isn't a better template. It's to make the brief **assemble itself** 
 | **Partner brief** | A one-screen synthesis: 60-sec summary · talking points · history · initiatives · contacts (both sides) · interactions · external context — every claim traceable to its source, low-confidence items flagged. |
 | **Slack delivery** | How it lands: an AgentForce → Slack DM the day before, with an inline "fix it" feedback loop. |
 | **Build spec** | The part most prototypes skip: the Salesforce objects & fields, the AgentForce agent definition, the Slack integration logic, and the guardrails — what a delivery team actually builds from. |
+| **Impact** | How success is measured: animated edit-rate trend (the north-star metric), time saved, and adoption by team — all derivable from the `Brief_Feedback__c` object in the spec. |
 | **How it works** | Problem → current vs. future state → architecture → 90-day rollout. |
 
 ## Two design decisions worth noting
@@ -61,5 +62,7 @@ Plain HTML/CSS/JS, zero dependencies, fully offline. Built with **Claude Code** 
 ## Repo
 
 - `index.html` — the prototype
-- `TALK-SCRIPT.md` — the 10-minute panel walkthrough + anticipated Q&A
+- `presenter-guide.html` — a readable walkthrough + collapsible Q&A (open in a browser)
+- `onepager.html` / `Partner-Briefing-Onepager.pdf` — one-page leave-behind
+- `TALK-SCRIPT.md` — the 10-minute panel walkthrough + anticipated Q&A (plain text)
 - Built on a feature branch and merged via PR — mirroring the GitHub/PR workflow the role uses.

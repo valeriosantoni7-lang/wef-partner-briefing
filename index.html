@@ -277,6 +277,46 @@
   .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
   .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
 
+  /* motion — entrance reveal + count-up */
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .brief-head,.tldr,.tp-card,.card,.mcard,.anyco-card,.legend-bar,.obj,.metric,.imp-card,.flow,.vs-card{animation:rise .45s cubic-bezier(.2,.7,.3,1) both}
+  .mcard:nth-child(2){animation-delay:.04s}.mcard:nth-child(3){animation-delay:.09s}.mcard:nth-child(4){animation-delay:.14s}
+  .card:nth-child(2){animation-delay:.05s}.card:nth-child(3){animation-delay:.1s}
+  .metric:nth-child(2){animation-delay:.06s}.metric:nth-child(3){animation-delay:.12s}.metric:nth-child(4){animation-delay:.18s}
+  .imp-card:nth-child(2){animation-delay:.07s}.imp-card:nth-child(3){animation-delay:.14s}.imp-card:nth-child(4){animation-delay:.21s}
+  @media (prefers-reduced-motion:reduce){*{animation:none !important}}
+
+  /* impact dashboard */
+  .imp-hero{font-size:15px;color:var(--ink-2);max-width:720px;margin:0 0 22px;line-height:1.6}
+  .imp-hero b{color:var(--ink)}
+  .imp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .imp-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .imp-card .ico{font-size:18px}
+  .imp-card .num{font-size:30px;font-weight:800;color:var(--navy);line-height:1;margin-top:8px;font-variant-numeric:tabular-nums}
+  .imp-card .lab{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.35}
+  .imp-card .trend{font-size:11.5px;font-weight:700;margin-top:8px;display:inline-flex;gap:4px;align-items:center;padding:3px 8px;border-radius:20px}
+  .trend.good{color:var(--green);background:var(--green-soft)}
+  .trend.bad{color:var(--red);background:#fdecea}
+  .chart-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:18px}
+  .chart-card .h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px}
+  .chart-card h3{margin:0;font-size:15px;font-weight:700}
+  .chart-sub{font-size:12.5px;color:var(--ink-2);margin:0 0 18px}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:10px;border-bottom:2px solid var(--line)}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
+  .bar{width:100%;max-width:46px;border-radius:7px 7px 0 0;height:0;transition:height 1.1s cubic-bezier(.2,.7,.3,1);position:relative}
+  .bar .v{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;font-weight:700;color:var(--ink-2)}
+  .bar-x{font-size:11px;color:var(--muted);font-weight:600}
+  .chart-legend{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap}
+  .chart-legend span{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+  .chart-legend .sw{width:11px;height:11px;border-radius:3px}
+  .adopt{display:flex;flex-direction:column;gap:13px}
+  .adopt-row{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:12px}
+  .adopt-row .nm{font-size:13px;font-weight:600}
+  .adopt-track{height:11px;background:var(--surface-2);border-radius:20px;overflow:hidden}
+  .adopt-fill{height:100%;width:0;border-radius:20px;transition:width 1.1s cubic-bezier(.2,.7,.3,1)}
+  .adopt-row .pct{font-size:12.5px;font-weight:700;color:var(--navy);text-align:right;font-variant-numeric:tabular-nums}
+
   /* any-company + slack + toast */
   .anyco-card{background:linear-gradient(120deg,#13243f,#274a7d);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:22px;
     display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:var(--shadow)}
@@ -304,6 +344,7 @@
     <nav class="nav" id="nav">
       <button data-view="meetings" class="active"><span class="ic">📅</span> Upcoming meetings</button>
       <button data-view="spec"><span class="ic">🧩</span> Build spec</button>
+      <button data-view="impact"><span class="ic">📊</span> Impact</button>
       <button data-view="how"><span class="ic">⚙️</span> How it works</button>
     </nav>
     <div class="side-foot">
@@ -1004,6 +1045,78 @@ function specRules(){
   </div>`;
 }
 
+/* ============================ IMPACT DASHBOARD ============================ */
+function animateCountups(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseFloat(el.getAttribute('data-count'));
+    const suffix=el.getAttribute('data-suffix')||'';
+    const dur=900, t0=performance.now();
+    const tick=(t)=>{
+      const p=Math.min((t-t0)/dur,1);
+      const e=1-Math.pow(1-p,3); // easeOutCubic
+      const val=target*e;
+      el.textContent=(target%1===0?Math.round(val):val.toFixed(1))+suffix;
+      if(p<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+function renderImpact(){
+  setNav('impact');
+  tbTitle.textContent='Impact';
+  tbSub.textContent='How we’d measure success — and why edit-rate is the north star';
+
+  // edit-rate trend: falling = trust rising
+  const weeks=[['W1',48],['W2',41],['W3',35],['W4',31],['W5',24],['W6',19],['W7',15],['W8',12]];
+  const maxv=50;
+  const adoption=[['Partnerships',92,'#2f6df0'],['Annual Meeting',81,'#15a05a'],['Centres',64,'#7b3fe4'],['Regional',47,'#c77700']];
+
+  let h=`<p class="imp-hero"><b>Success isn’t “briefs generated.”</b> It’s whether staff trust and use them. Three signals, all derivable from the data model I specced — the <code>Brief_Feedback__c</code> object captures the loop, so these metrics come for free. <span style="color:var(--muted)">(Illustrative targets, to show what I’d instrument.)</span></p>
+
+  <div class="imp-grid">
+    <div class="imp-card"><div class="ico">📨</div><div class="num"><span data-count="128">0</span></div><div class="lab">Briefs delivered / month</div><div class="trend good">▲ adoption climbing</div></div>
+    <div class="imp-card"><div class="ico">⏱️</div><div class="num"><span data-count="38" data-suffix="m">0</span></div><div class="lab">Avg. manual prep saved / meeting</div><div class="trend good">≈ 80 hrs/mo team-wide</div></div>
+    <div class="imp-card"><div class="ico">👥</div><div class="num"><span data-count="87" data-suffix="%">0</span></div><div class="lab">Of briefs opened before the meeting</div><div class="trend good">▲ vs 0 baseline</div></div>
+    <div class="imp-card"><div class="ico">✏️</div><div class="num"><span data-count="12" data-suffix="%">0</span></div><div class="lab">Edit-rate — briefs needing correction</div><div class="trend good">▼ from 48% (trust ↑)</div></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="h-row"><h3>📉 Edit-rate over time</h3><span class="freshness">north-star metric</span></div>
+    <p class="chart-sub">The share of briefs a human had to correct before the meeting. <b>Falling = the agent is earning trust.</b> This is the number I’d report to stakeholders.</p>
+    <div class="bars" id="editbars">
+      ${weeks.map(w=>`<div class="bar-col">
+        <div class="bar" data-h="${Math.round(w[1]/maxv*100)}" style="background:linear-gradient(180deg,#6ea0ff,#2f6df0)"><span class="v">${w[1]}%</span></div>
+        <div class="bar-x">${w[0]}</div></div>`).join('')}
+    </div>
+    <div class="chart-legend"><span><span class="sw" style="background:#2f6df0"></span>% of briefs edited by a human</span><span style="color:var(--green)">↓ lower is better</span></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="h-row"><h3>👥 Adoption by team</h3><span class="freshness">roll-out signal</span></div>
+    <p class="chart-sub">Where briefs are landing. Low-adoption teams tell us where the workflow or data quality needs work — that’s a product decision, not a guess.</p>
+    <div class="adopt">
+      ${adoption.map(a=>`<div class="adopt-row">
+        <div class="nm">${a[0]}</div>
+        <div class="adopt-track"><div class="adopt-fill" data-w="${a[1]}" style="background:${a[2]}"></div></div>
+        <div class="pct">${a[1]}%</div></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="card full" style="margin-top:0">
+    <h3>🧭 How these drive decisions</h3>
+    <div class="init"><div class="dot" style="background:#2f6df0;margin-top:6px"></div><div style="flex:1"><div class="nm">Edit-rate climbs on a partner type → the prompt or sources need work there.</div></div></div>
+    <div class="init"><div class="dot" style="background:#15a05a;margin-top:6px"></div><div style="flex:1"><div class="nm">A team’s adoption stalls → shadow them; the workflow fit is off, not the tech.</div></div></div>
+    <div class="init"><div class="dot" style="background:#c77700;margin-top:6px"></div><div style="flex:1"><div class="nm">Time-saved plateaus → we’ve captured the easy wins; look for the next workflow to transform.</div></div></div>
+  </div>`;
+  content.innerHTML=h; window.scrollTo(0,0);
+  // kick animations after paint
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    animateCountups();
+    document.querySelectorAll('#editbars .bar').forEach(b=>{b.style.height=b.getAttribute('data-h')+'%';});
+    document.querySelectorAll('.adopt-fill').forEach(f=>{f.style.width=f.getAttribute('data-w')+'%';});
+  }));
+}
+
 /* ============================ HOW IT WORKS ============================ */
 function renderHow(){
   setNav('how');
@@ -1079,6 +1192,7 @@ document.getElementById('nav').addEventListener('click',e=>{
   const v=b.dataset.view;
   if(v==='meetings') renderMeetings();
   else if(v==='spec') renderSpec();
+  else if(v==='impact') renderImpact();
   else renderHow();
 });
 

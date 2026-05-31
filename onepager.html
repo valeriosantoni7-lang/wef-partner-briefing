@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Partner Briefing — One-pager</title>
+<style>
+  @page{size:A4;margin:0}
+  :root{
+    --navy:#13243f;--navy2:#274a7d;--accent:#2f6df0;--accent-soft:#eaf1ff;
+    --ink:#1a2740;--ink2:#52617a;--muted:#8d99ad;--line:#e3e8f0;
+    --green:#15a05a;--green-soft:#e7f6ee;--amber:#c77700;--amber-soft:#fdf3df;
+    --sf:#00A1E0;--slack:#4A154B;--web:#0e9f6e;--docs:#7b3fe4;--email:#5b6b85;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);
+    font-size:9.6px;line-height:1.42;-webkit-font-smoothing:antialiased;background:#fff}
+  .page{width:210mm;min-height:297mm;margin:0 auto;padding:11mm 12mm 9mm;position:relative}
+
+  /* header */
+  header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2.5px solid var(--navy);padding-bottom:9px;margin-bottom:11px}
+  header .l .kick{font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  header .l h1{font-size:21px;font-weight:800;letter-spacing:-.01em;color:var(--navy);margin-top:2px;line-height:1.05}
+  header .l .sub{font-size:9.6px;color:var(--ink2);margin-top:3px}
+  header .r{text-align:right;font-size:8.6px;color:var(--ink2);line-height:1.5}
+  header .r b{color:var(--navy);font-size:9.6px}
+
+  .reframe{background:linear-gradient(110deg,#13243f,#274a7d);color:#fff;border-radius:9px;padding:10px 14px;margin-bottom:11px}
+  .reframe .t{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#9db6e0}
+  .reframe .b{font-size:11.5px;font-weight:600;line-height:1.4;margin-top:3px}
+  .reframe .b u{text-decoration-color:#6fa0ff;text-underline-offset:2px}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
+  h2{font-size:8.4px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .panel{border:1px solid var(--line);border-radius:9px;padding:10px 12px}
+  .now{background:#fff7f5;border-color:#f3d8d0}
+  .fut{background:var(--green-soft);border-color:#c2e6d0}
+  .panel h3{font-size:10px;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+  .panel ul{list-style:none}
+  .panel li{font-size:9.2px;padding:2.5px 0 2.5px 13px;position:relative;color:var(--ink)}
+  .panel li::before{position:absolute;left:0;top:2.5px}
+  .now li::before{content:"✕";color:#c8402f;font-weight:700;font-size:8px}
+  .fut li::before{content:"✓";color:var(--green);font-weight:700;font-size:8px}
+
+  /* architecture */
+  .arch{border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:11px}
+  .flow{display:flex;align-items:center;gap:7px;margin-top:3px}
+  .fcol{flex:1}
+  .fcol .ct{font-size:7.6px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;margin-bottom:4px}
+  .src{display:flex;align-items:center;gap:5px;background:#f7f9fc;border:1px solid var(--line);border-radius:5px;padding:3px 7px;margin-bottom:3px;font-size:8.6px;font-weight:600}
+  .src .d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .agent{background:var(--navy);color:#fff;border-radius:8px;padding:9px 7px;text-align:center}
+  .agent .em{font-size:15px}.agent .nm{font-weight:800;font-size:9.4px;margin-top:2px}
+  .agent .ds{font-size:7.4px;color:#aebccf;margin-top:2px;line-height:1.3}
+  .arr{color:var(--muted);font-size:14px;font-weight:700;flex:0 0 12px;text-align:center}
+
+  /* trust + metrics row */
+  .row2{display:grid;grid-template-columns:1.35fr 1fr;gap:11px;margin-bottom:11px}
+  .trust .ti{display:flex;gap:7px;padding:4px 0;font-size:9.2px;align-items:flex-start}
+  .trust .ti b{color:var(--navy)}
+  .trust .ic{flex:0 0 14px}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .metric{background:#f7f9fc;border:1px solid var(--line);border-radius:7px;padding:7px 9px;text-align:center}
+  .metric .big{font-size:16px;font-weight:800;color:var(--navy);line-height:1}
+  .metric .lab{font-size:7.6px;color:var(--ink2);margin-top:3px;line-height:1.2}
+
+  /* roadmap */
+  .road{border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:11px}
+  .rsteps{display:flex;gap:7px;margin-top:3px}
+  .rstep{flex:1;border-left:2.5px solid var(--accent);padding-left:7px}
+  .rstep .w{font-size:7.6px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+  .rstep .h{font-size:9px;font-weight:700;margin:1px 0}
+  .rstep .d{font-size:8.2px;color:var(--ink2);line-height:1.3}
+  .rstep:nth-child(2){border-color:#7b3fe4}.rstep:nth-child(2) .w{color:#7b3fe4}
+  .rstep:nth-child(3){border-color:var(--green)}.rstep:nth-child(3) .w{color:var(--green)}
+  .rstep:nth-child(4){border-color:var(--amber)}.rstep:nth-child(4) .w{color:var(--amber)}
+
+  /* footer strip */
+  .built{display:flex;justify-content:space-between;align-items:center;background:var(--navy);color:#fff;border-radius:9px;padding:9px 14px}
+  .built .t{font-size:9.4px}.built .t b{font-weight:800}
+  .built .repo{font-size:8.6px;color:#9db6e0;font-family:ui-monospace,Menlo,monospace}
+  .jdmap{font-size:7.8px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.4}
+  .jdmap b{color:var(--ink2)}
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="l">
+        <div class="kick">World Economic Forum · Panel Task</div>
+        <h1>Partner Briefing</h1>
+        <div class="sub">Pre-meeting intelligence that assembles itself — and arrives before anyone asks.</div>
+      </div>
+      <div class="r">
+        <b>Valerio Santoni</b><br>Candidate — Digital Product Specialist,<br>AI &amp; Business Transformation<br>
+        <span style="color:var(--accent);font-weight:700">Working prototype + build spec</span>
+      </div>
+    </header>
+
+    <div class="reframe">
+      <div class="t">The reframe</div>
+      <div class="b">Not a <u>document</u> problem — a <u>fragmentation</u> problem. The context already exists; it's scattered across five systems and stitched by hand, the morning of. So the brief should <u>assemble itself</u> and land in Slack the day before — with a human in the loop.</div>
+    </div>
+
+    <div class="cols">
+      <div class="panel now">
+        <h3>🔴 Today</h3>
+        <ul>
+          <li>Staffer manually queries Salesforce, email, Slack, docs &amp; web — one by one</li>
+          <li>Done the morning of, under time pressure</li>
+          <li>~30–45 min per meeting; quality depends on who does it</li>
+          <li>Knowledge trapped in one person's head</li>
+        </ul>
+      </div>
+      <div class="panel fut">
+        <h3>🟢 With Partner Briefing</h3>
+        <ul>
+          <li>Triggers off the calendar event — no one runs anything</li>
+          <li>Brief waiting in Slack the day before</li>
+          <li>~2 min to read; consistent structure every time</li>
+          <li>Human reviews &amp; refines; corrections tune the agent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="arch">
+      <h2>Architecture</h2>
+      <div class="flow">
+        <div class="fcol">
+          <div class="ct">Sources</div>
+          <div class="src"><span class="d" style="background:var(--sf)"></span>Salesforce <span style="color:var(--muted);font-weight:500">· record</span></div>
+          <div class="src"><span class="d" style="background:var(--email)"></span>Email / Outlook</div>
+          <div class="src"><span class="d" style="background:var(--slack)"></span>Slack channels</div>
+          <div class="src"><span class="d" style="background:var(--docs)"></span>Internal documents</div>
+          <div class="src"><span class="d" style="background:var(--web)"></span>Web search</div>
+        </div>
+        <div class="arr">→</div>
+        <div class="fcol" style="flex:0 0 30%">
+          <div class="ct">Agent · AgentForce</div>
+          <div class="agent"><div class="em">🤝</div><div class="nm">Briefing Agent</div>
+            <div class="ds">retrieve → de-dupe → synthesize → cite → flag gaps for review</div></div>
+        </div>
+        <div class="arr">→</div>
+        <div class="fcol">
+          <div class="ct">Delivery</div>
+          <div class="src"><span class="d" style="background:var(--slack)"></span>Slack DM (day before)</div>
+          <div class="src"><span class="d" style="background:var(--accent)"></span>Web brief</div>
+          <div class="src"><span class="d" style="background:#52617a"></span>PDF export</div>
+          <div class="src"><span class="d" style="background:var(--green)"></span>Human review → feedback</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="panel trust">
+        <h2>What makes it trustworthy</h2>
+        <div class="ti"><span class="ic">🔗</span><span><b>Provenance</b> — every claim cites its source (Salesforce / email / Slack / docs / web). Real vs. illustrative data is labelled in the UI.</span></div>
+        <div class="ti"><span class="ic">⚠️</span><span><b>Confidence flags</b> — the agent surfaces what's thin or stale instead of bluffing. It admits what it doesn't know.</span></div>
+        <div class="ti"><span class="ic">🧑‍⚖️</span><span><b>Human-in-the-loop</b> — the agent drafts; a person signs off. Corrections feed back and tune future briefs.</span></div>
+        <div class="ti"><span class="ic">🔐</span><span><b>Respects permissions</b> — only surfaces what the viewer can already access. Never widens access.</span></div>
+      </div>
+      <div>
+        <h2>Impact</h2>
+        <div class="metrics">
+          <div class="metric"><div class="big">5→1</div><div class="lab">Systems collapsed into one brief</div></div>
+          <div class="metric"><div class="big">~40<span style="font-size:9px">min</span></div><div class="lab">Manual prep saved / meeting</div></div>
+          <div class="metric"><div class="big">Day −1</div><div class="lab">Proactive, not morning-of</div></div>
+          <div class="metric"><div class="big">↓ edit-rate</div><div class="lab">North-star: trust over time</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="road">
+      <h2>How I'd sequence it — 90 days</h2>
+      <div class="rsteps">
+        <div class="rstep"><div class="w">Wk 1–3</div><div class="h">Shadow + map</div><div class="d">Sit with 3–4 staffers; map what they pull &amp; where it breaks. Validate before building.</div></div>
+        <div class="rstep"><div class="w">Wk 3–6</div><div class="h">Thin slice</div><div class="d">Salesforce-only briefs for one team. Prove the structure earns trust.</div></div>
+        <div class="rstep"><div class="w">Wk 6–10</div><div class="h">Add sources + Slack</div><div class="d">Layer email, Slack, web. Ship AgentForce → Slack delivery + feedback loop.</div></div>
+        <div class="rstep"><div class="w">Wk 10–13</div><div class="h">Measure + expand</div><div class="d">Track adoption, time saved, edit-rate. Roll out as briefs need fewer corrections.</div></div>
+      </div>
+    </div>
+
+    <div class="built">
+      <div class="t"><b>Built with Claude Code</b> — shipped on a feature branch, merged via pull request. The workflow is the artefact too.</div>
+      <div class="repo">github.com/valeriosantoni7-lang/<br>wef-partner-briefing · PR #1</div>
+    </div>
+
+    <div class="jdmap">
+      <b>Maps to the role:</b> workflow transformation (reframe + 90-day plan) · Salesforce ownership (data model &amp; custom objects) · AgentForce ↔ Slack business logic (agent + integration spec) · AI-assisted building (Claude Code + PR) · data-informed decisions (edit-rate metric)
+    </div>
+  </div>
+</body>
+</html>

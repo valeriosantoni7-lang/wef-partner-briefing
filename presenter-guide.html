@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Presenter Guide — Partner Briefing · WEF Panel</title>
+<style>
+  :root{
+    --navy:#13243f;--navy2:#1d3358;--accent:#2f6df0;--accent-soft:#e9f0ff;
+    --ink:#16223a;--ink2:#516079;--muted:#8a96ab;--line:#e6eaf1;--bg:#eef1f6;
+    --green:#15a05a;--green-soft:#e4f6ec;--amber:#c77700;--amber-soft:#fdf3df;--gold:#f2c94c;
+    --shadow:0 1px 2px rgba(16,32,64,.05),0 10px 30px rgba(16,32,64,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+
+  /* header */
+  .hero{background:linear-gradient(135deg,#13243f,#274a7d);color:#fff;border-radius:0 0 20px 20px;
+    padding:38px 40px 32px;margin-bottom:30px;box-shadow:var(--shadow)}
+  .hero .kick{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9db6e0}
+  .hero h1{margin:8px 0 6px;font-size:27px;font-weight:800;letter-spacing:-.01em}
+  .hero p{margin:0;color:#c4d2ec;font-size:14.5px}
+  .hero .meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+  .hero .pill{font-size:12px;font-weight:600;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+    padding:6px 12px;border-radius:20px;color:#e6eefb}
+
+  /* anchor */
+  .anchor{background:linear-gradient(180deg,#fffdf6,#fff7e6);border:1px solid #f0e2bd;border-left:5px solid var(--gold);
+    border-radius:14px;padding:20px 24px;margin-bottom:30px}
+  .anchor .lab{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#a07b14;margin-bottom:7px}
+  .anchor p{margin:0;font-size:17px;font-weight:600;line-height:1.5;color:#3a2e08}
+
+  /* toc */
+  .toc{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+  .toc a{font-size:12.5px;font-weight:600;text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--line);
+    padding:7px 13px;border-radius:9px}
+  .toc a:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* timeline of segments */
+  h2.sec{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    margin:36px 0 16px;padding-bottom:9px;border-bottom:2px solid var(--line)}
+  .seg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow);
+    display:flex;gap:18px}
+  .seg .time{flex:0 0 64px;font-weight:800;color:var(--accent);font-size:14px;font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);border-radius:9px;text-align:center;padding:8px 4px;height:fit-content}
+  .seg .body{flex:1;min-width:0}
+  .seg h3{margin:0 0 8px;font-size:16.5px;font-weight:800}
+  .seg .say{background:var(--navy);color:#eaf0fb;border-radius:10px;padding:13px 16px;font-size:14px;line-height:1.55;
+    margin:10px 0;font-style:italic;position:relative}
+  .seg .say::before{content:"“";position:absolute;left:7px;top:-6px;font-size:30px;color:#3f5d8c;font-style:normal}
+  .seg .say b{color:#fff;font-style:normal}
+  .seg ul{margin:8px 0 0;padding-left:20px}
+  .seg li{font-size:13.8px;margin-bottom:7px}
+  .seg li b{color:var(--navy2)}
+  .do{font-size:13px;color:var(--ink2);background:var(--green-soft);border:1px solid #bfe6cd;border-radius:9px;
+    padding:9px 13px;margin:10px 0 0;display:flex;gap:8px}
+  .do b{color:var(--green)}
+  .warn{font-size:13px;color:#8a3322;background:#fff6f4;border:1px solid #f3d2cb;border-radius:9px;padding:9px 13px;margin:10px 0 0;display:flex;gap:8px}
+  .star{display:inline-block;background:var(--gold);color:#5c4500;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;letter-spacing:.03em}
+
+  /* differentiators */
+  .diffs{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:10px}
+  .diff{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 18px;box-shadow:var(--shadow)}
+  .diff .n{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+  .diff h4{margin:0 0 4px;font-size:14.5px}
+  .diff p{margin:0;font-size:13px;color:var(--ink2)}
+
+  /* Q&A */
+  .qa{background:#fff;border:1px solid var(--line);border-radius:13px;margin-bottom:11px;overflow:hidden;box-shadow:var(--shadow)}
+  .qa summary{cursor:pointer;list-style:none;padding:15px 18px;font-weight:700;font-size:14.5px;display:flex;gap:11px;align-items:flex-start}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .q{flex:0 0 24px;height:24px;border-radius:7px;background:var(--accent-soft);color:var(--accent);
+    font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .qa summary::after{content:"+";margin-left:auto;color:var(--muted);font-size:20px;font-weight:400;line-height:1}
+  .qa[open] summary::after{content:"−"}
+  .qa .ans{padding:0 18px 16px 53px;font-size:14px;color:var(--ink);line-height:1.55}
+  .qa .ans .lead{color:var(--ink2);font-style:italic}
+
+  /* checklist */
+  .check{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px 22px;box-shadow:var(--shadow)}
+  .check label{display:flex;gap:11px;align-items:flex-start;padding:8px 0;font-size:14px;cursor:pointer;border-bottom:1px dashed var(--line)}
+  .check label:last-child{border-bottom:none}
+  .check input{margin-top:3px;width:17px;height:17px;accent-color:var(--accent)}
+
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:40px}
+  .print-hint{position:fixed;bottom:18px;right:18px;background:var(--navy);color:#fff;font-size:12.5px;font-weight:600;
+    padding:9px 14px;border-radius:10px;box-shadow:var(--shadow);text-decoration:none}
+  @media (max-width:680px){.diffs{grid-template-columns:1fr}.seg{flex-direction:column;gap:10px}.seg .time{flex:none;display:inline-block}}
+  @media print{
+    body{background:#fff}.print-hint,.toc{display:none}
+    .hero{border-radius:0}.qa{break-inside:avoid}.seg{break-inside:avoid}
+    .qa[open] .ans,.qa .ans{padding-left:53px}
+    details{open:true}
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="kick">WEF Panel · Presenter Guide</div>
+    <h1>Partner Briefing</h1>
+    <p>Your 10-minute walkthrough + the questions they'll ask. Valerio Santoni — Digital Product Specialist, AI&nbsp;&amp;&nbsp;Business Transformation.</p>
+    <div class="meta">
+      <span class="pill">⏱ 10 min present · 15 discuss · 30 general</span>
+      <span class="pill">🖥 Zoom screen-share</span>
+      <span class="pill">📦 index.html + GitHub PR open</span>
+    </div>
+  </div>
+
+  <div class="wrap" style="margin-top:-8px">
+
+    <div class="anchor">
+      <div class="lab">⚓ The one sentence to anchor everything</div>
+      <p>"I reframed a <u>document</u> problem as a <u>fragmentation</u> problem, and built a working agent that assembles the brief itself and delivers it in Slack the day before — with provenance and a human in the loop so people actually trust it."</p>
+    </div>
+
+    <div class="toc">
+      <a href="#flow">The 10 minutes</a>
+      <a href="#diffs">Why you win</a>
+      <a href="#qa">Q&amp;A prep</a>
+      <a href="#check">Pre-flight</a>
+    </div>
+
+    <!-- ================= FLOW ================= -->
+    <h2 class="sec" id="flow">The 10 minutes, step by step</h2>
+
+    <div class="seg">
+      <div class="time">0:00</div>
+      <div class="body">
+        <h3>Frame it — before you share your screen</h3>
+        <div class="say"><b>"Before I show anything — how I read the task.</b> The brief you described sounds like a <b>document</b> problem. I think it's actually a <b>fragmentation</b> problem: the context already exists, it's just scattered across five systems and stitched together by hand, under time pressure, the morning of. So I didn't design a better template. I designed something that <b>assembles the brief itself and delivers it before anyone has to ask.</b> And I built it — let me show you."</div>
+        <div class="do"><b>Why</b><span>The JD's #1 theme is "rethink how work gets done, don't just implement a tool." You're doing exactly that in your first 30 seconds.</span></div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">0:30</div>
+      <div class="body">
+        <h3>Problem &amp; current state</h3>
+        <p style="margin:0 0 4px;font-size:14px">Open <b>"How it works"</b> → point at the red <b>Today</b> column.</p>
+        <div class="say">"Today a staffer manually queries Salesforce, then email, then Slack, then docs, then Google — one by one, the morning of. It's <b>manual</b>, <b>reactive</b>, <b>inconsistent</b> — quality depends on who does it — and it <b>doesn't scale</b>: every meeting starts from zero, and the knowledge stays trapped in one person's head."</div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">1:30</div>
+      <div class="body">
+        <h3>The reframe / future state</h3>
+        <p style="margin:0 0 4px;font-size:14px">Same screen → green <b>With Partner Briefing</b> column.</p>
+        <div class="say">"Four changes: it triggers off the <b>calendar event</b> so no one runs anything; the brief is <b>waiting in Slack the day before</b>; it has a <b>consistent structure</b> every time; and there's a <b>human in the loop</b> — the staffer reviews, corrects, and those corrections tune the agent."</div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">2:00</div>
+      <div class="body">
+        <h3>Live demo — the core</h3>
+        <p style="margin:0;font-size:14px">Go to <b>"Upcoming meetings."</b></p>
+        <ul>
+          <li><b>The trigger:</b> "External meetings from the calendar. Two briefs ready; one not generated yet."</li>
+          <li><b>Generate it</b> — click the Maersk card. "Normally runs automatically the night before. Watch: it queries all five sources — you can see the actual queries — then synthesizes." Call out the last step: <b>"structure, cite sources, flag low-confidence."</b></li>
+          <li><b>Point at the legend bar</b> — the honesty move (see the say-box below).</li>
+          <li><b>Walk the brief:</b> 60-sec summary → talking points → <b>flags</b> (dwell here) → history / initiatives / contacts / interactions / external — each with source pills + real links.</li>
+          <li><b>Open Nestlé</b> — "a mature relationship mid leadership-reset; the brief flags it so our lead doesn't bring last year's plan."</li>
+          <li><b>"View Slack delivery"</b> — "where it lands: an AgentForce-style DM the day before, with a 'fix it' loop."</li>
+        </ul>
+        <div class="say">"One thing I'll be upfront about. Everything tagged <b>REAL</b> — the org profile, the WEF initiatives, the external context — is genuinely real and sourced; I had Claude search the live web. Maersk really is a founding member of the First Movers Coalition; <b>Laura Maersk</b> really is the first methanol container ship. The parts tagged <b>SAMPLE</b> — CRM, Slack, named contacts — are illustrative, because I obviously don't have the Forum's live systems. In production that exact mechanism keeps the agent honest."</div>
+        <div class="warn"><b>⚠</b><span>Saying the honesty line <b>out loud</b> is the move that makes you look trustworthy instead of caught out. Don't skip it.</span></div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">5:30</div>
+      <div class="body">
+        <h3>The "wow" — generate one live for any org</h3>
+        <p style="margin:0 0 4px;font-size:14px">Back to meetings → the box at the top.</p>
+        <div class="say">"And it's not a fixed list. If you're about to meet anyone — give me a name — it assembles a brief on demand."</div>
+        <ul>
+          <li>Type <b>Salesforce</b> → there's a meta-beat: "note this is the company behind Agentforce — the exact platform a production version would run on."</li>
+          <li>"For orgs with public data, the context is real and sourced. For anything else, it builds the structure and is explicit the CRM layer would come from live Salesforce. Either way — no one prepared anything."</li>
+        </ul>
+        <div class="do"><b>If they name a company you don't know</b><span>It still works — returns a labelled scaffold explaining what each section pulls live. That's a feature. Say so.</span></div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">6:30</div>
+      <div class="body">
+        <h3>The differentiator — "Build spec" <span class="star">★ YOUR MOAT</span></h3>
+        <p style="margin:0 0 4px;font-size:14px">Go to <b>"Build spec."</b> This is what no generalist candidate will have.</p>
+        <div class="say">"A nice UI is easy. The value of this role is the <b>requirements a Salesforce delivery team can actually build from</b> — so I wrote them."</div>
+        <ul>
+          <li><b>Data model:</b> Salesforce as system of record. Standard objects + custom <code>Engagement__c</code> (partner↔initiative + health) and <code>Brief_Feedback__c</code>. "Health drives the flags; feedback tunes the agent. Reports on those two give adoption + quality metrics for free."</li>
+          <li><b>AgentForce agent:</b> trigger logic, the 7 actions, the instructions. "This is the 'define business logic for AgentForce-powered Slack integrations' deliverable, written out."</li>
+          <li><b>Slack integration:</b> when it fires, the Block Kit message, what the 'fix it' button writes back.</li>
+          <li><b>Guardrails:</b> permissions, human-in-loop, traceability, feedback, thin-slice rollout.</li>
+        </ul>
+        <div class="do"><b>Land the line</b><span>"That's the JD's 'understand objects, flows, and data models well enough to write clear requirements and review delivered work.'"</span></div>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">8:00</div>
+      <div class="body">
+        <h3>Impact + how I built it + roadmap</h3>
+        <ul>
+          <li>Open the <b>"Impact"</b> view: "Success isn't briefs generated. It's adoption, time saved, and <b>edit-rate falling over time</b> — that's the agent earning trust. I modelled the data to capture it."</li>
+          <li>"I built this with <b>Claude Code</b> — one of your named tools — and shipped it on a feature branch, merged via a <b>pull request</b>." <em>(Flip to the GitHub PR tab for 5 seconds.)</em> "So 'push PRs with AI tools' isn't a claim, it's in the repo."</li>
+          <li>90-day plan: "Weeks 1–3 shadow + validate. Then a <b>thin slice — Salesforce-only briefs for one team</b> — to earn trust before adding sources. Then measure and expand."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seg">
+      <div class="time">9:00</div>
+      <div class="body">
+        <h3>Close</h3>
+        <div class="say">"To be clear what this is: a prototype I built in a few hours — sample data, rough edges. Polish isn't the point. The point is the loop: <b>understand the problem → reframe it → ship a working artefact that points at the real solution</b> — which is what this role does every week. The best documentation is a working system, so I brought one."</div>
+        <div class="do"><b>That last line</b><span>is lifted straight from the JD. Say it verbatim.</span></div>
+      </div>
+    </div>
+
+    <!-- ================= DIFFERENTIATORS ================= -->
+    <h2 class="sec" id="diffs">Why you win — the 4 differentiators</h2>
+    <div class="diffs">
+      <div class="diff"><div class="n">1</div><h4>Build spec</h4><p>Real Salesforce objects + AgentForce agent + Slack logic. Generalists hand-wave the backend; you wrote it.</p></div>
+      <div class="diff"><div class="n">2</div><h4>Provenance &amp; honesty</h4><p>REAL vs SAMPLE labelled in the UI. You never pass fabricated data off as real — the trust principle, demonstrated.</p></div>
+      <div class="diff"><div class="n">3</div><h4>GitHub PR</h4><p>Shipped via a real pull request with Claude Code. "Push PRs with AI tools" — proven, not claimed.</p></div>
+      <div class="diff"><div class="n">4</div><h4>Any-company, live</h4><p>Answers "try MY company" on the spot — offline, so it's bulletproof over Zoom.</p></div>
+    </div>
+
+    <!-- ================= Q&A ================= -->
+    <h2 class="sec" id="qa">Q&amp;A prep — tap to reveal answers</h2>
+
+    <details class="qa"><summary><span class="q">Q</span>How accurate is the AI synthesis? What about hallucination?</summary>
+      <div class="ans"><span class="lead">Three safeguards, two visible live.</span> "Provenance — every claim links to a source. Explicit confidence flags — the agent surfaces what's thin or stale, like it did for Maersk. And a human reviews every brief before the meeting. The agent drafts; the person signs off."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>Why Salesforce as system of record — why not just feed everything to the LLM?</summary>
+      <div class="ans">"Salesforce already holds the structured relationship data and is where staff log interactions. Anchoring there means the brief writes back into a workflow people already maintain, instead of spawning a parallel source of truth. The LLM is the synthesis layer on top — not the database."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>How does AgentForce specifically fit?</summary>
+      <div class="ans">"AgentForce is Salesforce's native agent/orchestration layer — it reads Salesforce objects, calls out to other systems, runs the synthesis, and posts to Slack via the supported integration. So trigger logic, data inputs and the Slack flow all live where the data already is. I sketched the full agent definition in the Build-spec tab."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>What would you build first / how do you de-risk?</summary>
+      <div class="ans">"Thinnest slice that proves trust: Salesforce-only briefs for one team. If people trust a brief built from data they already own, adding email/Slack/web is purely additive. If they don't trust the structure, no number of sources fixes it. I'd rather learn that in week 4 than month 4."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>How do you measure success?</summary>
+      <div class="ans">"Not 'briefs generated.' Three things: adoption (do staff open and use them), time saved per meeting, and edit-rate — how much humans correct a brief. A falling edit-rate means the agent is earning trust. That's the real signal, and I modelled the feedback object to capture it." <em>(Show the Impact view.)</em></div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>Data privacy / sensitive partner info?</summary>
+      <div class="ans">"Respect existing permissions — the agent only surfaces what the viewer can already access in each source, never widens access. Keep it internal, with provenance visible, so anything sensitive is traceable and governed, not floating in a model's context. It's the first guardrail in the spec."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>Where does this break? What's the hard part?</summary>
+      <div class="ans">"Not the build — it's source quality and trust. If Salesforce activity logging is patchy, the brief inherits the gaps. So part of the work is improving the inputs — and the flags help, because making gaps visible nudges people to log better. The transformation is as much workflow as tool."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>This isn't an engineering role — how technical are you really?</summary>
+      <div class="ans">"I built this — Claude Code, a real repo, merged via PR — and I can read the data model well enough to write the Salesforce requirements and review what a delivery team ships. I'm not here to replace engineers. I'm here to prototype fast enough that the spec is a working thing, and to speak both sides fluently."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>You used real partner names — is that a concern?</summary>
+      <div class="ans">"Deliberate, and flagged. Org-level facts and WEF initiatives are real and public — I wanted the demo grounded in truth, not invented. Anything I couldn't source, I tagged SAMPLE right in the interface. I'd never present fabricated data as real — that honesty is the same principle the production agent runs on."</div>
+    </details>
+
+    <details class="qa"><summary><span class="q">Q</span>Could it generate a brief for any organisation, live?</summary>
+      <div class="ans">"Architecturally yes — swap the sample CRM layer for live Salesforce + connector calls and the external-context section already works off live web search. I kept the demo offline on purpose so it's bulletproof over Zoom; the live version is a connector-wiring exercise, not a redesign." <em>(Then actually do it — type a company in the any-org box.)</em></div>
+    </details>
+
+    <!-- ================= CHECKLIST ================= -->
+    <h2 class="sec" id="check">Pre-flight checklist (the morning of)</h2>
+    <div class="check">
+      <label><input type="checkbox"> <span><b>index.html</b> opens and the generate animation plays (click Maersk).</span></label>
+      <label><input type="checkbox"> <span>GitHub <b>PR open in a second browser tab</b>, ready to flip to.</span></label>
+      <label><input type="checkbox"> <span>Browser zoom bumped so text is readable on a shared screen.</span></label>
+      <label><input type="checkbox"> <span>Notifications off, other tabs closed.</span></label>
+      <label><input type="checkbox"> <span>Said the <b>30-second framing out loud</b> once — that's the bit that lands.</span></label>
+      <label><input type="checkbox"> <span>Practised the <b>honesty line</b> (REAL vs SAMPLE) so it sounds natural.</span></label>
+    </div>
+
+    <div class="foot">Built with Claude Code · github.com/valeriosantoni7-lang/wef-partner-briefing · Print this page (⌘P) for a paper copy.</div>
+  </div>
+
+  <a class="print-hint" href="#" onclick="window.print();return false">⌘P · Print / Save PDF</a>
+</body>
+</html>
