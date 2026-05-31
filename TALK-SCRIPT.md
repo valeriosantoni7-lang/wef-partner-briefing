@@ -62,6 +62,10 @@ Let it play. Call out the last step: **"structure, cite sources, and flag low-co
 
 **e) Open a mature one — back, click Nestlé.** "Different shape: a 15-year relationship mid leadership-reset under a new CEO. The brief flags it so our lead doesn't walk in with last year's plan."
 
+**e2) Ask the brief a question** *(great if a panelist is curious — or do it yourself).* Scroll to **"💬 Ask this brief"** and click a suggested question, or type one.
+> "And it's conversational — if I want to go deeper, I just ask. 'What's the biggest risk here?'" *(click it; the agent answers in-thread)* "This is the 'define conversation flows' part of the AgentForce work — the brief isn't a dead document, it's something you can interrogate."
+⚠️ *If asked something off-script, it answers the common questions and gracefully says the rest would be answered live in production. That's honest, not a miss.*
+
 **f) Delivery — click "View Slack delivery."**
 > "Where it actually lands: an AgentForce-style Slack DM the day before — 60-second version, what to lead with, the heads-up, and a 'Something off? Fix it' button. That's the human-in-the-loop and the AgentForce + Slack integration in one screen."
 

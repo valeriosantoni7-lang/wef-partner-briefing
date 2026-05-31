@@ -277,6 +277,26 @@
   .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
   .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
 
+  /* ask this brief — chat */
+  .ask-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:18px}
+  .ask-chips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .ask-chip{all:unset;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);
+    border:1px solid #d7e4ff;border-radius:20px;padding:7px 13px;transition:.15s}
+  .ask-chip:hover{background:#dbe8ff}
+  .ask-thread{display:flex;flex-direction:column;gap:10px}
+  .ask-thread:not(:empty){margin-bottom:13px}
+  .ask-q{align-self:flex-end;background:var(--navy);color:#fff;border-radius:14px 14px 4px 14px;padding:9px 14px;font-size:13.5px;max-width:82%;animation:pop .25s ease both}
+  .ask-a{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:14px 14px 14px 4px;
+    padding:11px 14px;font-size:13.5px;max-width:90%;line-height:1.5;animation:pop .25s ease both}
+  .ask-a .who{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+  .ask-form{display:flex;gap:9px}
+  .ask-input{flex:1;border:1px solid var(--line);border-radius:9px;padding:10px 13px;font-size:13.5px;outline:none}
+  .ask-input:focus{border-color:var(--accent)}
+  .ask-typing{display:flex;gap:4px;padding:3px 2px}
+  .ask-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+  .ask-typing span:nth-child(2){animation-delay:.18s}.ask-typing span:nth-child(3){animation-delay:.36s}
+  @keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+
   /* motion — entrance reveal + count-up */
   @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
@@ -827,6 +847,9 @@ function renderBrief(id){
     </div>
   </div>`;
 
+  /* ask this brief */
+  h+=renderAskCard(m);
+
   /* flags */
   if(m.flags&&m.flags.length){
     h+=`<div class="card full"><div class="h-row"><h3>⚠️ Flagged for your attention</h3>
@@ -875,6 +898,79 @@ function thumb(btn,dir){
   p.innerHTML = dir==='up'
     ? '<span style="color:var(--green);font-weight:600">✓ Thanks — logged. The agent keeps this style.</span>'
     : '<span style="color:var(--accent);font-weight:600">✓ Noted — flagged for refinement; correction feeds back to the agent.</span>';
+}
+
+/* ===================== ASK THIS BRIEF (conversational) =====================
+   Demonstrates the "define conversation flows" part of the AgentForce work.
+   Offline: curated Q&A per partner + keyword routing; for anything else it
+   reuses the brief's own synthesis, with a graceful production fallback. */
+const ASK_BANK={
+  nestle:[
+    {q:"What's the biggest risk here?",k:['risk','danger','watch','worry','careful','pitfall'],
+     a:"The renewal itself is on track — the real risk is the <b>unresolved March data-sharing question</b>. The other side knows it's open, so raise it before they do. Align with James Okoro (Food Systems lead) beforehand so you're not caught flat-footed."},
+    {q:"What should I lead with?",k:['lead','open','start','first','begin'],
+     a:"Lead with the <b>renewal win</b> and the regenerative-agriculture progress — celebrate the long partnership. Then pivot to where the new leadership wants to take it."},
+    {q:"What changed on their side?",k:['change','new','recent','update','leadership','ceo'],
+     a:"New CEO <b>Laurent Freixe</b> (since Sept 2024) is running a strategy reset, so priorities are shifting. Don't assume last year's plan holds — listen for the reset and ask where they want the partnership to go next."},
+    {q:"Who should join from our side?",k:['who','join','attend','our side','bring','team'],
+     a:"<b>Maria Lindqvist</b> owns the account. Bring <b>James Okoro</b> too — the AI / data-collaboration ask lands with him, and he has context on the open data-sharing thread."}
+  ],
+  siemens:[
+    {q:"What's the goal of this meeting?",k:['goal','aim','objective','want','outcome','purpose'],
+     a:"Convert warm goodwill into a <b>concrete commitment</b>: an anchor speaking role on AI in advanced manufacturing at the Annual Meeting. Make the ask specific — propose a format and a date, don't leave it open."},
+    {q:"What's our strongest hook?",k:['hook','angle','open','lead','strong','start'],
+     a:"The <b>Global Collaboration Village</b> — Siemens is a founding partner, so it shows you value the relationship beyond sponsorship. Their <b>Lighthouse</b> credibility makes them the natural voice on factory-floor AI."},
+    {q:"Any open issues?",k:['issue','risk','problem','watch','concern','open'],
+     a:"No open issues — the relationship is warm. The only watch-out: the opportunity hasn't changed stage in ~3 weeks. Use this meeting to <b>advance it from Proposal</b>."},
+    {q:"Who's the decision-maker?",k:['who','decision','contact','decide','people'],
+     a:"<b>Dr. Klaus Weber</b> (Head of Digital Industries) decides on speaking commitments. <b>Sofia Bianchi</b> (Public Affairs) is your warm, aligned day-to-day contact — work through her to land time with Klaus."}
+  ],
+  maersk:[
+    {q:"What's the biggest risk?",k:['risk','danger','watch','worry','careful'],
+     a:"<b>Thin internal history</b> and ~18 months of light engagement. Treat CRM facts as lower-confidence (verify with Elena) and manage expectations — this is <b>re-warming, not a renewal</b>."},
+    {q:"What's our hook?",k:['hook','angle','lead','open','strong','start'],
+     a:"Their <b>First Movers Coalition</b> membership and methanol leadership — <i>Laura Maersk</i> is the first methanol-enabled container ship. That's the perfect bridge into the Trade &amp; Supply-Chain Resilience initiative."},
+    {q:"What's the goal?",k:['goal','aim','objective','want','outcome','purpose'],
+     a:"Exploratory — <b>gauge appetite</b> for deepening into the resilience initiative and find the right entry point. Propose a concrete next step, not a commitment."},
+    {q:"Why is the history thin?",k:['history','thin','why','data','record','light'],
+     a:"Engagement has been light for ~18 months, so the CRM has less to draw on. That's exactly why the brief leans on <b>real external context</b> here and flags the relationship data as lower-confidence — honest about what it does and doesn't know."}
+  ]
+};
+function askSet(m){
+  if(ASK_BANK[m.id]) return ASK_BANK[m.id];
+  return [ // any-company: reuse the brief's own synthesis
+    {q:"Give me the 30-second version",k:['30','summary','tldr','short','quick','overview'],a:m.tldr},
+    {q:"What should I lead with?",k:['lead','open','start','first','hook'],a:m.talking[0]},
+    {q:"What's flagged to watch?",k:['risk','watch','flag','careful','concern'],a:(m.flags[0]||{}).tx||'No specific flags — verify relationship history in Salesforce.'}
+  ];
+}
+function renderAskCard(m){
+  const set=askSet(m);
+  return `<div class="ask-card">
+    <div class="h-row"><h3>💬 Ask this brief</h3><span class="freshness">conversational</span></div>
+    <div class="ask-chips">${set.map((x,i)=>`<button class="ask-chip" onclick="askChip('${m.id}',${i})">${x.q}</button>`).join('')}</div>
+    <div class="ask-thread" id="askThread"></div>
+    <form class="ask-form" onsubmit="askSubmit(event,'${m.id}')">
+      <input class="ask-input" id="askInput" placeholder="Ask anything about ${m.org.name}…" autocomplete="off" />
+      <button class="btn primary" type="submit">Ask</button>
+    </form>
+  </div>`;
+}
+function askChip(id,i){const m=MEETINGS.find(x=>x.id===id);const set=askSet(m);askPush(m,set[i].q,set[i].a);}
+function askSubmit(e,id){
+  e.preventDefault();
+  const inp=document.getElementById('askInput');const q=(inp.value||'').trim();if(!q)return;inp.value='';
+  const m=MEETINGS.find(x=>x.id===id);const set=askSet(m);const ql=q.toLowerCase();
+  const hit=set.find(x=>x.k.some(k=>ql.includes(k)));
+  const a=hit?hit.a:`In production I'd answer this live — synthesizing across Salesforce, email, Slack, documents and the web, with citations. For this demo I've pre-answered the most likely questions; tap one of the suggestions above.`;
+  askPush(m,q,a);
+}
+function askPush(m,q,a){
+  const thread=document.getElementById('askThread');if(!thread)return;
+  const qd=document.createElement('div');qd.className='ask-q';qd.textContent=q;thread.appendChild(qd);
+  const ad=document.createElement('div');ad.className='ask-a';ad.innerHTML='<div class="ask-typing"><span></span><span></span><span></span></div>';thread.appendChild(ad);
+  ad.scrollIntoView({block:'nearest'});
+  setTimeout(()=>{ad.innerHTML=`<div class="who">✨ Briefing agent</div>${a}`;ad.scrollIntoView({block:'nearest'});},680);
 }
 
 /* ---- Slack delivery ---- */

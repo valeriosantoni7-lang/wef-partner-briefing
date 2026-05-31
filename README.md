@@ -22,7 +22,7 @@ So the goal isn't a better template. It's to make the brief **assemble itself** 
 | View | What it demonstrates |
 |------|----------------------|
 | **Upcoming meetings** | Briefs triggered by calendar events; generate one live (watch it query all 5 sources). Plus an **"any organisation"** box — type any company and the agent assembles a brief on demand. |
-| **Partner brief** | A one-screen synthesis: 60-sec summary · talking points · history · initiatives · contacts (both sides) · interactions · external context — every claim traceable to its source, low-confidence items flagged. |
+| **Partner brief** | A one-screen synthesis: 60-sec summary · talking points · history · initiatives · contacts (both sides) · interactions · external context — every claim traceable to its source, low-confidence items flagged. Plus **"Ask this brief"** — a conversational box to interrogate the brief (the AgentForce "conversation flow" pattern). |
 | **Slack delivery** | How it lands: an AgentForce → Slack DM the day before, with an inline "fix it" feedback loop. |
 | **Build spec** | The part most prototypes skip: the Salesforce objects & fields, the AgentForce agent definition, the Slack integration logic, and the guardrails — what a delivery team actually builds from. |
 | **Impact** | How success is measured: animated edit-rate trend (the north-star metric), time saved, and adoption by team — all derivable from the `Brief_Feedback__c` object in the spec. |
