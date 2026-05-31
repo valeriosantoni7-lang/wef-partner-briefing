@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Partner Briefing — Prototype</title>
+<style>
+  :root{
+    --bg:#eef1f6; --surface:#ffffff; --surface-2:#f7f9fc;
+    --navy:#13243f; --navy-2:#1d3358; --accent:#2f6df0; --accent-soft:#e9f0ff;
+    --ink:#16223a; --ink-2:#516079; --muted:#8a96ab; --line:#e3e8f0;
+    --green:#15a05a; --green-soft:#e4f6ec; --amber:#c77700; --amber-soft:#fdf2dd; --red:#c8402f;
+    --sf:#00A1E0; --slack:#4A154B; --email:#5b6b85; --docs:#7b3fe4; --web:#0e9f6e;
+    --radius:14px; --shadow:0 1px 2px rgba(16,32,64,.06),0 8px 24px rgba(16,32,64,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{display:flex; min-height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:248px; background:var(--navy); color:#cdd6e6; flex-shrink:0;
+    display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh;
+  }
+  .brand{display:flex; align-items:center; gap:11px; padding:4px 8px 20px}
+  .brand .logo{
+    width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#3b78ff,#7aa8ff);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:#fff;font-size:15px;flex-shrink:0
+  }
+  .brand .t{font-weight:700;color:#fff;font-size:15px;line-height:1.15}
+  .brand .t small{display:block;font-weight:500;color:#8da2c4;font-size:11.5px}
+  .nav{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+  .nav button{
+    all:unset; cursor:pointer; display:flex;align-items:center;gap:11px; padding:10px 12px;border-radius:10px;
+    color:#aebbd2;font-size:14px;font-weight:500;transition:.15s
+  }
+  .nav button:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav button.active{background:var(--accent);color:#fff}
+  .nav .ic{width:18px;text-align:center}
+  .side-foot{margin-top:auto;padding:12px 10px;border-top:1px solid rgba(255,255,255,.08);font-size:11.5px;color:#7286a6}
+  .side-foot b{color:#aebbd2;font-weight:600}
+
+  /* ---------- Main ---------- */
+  .main{flex:1; min-width:0; display:flex; flex-direction:column}
+  .topbar{
+    background:var(--surface); border-bottom:1px solid var(--line); padding:16px 30px;
+    display:flex;align-items:center;justify-content:space-between; position:sticky;top:0;z-index:5
+  }
+  .topbar h1{margin:0;font-size:18px;font-weight:700}
+  .topbar .sub{font-size:13px;color:var(--ink-2);margin-top:2px}
+  .demo-pill{font-size:11px;font-weight:600;color:var(--amber);background:var(--amber-soft);
+    padding:5px 10px;border-radius:20px;border:1px solid #f0dcae}
+  .content{padding:26px 30px 60px; max-width:1120px; width:100%; margin:0 auto}
+
+  /* ---------- Meeting list ---------- */
+  .section-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .mcard{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;
+    display:flex;align-items:center;gap:18px;margin-bottom:13px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)
+  }
+  .mcard:hover{border-color:#c5d2ea;transform:translateY(-1px)}
+  .avatar{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:800;font-size:16px;flex-shrink:0}
+  .mc-body{flex:1;min-width:0}
+  .mc-body .org{font-weight:700;font-size:15.5px}
+  .mc-body .meet{color:var(--ink-2);font-size:13.5px;margin-top:1px}
+  .mc-meta{display:flex;gap:14px;margin-top:7px;flex-wrap:wrap}
+  .mc-meta span{font-size:12.5px;color:var(--muted)}
+  .when{text-align:right;flex-shrink:0}
+  .when .d{font-weight:700;font-size:14px}
+  .when .h{font-size:12.5px;color:var(--muted)}
+  .status{font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:20px;white-space:nowrap}
+  .st-ready{color:var(--green);background:var(--green-soft)}
+  .st-pending{color:var(--amber);background:var(--amber-soft)}
+
+  /* ---------- Brief ---------- */
+  .back{all:unset;cursor:pointer;color:var(--accent);font-weight:600;font-size:13.5px;margin-bottom:16px;display:inline-flex;gap:6px;align-items:center}
+  .brief-head{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px}
+  .bh-top{display:flex;gap:16px;align-items:flex-start}
+  .bh-top .avatar{width:54px;height:54px;font-size:19px;border-radius:13px}
+  .bh-info{flex:1;min-width:0}
+  .bh-info h2{margin:0;font-size:21px;font-weight:800}
+  .bh-info .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .tag{font-size:12px;font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:7px}
+  .tag.tier{color:#7a4ddb;background:#f2ecff;border-color:#e4d8ff}
+  .bh-actions{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+  .btn{all:unset;cursor:pointer;font-weight:600;font-size:13px;padding:9px 15px;border-radius:9px;text-align:center}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(.97)}
+  .meeting-strip{display:flex;gap:0;margin-top:18px;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .ms-item{flex:1;padding:11px 15px;border-right:1px solid var(--line)}
+  .ms-item:last-child{border-right:none}
+  .ms-item .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+  .ms-item .v{font-size:13.5px;font-weight:600;margin-top:3px}
+
+  /* TLDR */
+  .tldr{background:linear-gradient(180deg,#fbfcff,#f4f8ff);border:1px solid #d7e4ff;border-left:4px solid var(--accent);
+    border-radius:12px;padding:16px 18px;margin-bottom:18px}
+  .tldr .lab{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+  .tldr p{margin:9px 0 0;font-size:15px;line-height:1.5;color:#22324f}
+  .ai-note{font-size:11.5px;color:var(--muted);margin-top:10px;display:flex;align-items:center;gap:6px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:18px}
+  .card.full{grid-column:1 / -1}
+  .card h3{margin:0 0 2px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .card .h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .src-row{display:flex;gap:6px;flex-wrap:wrap}
+  .src{font-size:10.5px;font-weight:700;padding:3px 9px 3px 8px;border-radius:20px;color:#fff;display:inline-flex;align-items:center;gap:5px;opacity:.92}
+  .src::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+  .src-sf{background:var(--sf)} .src-slack{background:var(--slack)} .src-email{background:var(--email)}
+  .src-docs{background:var(--docs)} .src-web{background:var(--web)}
+  .freshness{font-size:11.5px;color:var(--green);font-weight:600}
+  .freshness.stale{color:var(--amber)}
+
+  /* timeline */
+  .timeline{position:relative;padding-left:20px}
+  .timeline::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 15px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:"";position:absolute;left:-19px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+  .tl-item .dt{font-size:11.5px;font-weight:700;color:var(--muted)}
+  .tl-item .tx{font-size:13.5px;margin-top:2px;color:var(--ink)}
+
+  /* initiatives */
+  .init{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .init:last-child{border-bottom:none}
+  .init .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex-shrink:0}
+  .init .nm{font-weight:600;font-size:14px}
+  .init .ro{font-size:12.5px;color:var(--ink-2);margin-top:1px}
+  .chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .chip.active{background:var(--green-soft);color:var(--green)}
+  .chip.explore{background:var(--accent-soft);color:var(--accent)}
+  .chip.paused{background:var(--surface-2);color:var(--muted)}
+
+  /* contacts */
+  .contact{display:flex;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+  .contact:last-child{border-bottom:none}
+  .c-av{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff}
+  .c-nm{font-weight:600;font-size:13.5px}
+  .c-ti{font-size:12px;color:var(--ink-2)}
+  .c-note{font-size:11.5px;color:var(--muted);margin-top:1px;font-style:italic}
+  .col-split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .col-split h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+
+  /* interactions */
+  .ix{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .ix:last-child{border-bottom:none}
+  .ix .badge{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+  .ix .tx{font-size:13px}
+  .ix .dt{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+  /* external */
+  .ext{padding:11px 0;border-bottom:1px solid var(--line)}
+  .ext:last-child{border-bottom:none}
+  .ext .tx{font-size:13.5px;font-weight:500}
+  .ext .mt{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center}
+
+  /* talking points */
+  .tp-card{background:linear-gradient(180deg,#fffdf6,#fff9ea);border:1px solid #f0e2bd;border-radius:var(--radius);padding:18px 20px;margin-bottom:18px}
+  .tp-card h3{color:#8a6400}
+  .tp{display:flex;gap:11px;padding:9px 0}
+  .tp .n{width:22px;height:22px;border-radius:50%;background:#f2c94c;color:#5c4500;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .tp .tx{font-size:13.5px}
+
+  /* flags */
+  .flag{display:flex;gap:10px;align-items:flex-start;background:#fff6f4;border:1px solid #f3d2cb;border-radius:10px;padding:11px 13px;margin-bottom:9px}
+  .flag .ic{font-size:14px}
+  .flag .tx{font-size:13px;color:#8a3322}
+
+  .feedback{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+  .fb-btn{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--surface-2);border-radius:7px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .fb-btn:hover{border-color:#c5d2ea}
+
+  /* ---------- Generate overlay ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(15,25,45,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:50}
+  .overlay.show{display:flex}
+  .gen{background:#fff;border-radius:18px;width:480px;max-width:92vw;padding:28px 30px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+  .gen h3{margin:0 0 4px;font-size:18px}
+  .gen .gsub{color:var(--ink-2);font-size:13.5px;margin-bottom:20px}
+  .step{display:flex;align-items:center;gap:13px;padding:9px 0}
+  .step .si{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;
+    border:2px solid var(--line);color:var(--muted);background:#fff;transition:.2s}
+  .step.run .si{border-color:var(--accent);color:var(--accent)}
+  .step.done .si{border-color:var(--green);background:var(--green);color:#fff}
+  .step .sl{font-size:13.5px;font-weight:600;color:var(--muted)}
+  .step.run .sl,.step.done .sl{color:var(--ink)}
+  .step .ss{font-size:12px;color:var(--muted);font-weight:400;display:block;margin-top:1px}
+  .spinner{width:13px;height:13px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .gbar{height:5px;background:var(--surface-2);border-radius:10px;overflow:hidden;margin-top:18px}
+  .gbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6ea0ff);transition:width .4s}
+
+  /* ---------- Slack preview ---------- */
+  .slack-wrap{max-width:560px}
+  .slack-msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;box-shadow:var(--shadow)}
+  .sl-head{display:flex;gap:11px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .sl-bot{width:38px;height:38px;border-radius:9px;background:var(--slack);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .sl-name{font-weight:700;font-size:14px}
+  .sl-name .app{font-size:10px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);padding:1px 5px;border-radius:4px;margin-left:6px;font-weight:700;vertical-align:middle}
+  .sl-time{font-size:12px;color:var(--muted)}
+  .sl-body{padding:15px 16px;font-size:13.5px}
+  .sl-body b{font-weight:700}
+  .sl-li{display:flex;gap:8px;margin:7px 0}
+  .sl-li .e{flex-shrink:0}
+  .sl-actions{display:flex;gap:9px;padding:0 16px 16px}
+  .sl-btn{font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .sl-btn.green{background:#007a5a;color:#fff}
+  .sl-btn.gray{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .ctx{font-size:12px;color:var(--muted);margin-top:12px}
+
+  /* ---------- How it works ---------- */
+  .hiw-intro{font-size:15px;color:var(--ink-2);max-width:760px;margin:0 0 26px;line-height:1.6}
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-bottom:34px}
+  .flow-col{flex:1;min-width:150px}
+  .flow-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;text-align:center;margin:0 0 12px}
+  .node{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;font-weight:600;margin-bottom:9px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}
+  .node .nd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .agent-node{background:var(--navy);color:#fff;border-radius:13px;padding:20px 16px;text-align:center;box-shadow:var(--shadow);height:100%;display:flex;flex-direction:column;justify-content:center}
+  .agent-node .em{font-size:26px}
+  .agent-node .nm{font-weight:800;font-size:15px;margin-top:6px}
+  .agent-node .ds{font-size:12px;color:#aebbd2;margin-top:5px;line-height:1.4}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:22px;padding:0 4px;flex:0 0 28px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+  .vs-card{border-radius:var(--radius);padding:18px 20px}
+  .vs-now{background:#fff6f4;border:1px solid #f3d2cb}
+  .vs-fut{background:var(--green-soft);border:1px solid #bfe6cd}
+  .vs-card h4{margin:0 0 12px;font-size:14px;display:flex;align-items:center;gap:8px}
+  .vs-card ul{margin:0;padding-left:18px}
+  .vs-card li{font-size:13px;margin-bottom:8px;color:var(--ink)}
+  .metric-row{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 30px}
+  .metric{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;flex:1;min-width:150px;box-shadow:var(--shadow)}
+  .metric .big{font-size:26px;font-weight:800;color:var(--navy)}
+  .metric .lab{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .legend span{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+  .legend .nd{width:9px;height:9px;border-radius:50%}
+
+  @media (max-width:880px){.grid,.col-split,.vs{grid-template-columns:1fr}.sidebar{display:none}}
+  @media print{.sidebar,.topbar,.bh-actions,.back,.feedback,.demo-pill{display:none}.content{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">PB</div>
+      <div class="t">Partner Briefing<small>AI &amp; Business Transformation</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-view="meetings" class="active"><span class="ic">📅</span> Upcoming meetings</button>
+      <button data-view="how"><span class="ic">⚙️</span> How it works</button>
+    </nav>
+    <div class="side-foot">
+      <b>Prototype</b> · sample data<br>Built with Claude Code for the WEF panel.
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="tb-title">Upcoming external meetings</h1>
+        <div class="sub" id="tb-sub">Briefs auto-assemble 24h before each meeting · 3 this week</div>
+      </div>
+      <div class="demo-pill">PROTOTYPE · SAMPLE DATA</div>
+    </div>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<!-- Generate overlay -->
+<div class="overlay" id="overlay">
+  <div class="gen">
+    <h3 id="gen-org">Assembling brief…</h3>
+    <div class="gsub">Pulling context from every source and synthesizing — normally runs automatically the day before.</div>
+    <div id="gen-steps"></div>
+    <div class="gbar"><div class="gbar-fill" id="gbar"></div></div>
+  </div>
+</div>
+
+<script>
+/* ============================ DATA (sample) ============================ */
+const SRC = {
+  sf:{c:'src-sf',label:'Salesforce'}, email:{c:'src-email',label:'Email'},
+  slack:{c:'src-slack',label:'Slack'}, docs:{c:'src-docs',label:'Documents'}, web:{c:'src-web',label:'Web'}
+};
+
+const MEETINGS = [
+  {
+    id:'nestle', status:'ready',
+    org:{name:'Nestlé S.A.', initials:'N', color:'#0a4c8b', sector:'Food & Beverage', hq:'Vevey, Switzerland', tier:'Strategic Partner', since:'2011'},
+    meeting:{
+      title:'Annual Partnership Review — Food Systems & AI',
+      date:'Tue 3 Jun 2026', time:'14:00–15:00 CET', loc:'Forum HQ, Geneva (+ Zoom)',
+      ours:'Maria Lindqvist (Relationship Lead)', theirs:'4 attendees incl. Chief Sustainability Officer'
+    },
+    tldr:'Nestlé is a 15-year Strategic Partner up for annual renewal. The relationship is strong but the renewal conversation is happening against a tense backdrop: they want a bigger role in the AI for Food Systems initiative, and an unresolved data-sharing question from March is still open. Lead with the renewal win, then steer to their AI ask.',
+    freshness:'Updated 2 hours ago',
+    history:[
+      {dt:'2011', tx:'Joined as Strategic Partner; founding member of the Food Systems Initiative.'},
+      {dt:'2019', tx:'Co-chaired the Davos panel on regenerative agriculture.'},
+      {dt:'Jan 2025', tx:'Signed 3-year commitment to the AI for Food Systems initiative.'},
+      {dt:'Jan 2026', tx:'Strong Davos presence — CEO on main-stage climate session.'}
+    ],
+    initiatives:[
+      {nm:'AI for Food Systems', ro:'Funding partner · wants to co-lead the data working group', st:'active'},
+      {nm:'Food Action Alliance', ro:'Steering board member', st:'active'},
+      {nm:'First Movers Coalition', ro:'Exploring participation (raised in April)', st:'explore'},
+      {nm:'Plastics & Packaging', ro:'Participation paused since 2024', st:'paused'}
+    ],
+    contactsTheirs:[
+      {nm:'Dr. Anna Brandt', ti:'Chief Sustainability Officer', note:'Main sponsor. Pushing for a co-lead role on AI data group.', color:'#0a4c8b'},
+      {nm:'Marco Rossi', ti:'VP Digital & Data', note:'New since Jan — the AI ask is coming from his team.', color:'#7a4ddb'},
+      {nm:'Claire Dubois', ti:'Head of Global Partnerships', note:'Day-to-day contact, very responsive.', color:'#0e9f6e'}
+    ],
+    contactsOurs:[
+      {nm:'Maria Lindqvist', ti:'Relationship Lead (owner)', note:'Owns the account since 2022.', color:'#2f6df0'},
+      {nm:'James Okoro', ti:'Lead, AI for Food Systems', note:'Should join — the AI ask lands with him.', color:'#c77700'}
+    ],
+    interactions:[
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Claire confirmed the 4 attendees and asked to add "expanded AI collaboration" to the agenda.', dt:'Email · 2 days ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'In #partnerships, James flagged the March data-sharing question is still unresolved.', dt:'Slack #partnerships · 4 days ago'},
+      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Logged call: Anna "very keen to deepen the AI partnership before Davos 2027."', dt:'Salesforce activity · 11 days ago'},
+      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Q1 partnership health note: engagement "green", renewal expected to proceed.', dt:'Internal doc · 3 weeks ago'}
+    ],
+    external:[
+      {tx:'Nestlé announced a CHF 1.2bn investment in regenerative agriculture across European supply chains.', mt:'Reuters · 8 days ago', src:'web'},
+      {tx:'Appointed a new Chief AI Officer — signals a deeper internal AI push (context for their ask).', mt:'Company press release · 3 weeks ago', src:'web'},
+      {tx:'Q1 results beat expectations; sustainability cited as a growth driver on the earnings call.', mt:'FT · 5 weeks ago', src:'web'}
+    ],
+    talking:[
+      'Open by confirming the renewal — it’s on track and worth celebrating 15 years.',
+      'Acknowledge the AI ask directly: explore what "co-leading the data working group" means in practice.',
+      'Close the loop on the March data-sharing question before they raise it — James has context.',
+      'Plant a seed on the First Movers Coalition while AI momentum is high.'
+    ],
+    flags:[
+      {tx:'The March data-sharing question is unresolved and the other side knows it. Don’t get caught flat-footed — align with James beforehand.'},
+      {tx:'Marco Rossi (VP Digital) is new and not in Salesforce yet. Added from the email thread — verify his exact title.'}
+    ]
+  },
+  {
+    id:'siemens', status:'ready',
+    org:{name:'Siemens AG', initials:'S', color:'#009999', sector:'Industrial Tech & Manufacturing', hq:'Munich, Germany', tier:'Strategic Partner', since:'2014'},
+    meeting:{
+      title:'Roundtable: AI in Advanced Manufacturing',
+      date:'Thu 5 Jun 2026', time:'10:30–11:30 CET', loc:'Zoom',
+      ours:'Thomas Müller (Relationship Lead)', theirs:'3 attendees incl. Head of Digital Industries'
+    },
+    tldr:'Siemens is a reliable Strategic Partner and a likely anchor speaker for the new Advanced Manufacturing initiative. This roundtable is about securing their commitment to host a session at the Annual Meeting. Warm relationship, no open issues — the goal is to convert enthusiasm into a concrete commitment.',
+    freshness:'Updated 5 hours ago',
+    history:[
+      {dt:'2014', tx:'Joined as Strategic Partner via the Advanced Manufacturing platform.'},
+      {dt:'2021', tx:'Hosted the "Factories of the Future" showcase at the Annual Meeting.'},
+      {dt:'2024', tx:'Co-authored a Forum white paper on industrial AI.'},
+      {dt:'Jan 2026', tx:'CTO joined the Davos tech leaders’ dinner.'}
+    ],
+    initiatives:[
+      {nm:'Advanced Manufacturing & Supply Chains', ro:'Anchor partner', st:'active'},
+      {nm:'AI Governance Alliance', ro:'Active contributor', st:'active'},
+      {nm:'Centre for Advanced Manufacturing', ro:'Founding supporter', st:'active'}
+    ],
+    contactsTheirs:[
+      {nm:'Dr. Klaus Weber', ti:'Head of Digital Industries', note:'Decision-maker for speaking commitments.', color:'#009999'},
+      {nm:'Sofia Bianchi', ti:'Global Head, Public Affairs', note:'Our main contact; very aligned with the Forum.', color:'#c77700'}
+    ],
+    contactsOurs:[
+      {nm:'Thomas Müller', ti:'Relationship Lead (owner)', note:'Strong personal rapport with Sofia.', color:'#2f6df0'},
+      {nm:'Aisha Khan', ti:'Lead, Advanced Manufacturing', note:'Owns the initiative agenda.', color:'#7a4ddb'}
+    ],
+    interactions:[
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Sofia: "Klaus is interested in a speaking role — let’s discuss formats."', dt:'Email · 3 days ago'},
+      {ch:'sf', ic:'☁️', bc:'#00A1E0', tx:'Opportunity updated: "AM initiative — anchor sponsor", stage Proposal.', dt:'Salesforce · 1 week ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'Aisha in #annual-meeting: Siemens is "first choice" to host the AM session.', dt:'Slack · 9 days ago'}
+    ],
+    external:[
+      {tx:'Siemens unveiled a new industrial AI copilot at Hannover Messe — strong proof point to reference.', mt:'Handelsblatt · 12 days ago', src:'web'},
+      {tx:'Raised full-year guidance on the back of digital-industries growth.', mt:'Bloomberg · 4 weeks ago', src:'web'}
+    ],
+    talking:[
+      'Reference the Hannover Messe AI copilot launch — shows you’re paying attention to their priorities.',
+      'Make the speaking-slot ask concrete: propose a format and a date for the Annual Meeting.',
+      'Connect Klaus with Aisha to shape the session content.',
+      'Confirm next steps in writing the same day to keep the proposal moving.'
+    ],
+    flags:[
+      {tx:'Opportunity in Salesforce hasn’t moved stage in 3 weeks. Use this meeting to advance it from Proposal.'}
+    ]
+  },
+  {
+    id:'maersk', status:'pending',
+    org:{name:'A.P. Moller – Maersk', initials:'M', color:'#42b0d5', sector:'Logistics & Shipping', hq:'Copenhagen, Denmark', tier:'Partner (deepening)', since:'2018'},
+    meeting:{
+      title:'Exploratory: Trade & Supply-Chain Resilience',
+      date:'Mon 9 Jun 2026', time:'15:00–16:00 CET', loc:'Zoom',
+      ours:'Elena Costa (Relationship Lead)', theirs:'2 attendees incl. Head of Sustainability'
+    },
+    tldr:'Maersk is a mid-tier Partner the team wants to deepen into the Trade & Supply-Chain Resilience initiative. This is an exploratory call — the goal is to gauge appetite and identify the right entry point. Less history on file, so external context matters more here.',
+    freshness:'Generated just now',
+    history:[
+      {dt:'2018', tx:'Joined as a Partner via the Supply Chain & Transport platform.'},
+      {dt:'2022', tx:'Participated in the ocean-decarbonisation working group.'},
+      {dt:'2025', tx:'Lighter engagement year — limited Annual Meeting presence.'}
+    ],
+    initiatives:[
+      {nm:'Trade & Supply-Chain Resilience', ro:'Target initiative — not yet committed', st:'explore'},
+      {nm:'First Movers Coalition (Shipping)', ro:'Active member', st:'active'},
+      {nm:'Ocean Decarbonisation', ro:'Past contributor', st:'paused'}
+    ],
+    contactsTheirs:[
+      {nm:'Lars Petersen', ti:'Head of Sustainability', note:'Driving their net-zero shipping agenda.', color:'#42b0d5'},
+      {nm:'Nina Holm', ti:'Director, Public Affairs', note:'Our entry point; relationship is still light.', color:'#7a4ddb'}
+    ],
+    contactsOurs:[
+      {nm:'Elena Costa', ti:'Relationship Lead (owner)', note:'Took over the account 6 months ago.', color:'#2f6df0'},
+      {nm:'David Park', ti:'Lead, Trade & Resilience', note:'Wants Maersk as a flagship logistics voice.', color:'#c77700'}
+    ],
+    interactions:[
+      {ch:'email', ic:'✉️', bc:'#5b6b85', tx:'Nina agreed to an exploratory call; asked what deeper involvement would entail.', dt:'Email · 5 days ago'},
+      {ch:'slack', ic:'💬', bc:'#4A154B', tx:'David in #partnerships: Maersk is "a gap we should close" for the resilience initiative.', dt:'Slack · 1 week ago'},
+      {ch:'docs', ic:'📄', bc:'#7b3fe4', tx:'Account note flags engagement has been light for ~18 months — needs re-warming.', dt:'Internal doc · 1 month ago'}
+    ],
+    external:[
+      {tx:'Maersk announced a major order of methanol-powered vessels — strong alignment with the resilience agenda.', mt:'Reuters · 6 days ago', src:'web'},
+      {tx:'New CEO outlined "resilience and decarbonisation" as twin strategic priorities.', mt:'Financial Times · 3 weeks ago', src:'web'},
+      {tx:'Red Sea disruptions cited as pushing up freight rates — supply-chain resilience is top-of-mind for them right now.', mt:'WSJ · 2 weeks ago', src:'web'}
+    ],
+    talking:[
+      'Lead with their methanol-vessel order — it’s the perfect bridge into the resilience initiative.',
+      'Acknowledge the lighter recent engagement honestly and frame this as a fresh chapter.',
+      'Tie the ask to their new CEO’s stated priorities (resilience + decarbonisation).',
+      'Keep it exploratory — propose a concrete next step, not a commitment, given the relationship is re-warming.'
+    ],
+    flags:[
+      {tx:'Thin internal history — most signal here is external. Treat relationship facts as lower-confidence and verify with Elena.'},
+      {tx:'Engagement has been light for ~18 months. Manage expectations: this is re-warming, not a renewal.'}
+    ]
+  }
+];
+
+/* ============================ RENDER ============================ */
+const content = document.getElementById('content');
+const tbTitle = document.getElementById('tb-title');
+const tbSub = document.getElementById('tb-sub');
+
+function srcRow(keys){
+  return '<div class="src-row">'+keys.map(k=>`<span class="src ${SRC[k].c}">${SRC[k].label}</span>`).join('')+'</div>';
+}
+
+function setNav(view){
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+}
+
+/* ---- Meeting list ---- */
+function renderMeetings(){
+  setNav('meetings');
+  tbTitle.textContent='Upcoming external meetings';
+  tbSub.textContent='Briefs auto-assemble 24h before each meeting · 3 this week';
+  let h='<p class="section-label">This week</p>';
+  MEETINGS.forEach(m=>{
+    const st = m.status==='ready'
+      ? '<span class="status st-ready">● Brief ready</span>'
+      : '<span class="status st-pending">○ Not generated</span>';
+    h+=`<div class="mcard" onclick="openMeeting('${m.id}')">
+      <div class="avatar" style="background:${m.org.color}">${m.org.initials}</div>
+      <div class="mc-body">
+        <div class="org">${m.org.name}</div>
+        <div class="meet">${m.meeting.title}</div>
+        <div class="mc-meta">
+          <span>📍 ${m.meeting.loc}</span>
+          <span>👥 ${m.meeting.theirs}</span>
+          <span>★ ${m.org.tier}</span>
+        </div>
+      </div>
+      <div class="when">
+        <div class="d">${m.meeting.date.split(' ').slice(0,2).join(' ')}</div>
+        <div class="h">${m.meeting.time.split('–')[0]}</div>
+      </div>
+      ${st}
+    </div>`;
+  });
+  content.innerHTML=h;
+  window.scrollTo(0,0);
+}
+
+/* ---- Open a meeting (generate if needed) ---- */
+function openMeeting(id){
+  const m = MEETINGS.find(x=>x.id===id);
+  if(m.status==='ready') return renderBrief(id);
+  runGenerate(m);
+}
+
+/* ---- Generate animation ---- */
+function runGenerate(m){
+  const overlay=document.getElementById('overlay');
+  document.getElementById('gen-org').textContent='Assembling brief: '+m.org.name;
+  const steps=[
+    {l:'Salesforce',s:'Account, Contacts, Opportunities, Activities'},
+    {l:'Email',s:'Relevant threads, last 90 days'},
+    {l:'Slack',s:'#partnerships, #annual-meeting mentions'},
+    {l:'Internal documents',s:'Account notes & meeting minutes'},
+    {l:'Web',s:'News, filings, leadership changes'},
+    {l:'Synthesizing brief with AI',s:'Structuring + flagging gaps for review'}
+  ];
+  const cont=document.getElementById('gen-steps');
+  cont.innerHTML=steps.map((s,i)=>`<div class="step" id="step${i}">
+      <div class="si">${i+1}</div>
+      <div><span class="sl">${s.l}</span><span class="ss">${s.s}</span></div>
+    </div>`).join('');
+  document.getElementById('gbar').style.width='0%';
+  overlay.classList.add('show');
+
+  let i=0;
+  const run=()=>{
+    if(i>0){const p=document.getElementById('step'+(i-1));p.classList.remove('run');p.classList.add('done');p.querySelector('.si').textContent='✓';}
+    if(i>=steps.length){
+      document.getElementById('gbar').style.width='100%';
+      setTimeout(()=>{overlay.classList.remove('show'); m.status='ready'; renderBrief(m.id);},450);
+      return;
+    }
+    const el=document.getElementById('step'+i);
+    el.classList.add('run'); el.querySelector('.si').innerHTML='<div class="spinner"></div>';
+    document.getElementById('gbar').style.width=((i+1)/steps.length*100)+'%';
+    i++;
+    setTimeout(run, i===steps.length ? 900 : 620);
+  };
+  setTimeout(run,400);
+}
+
+/* ---- Full brief ---- */
+function renderBrief(id){
+  const m = MEETINGS.find(x=>x.id===id);
+  setNav('meetings');
+  tbTitle.textContent='Partner brief';
+  tbSub.textContent=m.org.name+' · '+m.meeting.date;
+
+  const initDot={active:'#15a05a',explore:'#2f6df0',paused:'#b8c0cf'};
+  const initChip={active:'<span class="chip active">Active</span>',explore:'<span class="chip explore">Exploring</span>',paused:'<span class="chip paused">Paused</span>'};
+
+  let h=`<button class="back" onclick="renderMeetings()">← All meetings</button>
+
+  <div class="brief-head">
+    <div class="bh-top">
+      <div class="avatar" style="background:${m.org.color}">${m.org.initials}</div>
+      <div class="bh-info">
+        <h2>${m.org.name}</h2>
+        <div class="tags">
+          <span class="tag tier">★ ${m.org.tier}</span>
+          <span class="tag">${m.org.sector}</span>
+          <span class="tag">${m.org.hq}</span>
+          <span class="tag">Partner since ${m.org.since}</span>
+        </div>
+      </div>
+      <div class="bh-actions">
+        <button class="btn primary" onclick="renderSlack('${m.id}')">View Slack delivery</button>
+        <button class="btn ghost" onclick="window.print()">Export PDF</button>
+      </div>
+    </div>
+    <div class="meeting-strip">
+      <div class="ms-item"><div class="k">Meeting</div><div class="v">${m.meeting.title}</div></div>
+      <div class="ms-item"><div class="k">When</div><div class="v">${m.meeting.date} · ${m.meeting.time}</div></div>
+      <div class="ms-item"><div class="k">Where</div><div class="v">${m.meeting.loc}</div></div>
+      <div class="ms-item"><div class="k">Our lead</div><div class="v">${m.meeting.ours}</div></div>
+    </div>
+  </div>
+
+  <div class="tldr">
+    <div class="lab">⚡ 60-second brief</div>
+    <p>${m.tldr}</p>
+    <div class="ai-note">✨ AI-synthesized from the sources below · ${m.freshness} · verify flagged items before the meeting</div>
+  </div>`;
+
+  /* talking points (value-add, up top) */
+  h+=`<div class="tp-card">
+    <div class="h-row"><h3>🎯 Suggested talking points</h3></div>
+    ${m.talking.map((t,i)=>`<div class="tp"><div class="n">${i+1}</div><div class="tx">${t}</div></div>`).join('')}
+    <div class="feedback">Helpful?
+      <button class="fb-btn" onclick="thumb(this,'up')">👍 Yes</button>
+      <button class="fb-btn" onclick="thumb(this,'down')">👎 Refine</button>
+      <span style="color:var(--muted)">— feedback tunes future briefs</span>
+    </div>
+  </div>`;
+
+  /* flags */
+  if(m.flags && m.flags.length){
+    h+=`<div class="card full"><div class="h-row"><h3>⚠️ Flagged for your attention</h3>
+      <span class="freshness stale">needs human check</span></div>
+      ${m.flags.map(f=>`<div class="flag"><span class="ic">⚠️</span><div class="tx">${f.tx}</div></div>`).join('')}
+    </div>`;
+  }
+
+  /* two-column grid */
+  h+='<div class="grid">';
+
+  /* history */
+  h+=`<div class="card"><div class="h-row"><h3>📈 History with us</h3>${srcRow(['sf','docs'])}</div>
+    <div class="timeline">${m.history.map(x=>`<div class="tl-item"><div class="dt">${x.dt}</div><div class="tx">${x.tx}</div></div>`).join('')}</div>
+  </div>`;
+
+  /* initiatives */
+  h+=`<div class="card"><div class="h-row"><h3>🚀 Current initiatives</h3>${srcRow(['sf','docs'])}</div>
+    ${m.initiatives.map(x=>`<div class="init"><div class="dot" style="background:${initDot[x.st]}"></div>
+      <div style="flex:1"><div class="nm">${x.nm}</div><div class="ro">${x.ro}</div></div>${initChip[x.st]}</div>`).join('')}
+  </div>`;
+
+  h+='</div>'; // end grid
+
+  /* contacts full */
+  h+=`<div class="card full"><div class="h-row"><h3>👥 Key contacts</h3>${srcRow(['sf','email'])}</div>
+    <div class="col-split">
+      <div><h4>Their side</h4>${m.contactsTheirs.map(c=>contactRow(c)).join('')}</div>
+      <div><h4>Our side</h4>${m.contactsOurs.map(c=>contactRow(c)).join('')}</div>
+    </div>
+  </div>`;
+
+  /* interactions + external */
+  h+='<div class="grid">';
+  h+=`<div class="card"><div class="h-row"><h3>🕑 Recent interactions</h3>${srcRow(['email','slack','sf'])}</div>
+    ${m.interactions.map(x=>`<div class="ix"><div class="badge" style="background:${x.bc}">${x.ic}</div>
+      <div><div class="tx">${x.tx}</div><div class="dt">${x.dt}</div></div></div>`).join('')}
+  </div>`;
+  h+=`<div class="card"><div class="h-row"><h3>🌐 External context</h3>${srcRow(['web'])}</div>
+    ${m.external.map(x=>`<div class="ext"><div class="tx">${x.tx}</div><div class="mt">🔗 ${x.mt}</div></div>`).join('')}
+  </div>`;
+  h+='</div>';
+
+  content.innerHTML=h;
+  window.scrollTo(0,0);
+}
+
+function contactRow(c){
+  const ini=c.nm.split(' ').map(w=>w[0]).slice(0,2).join('');
+  return `<div class="contact"><div class="c-av" style="background:${c.color}">${ini}</div>
+    <div><div class="c-nm">${c.nm}</div><div class="c-ti">${c.ti}</div><div class="c-note">${c.note}</div></div></div>`;
+}
+
+function thumb(btn,dir){
+  const parent=btn.parentElement;
+  parent.innerHTML = dir==='up'
+    ? '<span style="color:var(--green);font-weight:600">✓ Thanks — logged. The agent will keep this style.</span>'
+    : '<span style="color:var(--accent);font-weight:600">✓ Noted — this brief is flagged for refinement.</span>';
+}
+
+/* ---- Slack delivery view ---- */
+function renderSlack(id){
+  const m = MEETINGS.find(x=>x.id===id);
+  tbTitle.textContent='Slack delivery';
+  tbSub.textContent='How the brief lands — automatically, the day before';
+  content.innerHTML=`<button class="back" onclick="renderBrief('${id}')">← Back to brief</button>
+  <p class="section-label">Delivered via AgentForce → Slack DM</p>
+  <div class="slack-wrap">
+    <div class="slack-msg">
+      <div class="sl-head">
+        <div class="sl-bot">🤝</div>
+        <div style="flex:1">
+          <div class="sl-name">Partner Briefing <span class="app">APP</span></div>
+          <div class="sl-time">Yesterday at 5:00 PM</div>
+        </div>
+      </div>
+      <div class="sl-body">
+        👋 You’re meeting <b>${m.org.name}</b> tomorrow — <b>${m.meeting.date.replace(/^\w+ /,'')}, ${m.meeting.time}</b>. Here’s your brief.
+        <div style="margin-top:10px"><b>⚡ The 60-second version</b><br>${m.tldr}</div>
+        <div style="margin-top:12px"><b>🎯 Lead with</b></div>
+        ${m.talking.slice(0,2).map(t=>`<div class="sl-li"><span class="e">•</span><span>${t}</span></div>`).join('')}
+        <div class="sl-li" style="margin-top:8px"><span class="e">⚠️</span><span><b>Heads-up:</b> ${m.flags[0].tx}</span></div>
+      </div>
+      <div class="sl-actions">
+        <div class="sl-btn green" onclick="renderBrief('${id}')">📄 Open full brief</div>
+        <div class="sl-btn gray" onclick="alert('In production: opens a thread to correct the brief — feedback tunes the agent.')">✏️ Something off? Fix it</div>
+      </div>
+    </div>
+    <div class="ctx">↳ Triggered by the calendar event. The staffer can refine inline; corrections feed back into the agent. No one has to remember to run anything.</div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ---- How it works ---- */
+function renderHow(){
+  setNav('how');
+  tbTitle.textContent='How it works';
+  tbSub.textContent='Problem → workflow transformation → architecture';
+  content.innerHTML=`
+  <p class="hiw-intro"><b>The real problem isn’t a missing template — it’s fragmentation.</b> Context for a meeting lives across five systems, and synthesis happens manually, under time pressure, the morning of. The fix isn’t a better doc. It’s making the brief <b>assemble itself</b> and arrive before anyone has to ask.</p>
+
+  <p class="section-label">From manual scramble → self-assembling brief</p>
+  <div class="vs">
+    <div class="vs-card vs-now"><h4>🔴 Today</h4>
+      <ul>
+        <li>Staffer manually queries Salesforce, email, Slack, docs, and Google — one by one</li>
+        <li>Done the <b>morning of</b>, under time pressure</li>
+        <li>~30–45 min per meeting; quality depends on who does it</li>
+        <li>Knowledge stays trapped in one person’s head</li>
+      </ul>
+    </div>
+    <div class="vs-card vs-fut"><h4>🟢 With Partner Briefing</h4>
+      <ul>
+        <li>Agent triggers off the <b>calendar event</b> — no one runs anything</li>
+        <li>Brief is <b>waiting in Slack the day before</b></li>
+        <li>~2 min to read; consistent structure every time</li>
+        <li>Human reviews &amp; refines; corrections tune the agent</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="section-label" style="margin-top:30px">Architecture</p>
+  <div class="flow">
+    <div class="flow-col">
+      <h4>Sources</h4>
+      <div class="node"><span class="nd" style="background:var(--sf)"></span>Salesforce <span style="color:var(--muted);font-weight:500">(system of record)</span></div>
+      <div class="node"><span class="nd" style="background:var(--email)"></span>Email / Outlook</div>
+      <div class="node"><span class="nd" style="background:var(--slack)"></span>Slack channels</div>
+      <div class="node"><span class="nd" style="background:var(--docs)"></span>Internal documents</div>
+      <div class="node"><span class="nd" style="background:var(--web)"></span>Web search</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="flow-col" style="flex:0 0 200px">
+      <h4>Agent (AgentForce)</h4>
+      <div class="agent-node">
+        <div class="em">🤝</div>
+        <div class="nm">Briefing Agent</div>
+        <div class="ds">Retrieve → de-dupe → synthesize → structure → flag gaps for human review</div>
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="flow-col">
+      <h4>Delivery</h4>
+      <div class="node"><span class="nd" style="background:var(--slack)"></span>Slack DM (day before)</div>
+      <div class="node"><span class="nd" style="background:var(--accent)"></span>Web brief (this prototype)</div>
+      <div class="node"><span class="nd" style="background:var(--ink-2)"></span>PDF export</div>
+      <div class="node"><span class="nd" style="background:var(--green)"></span>Human review → feedback loop</div>
+    </div>
+  </div>
+
+  <p class="section-label">Why this shape</p>
+  <div class="metric-row">
+    <div class="metric"><div class="big">5→1</div><div class="lab">Systems to check, collapsed into one brief</div></div>
+    <div class="metric"><div class="big">~40 min</div><div class="lab">Manual prep saved per meeting</div></div>
+    <div class="metric"><div class="big">Day −1</div><div class="lab">Proactive, not morning-of</div></div>
+    <div class="metric"><div class="big">Human-in-loop</div><div class="lab">Every brief is reviewable &amp; correctable</div></div>
+  </div>
+
+  <div class="card full" style="margin-top:6px">
+    <h3>🧭 How I’d sequence it (90-day view)</h3>
+    <div class="init"><div class="dot" style="background:#15a05a;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 1–3 · Shadow + map</div><div class="ro">Sit with 3–4 staffers, map what they actually pull and where it breaks. Validate the problem before building.</div></div></div>
+    <div class="init"><div class="dot" style="background:#2f6df0;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 3–6 · Thin slice on Salesforce</div><div class="ro">Auto-brief from Salesforce data only (Account, Contacts, Activities) for one team. Prove the structure earns trust.</div></div></div>
+    <div class="init"><div class="dot" style="background:#7b3fe4;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 6–10 · Add sources + Slack delivery</div><div class="ro">Layer in email, Slack, web. Ship the AgentForce → Slack day-before delivery with the feedback loop.</div></div></div>
+    <div class="init"><div class="dot" style="background:#c77700;margin-top:6px"></div><div style="flex:1"><div class="nm">Weeks 10–13 · Measure + expand</div><div class="ro">Track adoption + time saved + brief edits. Roll out to more teams once briefs need few corrections.</div></div></div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ---- nav wiring ---- */
+document.getElementById('nav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  if(b.dataset.view==='meetings') renderMeetings(); else renderHow();
+});
+
+renderMeetings();
+</script>
+</body>
+</html>
